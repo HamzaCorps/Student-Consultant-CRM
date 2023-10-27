@@ -48,7 +48,17 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
     "Direct Call",
     "Referral",
   ];
-  const initialFilterState = { city: '', startingDate: '', endingDate: '', status: '', priority: '', property: '', }
+  const degrees = [
+    "Bacholers",
+    "Masters",
+    "PHD",
+    "Other"
+  ]
+  const visa = [
+    "Student Visa",
+    "Visit Visa"
+  ]
+  const initialFilterState = { city: '', startingDate: '', endingDate: '', status: '', priority: '', country: '', degree: '', visa: ''}
   //////////////////////////////// STATES ///////////////////////////////////////////////////
   const [filters, setFilters] = useState(initialFilterState)
 
@@ -131,18 +141,39 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
               </div>
             </div>
           </div>
-          <Select
-            name="property"
-            type="text"
-            onChange={(e) => handleChange('property', e.target.value)}
+          <Autocomplete
             size="small"
-            fullWidth>
-            <MenuItem value={''} >None</MenuItem>
-            {projects.map((project, index) => (
-              <MenuItem value={project._id} key={index}>{project.title}{" "}</MenuItem>
-            ))}
-          </Select>
-
+            disablePortal
+            id="combo-box-demo"
+            // options={pakistanCities}
+            onSelect={(e) => handleChange('country', e.target.value)}
+            className="w-full"
+            renderInput={(params) => (
+              <TextField {...params} autoComplete="false" fullWidth label="Country" />
+            )}
+          />
+          <Autocomplete
+            size="small"
+            disablePortal
+            id="combo-box-demo"
+            options={degrees}
+            onSelect={(e) => handleChange('degree', e.target.value)}
+            className="w-full"
+            renderInput={(params) => (
+              <TextField {...params} autoComplete="false" fullWidth label="Degree" />
+            )}
+          />
+          <Autocomplete
+            size="small"
+            disablePortal
+            id="combo-box-demo"
+            options={visa}
+            onSelect={(e) => handleChange('visa', e.target.value)}
+            className="w-full"
+            renderInput={(params) => (
+              <TextField {...params} autoComplete="false" fullWidth label="Visa" />
+            )}
+          />
           <Autocomplete
             size="small"
             disablePortal

@@ -39,7 +39,7 @@ const Signup = () => {
     phone: "",
     email: "",
     city: "",
-    project: "",
+    project: "Null",
     password: "",
   });
   const [inputError, setInputError] = useState({

@@ -44,7 +44,9 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     email: "",
     city: "",
     priority: "",
-    property: "",
+    country: "",
+    degree: "",
+    visa: "",
     status: "",
     source: "",
     description: "",
@@ -77,6 +79,16 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     { name: "Google", value: "google" },
     { name: "Referral", value: "referral" },
   ];
+  const degrees = [
+    {name: "Bacholers", value: "bacholers"},
+    {name: "Masters", value: "masters"},
+    {name: "PHD", value: "phd"},
+    {name: "Other", value: "other"},
+  ]
+  const Visa = [
+    {name: 'Student Visa', value: 'studentVisa'},
+    {name: 'Visit Visa', value: 'visitVisa'}
+  ]
 
   //////////////////////////////////////// STATES ////////////////////////////////////
   const [leadData, setLeadData] = useState(initialLeadState);
@@ -283,17 +295,48 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                 </td>
               </tr>
               <tr>
-                <td className="pb-4 text-lg">Project </td>
+                <td className="pb-4 text-lg">Country </td>
                 <td className="pb-4">
                   <CFormSelect
-                    value={leadData.property}
-                    onChange={(e) => handleChange("property", e.target.value)}
+                    value={leadData.country}
+                    onChange={(e) => handleChange("country", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
                     <option value="">Select an Option</option>
-
-                    {projects.map((project, key) => (
-                      <option key={key} value={project._id}>
-                        {project.title}
+                    {/* {countries.map((country, key) => (
+                      <option key={key} value={country.value}>
+                        {coountry.title}
+                      </option>
+                    ))} */}
+                  </CFormSelect>
+                </td>
+              </tr>
+              <tr>
+                <td className="pb-4 text-lg">Degree </td>
+                <td className="pb-4">
+                  <CFormSelect
+                    value={leadData.degree}
+                    onChange={(e) => handleChange("degree", e.target.value)}
+                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select an Option</option>
+                    {degrees.map((degree, key) => (
+                      <option key={key} value={degree.value}>
+                        {degree.name}
+                      </option>
+                    ))}
+                  </CFormSelect>
+                </td>
+              </tr>
+              <tr>
+                <td className="pb-4 text-lg">Visa </td>
+                <td className="pb-4">
+                  <CFormSelect
+                    value={leadData.visa}
+                    onChange={(e) => handleChange("visa", e.target.value)}
+                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select an Option</option>
+                    {Visa.map((index, key) => (
+                      <option key={key} value={index.value}>
+                        {index.name}
                       </option>
                     ))}
                   </CFormSelect>
