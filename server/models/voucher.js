@@ -13,7 +13,6 @@ const voucherSchema = Schema({
     total: { type: Number },
     propertyType: { type: String },
     area: { type: String },
-    project: { type: Schema.Types.ObjectId, ref: 'Project', },
     paid: { type: Number },
     remained: { type: Number },
     uid: { type: String },

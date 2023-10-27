@@ -1,5 +1,5 @@
 import express from 'express'
-import { createLead, createOnsiteLead, createOnlineLead, getLead, getEmployeeLeads, getLeadsStat, getLeads, filterLead, updateLead, shiftLead, shareLead, archiveLead, deleteLead, deleteWholeCollection, searchLead, } from '../controllers/lead.js'
+import { createLead,   getLead, getEmployeeLeads, getLeadsStat, getLeads, filterLead, updateLead, shiftLead, shareLead, archiveLead, deleteLead, deleteWholeCollection, searchLead, } from '../controllers/lead.js'
 import { verifyEmployee, verifyManager, verifyToken } from '../middleware/auth.js'
 import Lead from '../models//lead.js'
 import { createError } from '../utils/error.js'
@@ -29,8 +29,6 @@ router.get('/search', verifyToken, searchLead)
 router.get('/filter', verifyToken, filterLead)
 
 // POST
-router.post('/create/onsite', verifyToken, verifyEmployee, createOnsiteLead)
-router.post('/create/online', verifyToken, createOnlineLead)
 router.post('/create', verifyToken, createLead)
 
 // PUT

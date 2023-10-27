@@ -10,9 +10,9 @@ import nodemailer from 'nodemailer'
 export const register = async (req, res, next) => {
     try {
 
-        let { firstName, lastName, username, phone, email, password, city, role, project } = req.body
+        let { firstName, lastName, username, phone, email, password, city, role } = req.body
 
-        if (!firstName || !lastName || !username || !phone || !password || !city || !project) return next(createError(400, 'Make sure to provide all the fields'))
+        if (!firstName || !lastName || !username || !phone || !password || !city) return next(createError(400, 'Make sure to provide all the fields'))
         if (email && !validator.isEmail(email)) return next(createError(400, 'Invalid Email Address'))
 
         const findedUser = await User.findOne({ username })
@@ -27,7 +27,7 @@ export const register = async (req, res, next) => {
         else
             role = role || 'client'
 
-        const newUser = await User.create({ firstName, lastName, username, email, phone, password: hashedPassword, city, role, project })
+        const newUser = await User.create({ firstName, lastName, username, email, phone, password: hashedPassword, city, role })
         res.status(200).json({ result: newUser, message: 'User created successfully', success: true })
 
     } catch (err) {
