@@ -86,7 +86,7 @@ export const getFollowUpsStatsByDate = async (req, res, next) => {
 export const getFollowUpsStats = async (req, res, next) => {
     try {
 
-        const followUps = await FollowUp.find()
+        const followUps = await FollowUp.find().populate('leadId')
 
         const reducedFollowUps = followUps.reduce((result, followUp) => {
             const createdAtDate = new Date(followUp.createdAt).toLocaleDateString();
@@ -115,51 +115,6 @@ export const getFollowUpsStats = async (req, res, next) => {
     }
 };
 
-
-
-
-
-// export const getFollowUpsStats = async (req, res, next) => {
-//     try {
-//         const followUpStats = await FollowUp.aggregate([
-//             {
-//                 $project: {
-//                     dateFields: {
-//                         $setUnion: [
-//                             [{ $toDate: "$createdAt" }],
-//                             [{ $toDate: "$followUpDate" }],
-//                         ],
-//                     },
-//                     followUp: '$followUp'
-//                 },
-//             },
-//             {
-//                 $unwind: "$dateFields",
-//             },
-//             {
-//                 $group: {
-//                     _id: { $dateToString: { format: "%Y-%m-%d", date: "$dateFields" } },
-//                     followUps: { $push: "$followUp" },
-//                 },
-//             },
-//             {
-//                 $project: {
-//                     date: { $dateFromString: { dateString: "$_id" } },
-//                     followUps: 1,
-//                     _id: 0,
-//                 },
-//             },
-//             {
-//                 $sort: { date: 1 },
-//             },
-//         ]);
-
-//         res.status(200).json(followUpStats);
-//     } catch (error) {
-//         console.log("error", error);
-//         next(createError(500, error.message));
-//     }
-// };
 
 
 

@@ -7,34 +7,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getFollowUpsStats } from "../../../redux/action/followUp";
 
-const createData = (date, day, totalFollowUps) => {
+const createData = (date, day, followUps = []) => {
   return {
     date,
     day,
-    totalFollowUps,
-    history: [
-      {
-        leadID: 123,
-        status: "Contacted",
-        createData: "12/10/2021",
-        remarks: "This is a remark",
-        followUpDate: "12/10/2021",
-      },
-      {
-        leadID: 123,
-        status: "Contacted",
-        createData: "12/10/2021",
-        remarks: "This is a remark",
-        followUpDate: "12/10/2021",
-      },
-      {
-        leadID: 123,
-        status: "Contacted",
-        createData: "12/10/2021",
-        remarks: "This is a remark",
-        followUpDate: "12/10/2021",
-      },
-    ],
+    totalFollowUps: followUps.length,
+    history: followUps
   };
 };
 
@@ -83,24 +61,24 @@ const Row = ({ row }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                  {row?.history?.map((followUp) => (
+                    <TableRow key={followUp.date}>
                       <TableCell>
                         <span className="font-primary text-sky-400 cursor-pointer hover:text-sky-500">
-                          {historyRow.leadID}
+                          {followUp.leadId?.uid || followUp.leadId}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="font-primary">{historyRow.status}</span>
+                        <span className="font-primary">{followUp.status}</span>
                       </TableCell>
                       <TableCell>
-                        <span className="font-primary">{historyRow.createData}</span>
+                        <span className="font-primary">{new Date(followUp.createdAt).toLocaleDateString()}</span>
                       </TableCell>
                       <TableCell>
-                        <span className="font-primary">{historyRow.remarks}</span>
+                        <span className="font-primary">{followUp.remarks}</span>
                       </TableCell>
                       <TableCell>
-                        <span className="font-primary">{historyRow.followUpDate}</span>
+                        <span className="font-primary">{new Date(followUp.followUpDate).toLocaleDateString()}</span>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -131,11 +109,7 @@ Row.propTypes = {
   }).isRequired,
 };
 
-const rows = [
-  createData("29/10/2023", "Sunday", 3),
-  createData("30/10/2023", "Monday", 3),
-  createData("31/10/2023", "Tuesday", 3),
-];
+
 
 
 
@@ -143,8 +117,17 @@ const AllFollowUpsTable = () => {
 
   /////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
   const dispatch = useDispatch()
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const { followUpsStats } = useSelector(state => state.followUp)
-  console.log('fol', followUpsStats)
+  const rows = followUpsStats?.map((stat) => {
+    const dateParts = stat.date.split("/");
+    const year = parseInt(dateParts[2]);
+    const month = parseInt(dateParts[0]) - 1; // Months in JavaScript are zero-based
+    const day = parseInt(dateParts[1]);
+    const date = new Date(year, month, day);
+
+    return createData(stat.date, DAYS[date.getDay()], stat.followUps)
+  })
   /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
 
   /////////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////
