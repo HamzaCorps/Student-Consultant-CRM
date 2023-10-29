@@ -21,14 +21,25 @@ const createData = (date, day, totalFollowUps) => {
     totalFollowUps,
     history: [
       {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
+        leadID: 123,
+        status: "Contacted",
+        createData: "12/10/2021",
+        remarks: "This is a remark",
+        followUpDate: "12/10/2021",
       },
       {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
+        leadID: 123,
+        status: "Contacted",
+        createData: "12/10/2021",
+        remarks: "This is a remark",
+        followUpDate: "12/10/2021",
+      },
+      {
+        leadID: 123,
+        status: "Contacted",
+        createData: "12/10/2021",
+        remarks: "This is a remark",
+        followUpDate: "12/10/2021",
       },
     ],
   };
@@ -63,22 +74,42 @@ const Row = (props) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>
+                      <span className="font-primary text-sky-400">Lead ID</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-primary text-sky-400">Status</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-primary text-sky-400">Created</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-primary text-sky-400">Remarks</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-primary text-sky-400">Next Follow Up</span>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
+                      <TableCell>
+                        <span className="font-primary text-sky-400 cursor-pointer hover:text-sky-500">
+                          {historyRow.leadID}
+                        </span>
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      <TableCell>
+                        <span className="font-primary">{historyRow.status}</span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="font-primary">{historyRow.createData}</span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="font-primary">{historyRow.remarks}</span>
+                      </TableCell>
+                      <TableCell>
+                        <span className="font-primary">{historyRow.followUpDate}</span>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -99,15 +130,21 @@ Row.propTypes = {
     totalFollowUps: PropTypes.number.isRequired,
     history: PropTypes.arrayOf(
       PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
+        createdDate: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        followUpDate: PropTypes.string.isRequired,
+        leadId: PropTypes.number.isRequired,
+        remarks: PropTypes.string.isRequired,
       })
     ).isRequired,
   }).isRequired,
 };
 
-const rows = [createData("29/10/2023", "Sunday", 10)];
+const rows = [
+  createData("29/10/2023", "Sunday", 3),
+  createData("30/10/2023", "Monday", 3),
+  createData("31/10/2023", "Tuesday", 3),
+];
 
 const AllFollowUpsTable = () => {
   return (
