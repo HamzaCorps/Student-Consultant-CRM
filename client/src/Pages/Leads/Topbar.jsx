@@ -148,7 +148,7 @@ const Topbar = ({ options, setOptions, isFiltered, setIsFiltered, openFilters, s
             </Tooltip>
             <Tooltip title="View Follow ups" arrow placement="top">
               <div
-                onClick={handleOpenFollowUps}
+                onClick={()=>navigate('/leads/followups/all')}
                 className={` p-2 rounded-md cursor-pointer ${openFilters
                   ? "text-[#20aee3] bg-[#e4f1ff]"
                   : "bg-[#ebf2f5] hover:bg-[#dfe6e8] text-[#a6b5bd]"

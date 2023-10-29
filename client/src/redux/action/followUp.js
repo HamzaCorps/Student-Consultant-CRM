@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { start, end, error, getFollowUpReducer, getFollowUpsReducer, createFollowUpReducer, deleteFollowUpReducer, } from '../reducer/followUp'
+import { start, end, error, getFollowUpReducer, getFollowUpsReducer,getFollowUpsStatsReducer, createFollowUpReducer, deleteFollowUpReducer, } from '../reducer/followUp'
 
 export const getFollowUp = (followUpId) => async (dispatch) => {
     try {
@@ -16,6 +16,16 @@ export const getFollowUps = (leadId) => async (dispatch) => {
         dispatch(start())
         const { data } = await api.getFollowUps(leadId)
         dispatch(getFollowUpsReducer(data.result))
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
+export const getFollowUpsStats = () => async (dispatch) => {
+    try {
+        dispatch(start())
+        const { data } = await api.getFollowUpsStats()
+        dispatch(getFollowUpsStatsReducer(data.result))
         dispatch(end())
     } catch (err) {
         dispatch(error(err.message))

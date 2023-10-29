@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from 'react'
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -11,8 +12,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import { useDispatch, useSelector } from "react-redux";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { getFollowUpsStats } from "../../../redux/action/followUp";
 
 const createData = (date, day, totalFollowUps) => {
   return {
@@ -48,6 +51,8 @@ const createData = (date, day, totalFollowUps) => {
 const Row = (props) => {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+
+
 
   return (
     <React.Fragment>
@@ -146,7 +151,25 @@ const rows = [
   createData("31/10/2023", "Tuesday", 3),
 ];
 
+
+
 const AllFollowUpsTable = () => {
+
+  /////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
+  const dispatch = useDispatch()
+  const { followUpsStats } = useSelector(state => state.followUp)
+console.log('fol',followUpsStats)
+  /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////
+  useEffect(() => {
+    dispatch(getFollowUpsStats())
+  }, [])
+
+  /////////////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////////
+
+
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
