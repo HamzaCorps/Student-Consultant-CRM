@@ -9,6 +9,7 @@ import { getEmployeeLeads, getLeads, searchLead } from "../../../redux/action/le
 import { PiArchive, PiChartBar, PiMagnifyingGlass } from "react-icons/pi";
 import { FiFilter, FiList, FiUser } from "react-icons/fi";
 import { searchLeadReducer } from "../../../redux/reducer/lead";
+import Filter from "./Filter";
 const Topbar = () => {
   ////////////////////////////////////////// VARIABLES //////////////////////////////////////
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Topbar = () => {
   const [open, setOpen] = useState(false);
   const [scroll, setScroll] = React.useState("paper");
   const descriptionElementRef = React.useRef(null);
+  const [openFilter, setOpenFilter] = useState(false);
 
   ////////////////////////////////////////// USE EFFECTS //////////////////////////////////
   useEffect(() => {
@@ -37,6 +39,10 @@ const Topbar = () => {
   ////////////////////////////////////////// FUNCTIONS //////////////////////////////////////
   const handleSearch = (searchTerm) => {
     dispatch(searchLeadReducer(searchTerm));
+  };
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
   };
 
   return (
@@ -65,10 +71,22 @@ const Topbar = () => {
                   />
                 </FormControl>
               </div>
+              <Tooltip title="Filter" arrow placement="top">
+                <div
+                  onClick={handleOpenFilter}
+                  className={` p-2 rounded-md cursor-pointer ${openFilter
+                    ? "text-[#20aee3] bg-[#e4f1ff]"
+                    : "bg-[#ebf2f5] hover:bg-[#dfe6e8] text-[#a6b5bd]"
+                    }`}>
+                  <FiFilter className="text-[25px] " />
+                </div>
+              </Tooltip>
             </div>
           )}
         </div>
       </div>
+
+      <Filter open={openFilter} setOpen={setOpenFilter} />
     </div>
   );
 };

@@ -1,63 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Drawer, Button, TextField, Autocomplete, Select, MenuItem } from "@mui/material";
-import { Close } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { filterLead } from "../../redux/action/lead";
-import { FiFilter } from "react-icons/fi";
+import React, { useState } from "react";
+import { Drawer, TextField, Autocomplete, Select, MenuItem } from "@mui/material";
 import { PiFunnelLight, PiXLight } from "react-icons/pi";
-import { countries, pakistanCities } from "../../constant";
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { pakistanCities } from "../../../constant";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { filterLeadReducer } from "../../redux/reducer/lead";
-import { getProjects } from "../../redux/action/project";
+import { countries } from "../../../constant";
 
-const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
+const Filter = ({ open, setOpen }) => {
 
   //////////////////////////////// VARIABLES ///////////////////////////////////////////////////
-  const dispatch = useDispatch()
-  const { projects } = useSelector(state => state.project)
-  const { leads } = useSelector(state => state.lead)
-  const priorities = [
-    { name: "Very Cold", value: 'veryCold' },
-    { name: "Cold", value: 'cold' },
-    { name: "Moderate", value: 'moderate' },
-    { name: "Hot", value: 'hot' },
-    { name: "Very Hot", value: 'veryHot' },
-  ];
-  // const priorities = ["Very Cold", "Cold", "Moderate", "Hot", "Very Hot"];
 
-  const statuses = [
-    "New",
-    "Closed(Won)",
-    "Closed(Lost)",
-    "Followed Up(Call)",
-    "Followed Up(Email)",
-    "Contacted Client(Call)",
-    "Contacted Client(Call Attempt)",
-    "Contacted Client(Email)",
-    "Meeting(Done)",
-    "Meeting(Attempt)",
-  ];
-  const sources = [
-    "Facebook",
-    "Instagram",
-    "Google",
-    "Facebook Comments",
-    "Friend and Family",
-    "Direct Call",
-    "Referral",
-  ];
-  const degrees = [
-    "Bacholers",
-    "Masters",
-    "PHD",
-    "Other"
-  ]
-  const visa = [
-    "Student Visa",
-    "Visit Visa"
-  ]
   const initialFilterState = { city: '', startingDate: '', endingDate: '', status: '', priority: '', country: '', degree: '', visa: ''}
   //////////////////////////////// STATES ///////////////////////////////////////////////////
   const [filters, setFilters] = useState(initialFilterState)
@@ -65,16 +18,7 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
   //////////////////////////////// USE EFFECTS ///////////////////////////////////////////////////
 
   //////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////
-  const handleFilter = () => {
-    dispatch(filterLeadReducer(filters))
-    setIsFiltered(true)
-    setFilters(initialFilterState)
-    setOpen(false)
-  }
 
-  const handleChange = (field, value) => {
-    setFilters((pre) => ({ ...pre, [field]: value }))
-  }
 
   return (
     <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
@@ -100,7 +44,7 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
               <TextField {...params} autoComplete="false" fullWidth label="City" />
             )}
           />
-          <Autocomplete
+          {/* <Autocomplete
             size="small"
             disablePortal
             options={priorities}
@@ -109,7 +53,7 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
             onChange={(e, input) => handleChange('priority', input.value)} // Handle the selected value
             className="w-full"
             renderInput={(params) => <TextField   {...params} autoComplete="false" label="Priority" fullWidth />}
-          />
+          /> */}
 
           <div className="flex flex-col">
             <div>Date : </div>
@@ -150,7 +94,7 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
               <TextField {...params} autoComplete="false" fullWidth label="Country" />
             )}
           />
-          <Autocomplete
+          {/* <Autocomplete
             size="small"
             disablePortal
             id="combo-box-demo"
@@ -160,8 +104,8 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
             renderInput={(params) => (
               <TextField {...params} autoComplete="false" fullWidth label="Degree" />
             )}
-          />
-          <Autocomplete
+          /> */}
+          {/* <Autocomplete
             size="small"
             disablePortal
             id="combo-box-demo"
@@ -171,8 +115,8 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
             renderInput={(params) => (
               <TextField {...params} autoComplete="false" fullWidth label="Visa" />
             )}
-          />
-          <Autocomplete
+          /> */}
+          {/* <Autocomplete
             size="small"
             disablePortal
             id="combo-box-demo"
@@ -182,8 +126,8 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
             renderInput={(params) => (
               <TextField {...params} autoComplete="false" fullWidth label="Status" />
             )}
-          />
-
+          /> */}
+{/* 
           <Autocomplete
             size="small"
             disablePortal
@@ -194,7 +138,7 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
             renderInput={(params) => (
               <TextField {...params} autoComplete="false" fullWidth label="Source" />
             )}
-          />
+          /> */}
 
           <div className="flex gap-4 justify-end">
             <button className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-primary">
@@ -202,7 +146,6 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
             </button>
             <button
               className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg font-primary"
-              onClick={handleFilter}
               autoFocus>
               Apply Filters
             </button>
@@ -213,4 +156,4 @@ const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
   );
 };
 
-export default FilterDrawer;
+export default Filter;
