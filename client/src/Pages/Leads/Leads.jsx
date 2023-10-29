@@ -272,8 +272,7 @@ function Leads({ type, showSidebar }) {
   });
   ////////////////////////////////////// USE EFFECTS //////////////////////////////
   useEffect(() => {
-    // dispatch(getLeads()); 
-     dispatch(getEmployeeLeads()); // only find my leads (of one who is logged in)
+    dispatch(getLeads()); 
   }, []);
   useEffect(() => {
     if (!isFiltered) {
