@@ -40,8 +40,10 @@ const CreateSale = ({ open, setOpen, scroll }) => {
 
   ////////////////////////////////////////// USE EFFECTS /////////////////////////////////
   useEffect(() => {
-    dispatch(getEmployees());
-    dispatch(getClients());
+    if (employees.length === 0) {
+      dispatch(getEmployees());
+    }
+        dispatch(getClients());
   }, [open]);
   useEffect(() => {
     setSaleData({ ...saleData, staff: lead?.client?.username });
