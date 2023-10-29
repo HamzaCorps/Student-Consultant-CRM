@@ -121,19 +121,11 @@ const CreateFollowUps = ({ setOpen, open, scroll }) => {
               <tr>
                 <td className="flex flex-col justify-start mt-1 text-lg">Next Follow Up Date </td>
                 <td className="pb-4">
-                  <TextField
-                    onChange={handleInputChange}
-                    value={followUpData.followUpDate}
-                    name="followUpDate"
-                    type="date"
-                    size="small"
-                    fullWidth
-                    />
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker label="Select Date" onChange={(date) => setFollowUpData({ ...followUpData, followUpDate: date.$d })} />
                     </DemoContainer>
-                  </LocalizationProvider> */}
+                  </LocalizationProvider>
                 </td>
               </tr>
               <tr>

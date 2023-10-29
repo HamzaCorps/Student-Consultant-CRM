@@ -27,7 +27,7 @@ export const getFollowUps = async (req, res, next) => {
     }
 }
 
-export const getFollowUpsStats = async (req, res, next) => {
+export const getFollowUpsStatsByCreatedAt = async (req, res, next) => {
     try {
         const response = await FollowUp.aggregate([
             {
@@ -55,6 +55,113 @@ export const getFollowUpsStats = async (req, res, next) => {
         next(createError(500, error.message))
     }
 };
+export const getFollowUpsStatsByDate = async (req, res, next) => {
+    try {
+        const response = await FollowUp.aggregate([
+            {
+                $sort: { followUpDate: 1 },
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: '%Y-%m-%d', date: '$followUpDate' },
+                    },
+                    followUps: { $push: '$$ROOT' },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id',
+                    followUps: 1,
+                },
+            },
+        ]);
+
+        res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
+    } catch (error) {
+        next(createError(500, error.message))
+    }
+};
+export const getFollowUpsStats = async (req, res, next) => {
+    try {
+
+        const followUps = await FollowUp.find()
+
+        const reducedFollowUps = followUps.reduce((result, followUp) => {
+            const createdAtDate = new Date(followUp.createdAt).toLocaleDateString();
+            const followUpDate = new Date(followUp.followUpDate).toLocaleDateString();
+
+            if (!result.find(item => item.date === createdAtDate)) {
+                result.push({ date: createdAtDate, followUps: [] });
+            }
+
+            if (!result.find(item => item.date === followUpDate)) {
+                result.push({ date: followUpDate, followUps: [] });
+            }
+
+            result.forEach(item => {
+                if (item.date === createdAtDate || item.date === followUpDate) {
+                    item.followUps.push(followUp);
+                }
+            });
+
+            return result;
+        }, []);
+
+        res.status(200).json({ result: reducedFollowUps, message: "Stats fetched successfully.", success: true });
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+};
+
+
+
+
+
+// export const getFollowUpsStats = async (req, res, next) => {
+//     try {
+//         const followUpStats = await FollowUp.aggregate([
+//             {
+//                 $project: {
+//                     dateFields: {
+//                         $setUnion: [
+//                             [{ $toDate: "$createdAt" }],
+//                             [{ $toDate: "$followUpDate" }],
+//                         ],
+//                     },
+//                     followUp: '$followUp'
+//                 },
+//             },
+//             {
+//                 $unwind: "$dateFields",
+//             },
+//             {
+//                 $group: {
+//                     _id: { $dateToString: { format: "%Y-%m-%d", date: "$dateFields" } },
+//                     followUps: { $push: "$followUp" },
+//                 },
+//             },
+//             {
+//                 $project: {
+//                     date: { $dateFromString: { dateString: "$_id" } },
+//                     followUps: 1,
+//                     _id: 0,
+//                 },
+//             },
+//             {
+//                 $sort: { date: 1 },
+//             },
+//         ]);
+
+//         res.status(200).json(followUpStats);
+//     } catch (error) {
+//         console.log("error", error);
+//         next(createError(500, error.message));
+//     }
+// };
+
+
 
 
 export const createFollowUp = async (req, res, next) => {
