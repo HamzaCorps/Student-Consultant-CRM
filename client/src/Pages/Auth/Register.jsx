@@ -17,7 +17,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import validator from "email-validator";
 import { PiEyeSlashThin, PiEyeThin, PiX } from "react-icons/pi";
 import { pakistanCities } from "../../constant";
-import { getProjects } from "../../redux/action/project";
 
 const Signup = () => {
   const PasswordButtonInitialStyle = {
@@ -27,8 +26,6 @@ const Signup = () => {
   /////////////////////////////////// VARIABLES /////////////////////////////////
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { projects } = useSelector((state) => state.project);
-  const projectsTitles = projects.map(({ _id, title }) => ({ _id, title }));
   const { isFetching, error } = useSelector((state) => state.user);
 
   /////////////////////////////////// STATES /////////////////////////////////////

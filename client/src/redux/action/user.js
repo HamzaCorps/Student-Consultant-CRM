@@ -69,15 +69,12 @@ export const getClients = () => async (dispatch) => {
     }
 }
 export const getEmployees = () => async (dispatch) => {
-    console.log('here and there')
     try {
         dispatch(start())
         const { data } = await api.getEmployees()
-        console.log('geEmployees data',data)
         dispatch(getEmployeesReducer(data.result))
         dispatch(end())
     } catch (err) {
-        console.log('errro',err)
         dispatch(error(err.message))
     }
 }

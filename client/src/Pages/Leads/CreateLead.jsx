@@ -21,7 +21,6 @@ import {
   Checkbox,
 } from "@mui/material";
 import { PiNotepad, PiUser, PiXLight } from "react-icons/pi";
-import { getProjects } from "../../redux/action/project";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;

@@ -13,7 +13,6 @@ import {
   TextField,
 } from "@mui/material";
 import { PiNotepad, PiUser, PiXLight } from "react-icons/pi";
-import { getProjects } from "../../redux/action/project";
 import { CFormSelect } from "@coreui/react";
 import { getLeadReducer } from "../../redux/reducer/lead";
 

@@ -10,13 +10,11 @@ import { DatePicker, DesktopDatePicker, LocalizationProvider } from "@mui/x-date
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { filterLeadReducer } from "../../redux/reducer/lead";
-import { getProjects } from "../../redux/action/project";
 
 const FilterDrawer = ({ open, setOpen, setIsFiltered }) => {
 
   //////////////////////////////// VARIABLES ///////////////////////////////////////////////////
   const dispatch = useDispatch()
-  const { projects } = useSelector(state => state.project)
   const { leads } = useSelector(state => state.lead)
   const priorities = [
     { name: "Very Cold", value: 'veryCold' },

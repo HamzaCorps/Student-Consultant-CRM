@@ -9,9 +9,6 @@ import saleReducer from './reducer/sale';
 import leadReducer from './reducer/lead';
 import followUpReducer from './reducer/followUp';
 import refundReducer from './reducer/refund';
-import societyReducer from './reducer/society';
-import projectReducer from './reducer/project';
-import inventoryReducer from './reducer/inventory';
 import cashbookReducer from './reducer/cashbook';
 import voucherReducer from './reducer/voucher';
 
@@ -26,9 +23,6 @@ const rootReducer = combineReducers({
     lead: leadReducer,
     followUp: followUpReducer,
     refund: refundReducer,
-    society: societyReducer,
-    project: projectReducer,
-    inventory: inventoryReducer,
     cashbook: cashbookReducer,
     voucher: voucherReducer,
 });

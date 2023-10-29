@@ -14,15 +14,12 @@ import {
   User,
   Request,
   Refunds,
-  Projects,
   Employees,
   Clients,
   CreateCashBook,
   ViewCashBook,
   Lead,
   Notifications,
-  Inventory,
-  Societies,
   Ledger,
   AllFollowUps,
 } from "./Pages";
@@ -83,9 +80,6 @@ const App = () => {
                   <Route path="/" element={<DashBoard />} />
                   <Route path="/auth/register" element={<Navigate to="/" />} />
                   <Route path="/auth/login" element={<Navigate to="/" />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/inventory" element={<Inventory />} />
-                  <Route path="/societies" element={<Societies />} />
                   <Route path="/myLeads" element={<Leads />} />
                   <Route path="/leads" exact element={<Leads />} />
                   <Route path="/leads/followups/all" element={<AllFollowUps />} />

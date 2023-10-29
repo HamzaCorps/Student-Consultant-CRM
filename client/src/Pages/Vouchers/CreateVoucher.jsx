@@ -20,7 +20,6 @@ import {
 import { PiNotepad, PiXLight } from "react-icons/pi";
 import { CFormSelect } from "@coreui/react";
 import JsBarcode from "jsbarcode";
-import { getProjects } from "../../redux/action/project";
 import VoucherPage from "./VoucherPage";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
