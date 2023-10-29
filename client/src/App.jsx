@@ -24,6 +24,7 @@ import {
   Inventory,
   Societies,
   Ledger,
+  AllFollowUps,
 } from "./Pages";
 import { Navbar, Sidebar } from "./Components";
 import { useSelector } from "react-redux";
@@ -87,6 +88,7 @@ const App = () => {
                   <Route path="/societies" element={<Societies />} />
                   <Route path="/myLeads" element={<Leads />} />
                   <Route path="/leads" exact element={<Leads />} />
+                  <Route path="/leads/followups/all" element={<AllFollowUps />} />
                   <Route path="/leads/ledger" element={<Navigate to="/leads" />} />
                   <Route path="/leads/ledger/:leadId" element={<Ledger />} />
                   <Route path="/leads/:leadId" element={<Lead />} />
