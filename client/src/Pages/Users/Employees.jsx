@@ -120,8 +120,10 @@ const Employees = memo(() => {
 
   /////////////////////////////////////// USE EFFECTS ////////////////////////////////////
   useEffect(() => {
-    dispatch(getEmployees());
-  }, []);
+    if (employees.length === 0) {
+      dispatch(getEmployees());
+    }
+    }, []);
   useEffect(() => {
     if (!isFiltered) {
       dispatch(getEmployeesReducer(allEmployees))

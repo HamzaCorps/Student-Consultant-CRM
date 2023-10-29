@@ -98,8 +98,8 @@ function Leads({ type, showSidebar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { leads, allLeads, isFetching, error } = useSelector((state) => state.lead);
-  const archivedLeads = leads.filter(lead => lead.isArchived)
-  const unarchivedLeads = leads.filter(lead => !lead.isArchived)
+  const archivedLeads = leads.filter((lead) => lead.isArchived);
+  const unarchivedLeads = leads.filter((lead) => !lead.isArchived);
   const { loggedUser } = useSelector((state) => state.user);
   const role = loggedUser.role;
   const columns = [
@@ -129,9 +129,7 @@ function Leads({ type, showSidebar }) {
       headerClassName: "super-app-theme--header",
       width: 180,
       renderCell: (params) => (
-        <div className={`font-primary font-light`}>
-          {params.row?.client?.phone}
-        </div>
+        <div className={`font-primary font-light`}>{params.row?.client?.phone}</div>
       ),
     },
     {
@@ -159,12 +157,27 @@ function Leads({ type, showSidebar }) {
       width: 200,
       renderCell: (params) => (
         <span
-          className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium ${params.row?.status == "successful" ? "border-green-500 text-green-500" : ""
-            } ${params.row?.status == "remaining" ? "border-sky-400 text-sky-400" : ""} ${params.row?.status == "declined" ? "border-red-400 text-red-400" : ""
-            } ${params.row?.status == "underProcess" ? "border-yellow-500 text-yellow-500" : ""} ${params.row?.status == "unsuccessful" ? "border-orange-500 text-orange-500" : ""
-            }`}>
-          {params.row?.status == "underProcess" && <span>Under Process</span>}
-          {params.row?.status != "underProcess" && <span>{params.row?.status}</span>}
+          className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium 
+          ${params.row?.status == "closedWon" ? "border-green-500 text-green-500" : ""} 
+          ${params.row?.status == "closedLost" ? "border-red-400 text-red-400" : ""} 
+          ${params.row?.status == "followedUpCall" ? "border-sky-400 text-sky-400" : ""}
+          ${params.row?.status == "contactedCallAttempt" ? "border-orange-400 text-orange-400" : ""} 
+          ${params.row?.status == "contactedCall" ? "border-yellow-500 text-yellow-500" : ""}
+          ${params.row?.status == "followedUpEmail" ? "border-lime-400 text-lime-500" : ""} 
+          ${params.row?.status == "contactedEmail" ? "border-teal-400 text-teal-500" : ""} 
+          ${params.row?.status == "meetingDone" ? "border-indigo-400 text-indigo-500" : ""}
+          ${params.row?.status == "meetingAttempt" ? "border-pink-400 text-pink-500" : ""}`}>
+          <span>
+            {params.row?.status == "closedWon" ? <div>Closed Won</div> : <div></div>}
+            {params.row?.status == "closedLost" ? <div>Closed Lost</div> : <div></div>}
+            {params.row?.status == "followedUpCall" ? <div>Followed Up Call</div> : <div></div>}
+            {params.row?.status == "contactedCallAttempt" ? <div>Contacted Call Attempt</div> : <div></div>}
+            {params.row?.status == "contactedCall" ? <div>Contacted Call</div> : <div></div>}
+            {params.row?.status == "followedUpEmail" ? <div>Followed Up Email</div> : <div></div>}
+            {params.row?.status == "contactedEmail" ? <div>Contacted Email</div> : <div></div>}
+            {params.row?.status == "meetingDone" ? <div>Meeting Done</div> : <div></div>}
+            {params.row?.status == "meetingAttempt" ? <div>Meeting Attempt</div> : <div></div>}
+          </span>
         </span>
       ),
     },
@@ -173,7 +186,7 @@ function Leads({ type, showSidebar }) {
       headerName: "Degree",
       width: 170,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => <div className="font-primary font-light">{params.row?.degree}</div>,
+      renderCell: (params) => <div className="font-primary font-light capitalize">{params.row?.degree}</div>,
     },
     {
       field: "actions",
@@ -182,8 +195,7 @@ function Leads({ type, showSidebar }) {
       width: 160,
       renderCell: (params) => (
         <div className="flex gap-[10px] items-center transition-all">
-          {
-            loggedUser?.role != 'employee' &&
+          {loggedUser?.role != "employee" && (
             <Tooltip placement="top" title="Delete">
               {" "}
               <PiTrashLight
@@ -191,7 +203,7 @@ function Leads({ type, showSidebar }) {
                 className="cursor-pointer text-red-500 text-[23px] hover:text-red-400"
               />
             </Tooltip>
-          }
+          )}
           <Tooltip placement="top" title="View">
             <div className="cursor-pointer" onClick={() => handleOpenViewModal(params.row?._id)}>
               <IoOpenOutline className="cursor-pointer text-orange-500 text-[23px] hover:text-orange-400" />
@@ -223,7 +235,9 @@ function Leads({ type, showSidebar }) {
                 onClick={() => handleOpenShiftLeadModal(params.row)}>
                 Shift Lead
               </StyledMenuItem>
-              <StyledMenuItem className="text-gray-600 flex font-primary" onClick={() => handleOpenShareLeadModal(params.row)}>
+              <StyledMenuItem
+                className="text-gray-600 flex font-primary"
+                onClick={() => handleOpenShareLeadModal(params.row)}>
                 Share Lead
               </StyledMenuItem>
               <StyledMenuItem
@@ -236,10 +250,14 @@ function Leads({ type, showSidebar }) {
                 className="text-gray-600 flex font-primary">
                 Follow Ups
               </StyledMenuItem>
-              <StyledMenuItem onClick={() => handleOpenAttachmentModal(params.row._id)} className="text-gray-600 flex font-primary">
+              <StyledMenuItem
+                onClick={() => handleOpenAttachmentModal(params.row._id)}
+                className="text-gray-600 flex font-primary">
                 Attachments
               </StyledMenuItem>
-              <StyledMenuItem onClick={() => navigateToLedger(params.row._id)} className="text-gray-600 flex font-primary">
+              <StyledMenuItem
+                onClick={() => navigateToLedger(params.row._id)}
+                className="text-gray-600 flex font-primary">
                 Ledger
               </StyledMenuItem>
             </Menu>
@@ -264,7 +282,7 @@ function Leads({ type, showSidebar }) {
   const [openShareLeadModal, setOpenShareLeadModal] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
   const [selectedLeadId, setSelectedLeadId] = useState(null);
-  const [isFiltered, setIsFiltered] = useState(false)
+  const [isFiltered, setIsFiltered] = useState(false);
   const [options, setOptions] = useState({
     isKanbanView: false,
     showEmployeeLeads: false,
@@ -272,13 +290,13 @@ function Leads({ type, showSidebar }) {
   });
   ////////////////////////////////////// USE EFFECTS //////////////////////////////
   useEffect(() => {
-    dispatch(getLeads()); 
+    dispatch(getLeads());
   }, []);
   useEffect(() => {
     if (!isFiltered) {
-      dispatch(getLeadsReducer(allLeads))
+      dispatch(getLeadsReducer(allLeads));
     }
-  }, [isFiltered])
+  }, [isFiltered]);
 
   ////////////////////////////////////// FUNCTION //////////////////////////////
   const handleOpenAttachmentModal = (leadId) => {
@@ -324,7 +342,7 @@ function Leads({ type, showSidebar }) {
 
   const navigateToLedger = (leadId) => {
     navigate(`/leads/ledger/${leadId}`);
-  }
+  };
 
   return (
     <div className="w-full h-fit bg-inherit flex flex-col">
@@ -335,7 +353,11 @@ function Leads({ type, showSidebar }) {
       <ShareLeadModal open={openShareLeadModal} setOpen={setOpenShareLeadModal} />
       <Filter open={openFilters} setOpen={setOpenFilters} setIsFiltered={setIsFiltered} />
       <Lead open={openViewModal} setOpen={setOpenViewModal} leadId={selectedLeadId} />
-      <Attachments open={openAttachmentModal} setOpen={setOpenAttachmentModal} leadId={selectedLeadId} />
+      <Attachments
+        open={openAttachmentModal}
+        setOpen={setOpenAttachmentModal}
+        leadId={selectedLeadId}
+      />
 
       <Topbar
         options={options}
