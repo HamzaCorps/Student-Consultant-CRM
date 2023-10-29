@@ -17,6 +17,7 @@ export const getEmployeeLeads = () => async (dispatch) => {
     try {
         dispatch(start())
         const { data } = await api.getEmployeeLeads()
+        console.log('getEmployeeLead data',data)
         dispatch(getLeadsReducer(data.result))
         dispatch(end())
     } catch (err) {

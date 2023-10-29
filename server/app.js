@@ -46,7 +46,7 @@ app.use('/api/v1/followUp', followUpRoutes)
 app.use('/api/v1/cashbook', cashbookRoutes)
 app.use('/api/v1/refund', refundRoutes)
 app.use('/api/v1/voucher', voucherRoutes)
-
+ 
 app.use((err, req, res, next) => {
     const message = err.message || 'Something went wrong.'
     const status = err.status || 500

@@ -272,8 +272,12 @@ function Leads({ type, showSidebar }) {
   });
   ////////////////////////////////////// USE EFFECTS //////////////////////////////
   useEffect(() => {
+<<<<<<< HEAD
     // dispatch(getLeads()); 
     //  dispatch(getEmployeeLeads()); // only find my leads (of one who is logged in)
+=======
+    dispatch(getLeads()); 
+>>>>>>> f88ab7a51ff43039943a41a2cc6fafa2242d8f41
   }, []);
   useEffect(() => {
     if (!isFiltered) {
