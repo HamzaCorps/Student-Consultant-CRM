@@ -27,6 +27,35 @@ export const getFollowUps = async (req, res, next) => {
     }
 }
 
+export const getFollowUpsStats = async (req, res, next) => {
+    try {
+        const response = await FollowUp.aggregate([
+            {
+                $sort: { createdAt: 1 },
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: '%Y-%m-%d', date: '$createdAt' },
+                    },
+                    followUps: { $push: '$$ROOT' },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id',
+                    followUps: 1,
+                },
+            },
+        ]);
+
+        res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
+    } catch (error) {
+        next(createError(500, error.message))
+    }
+};
+
 
 export const createFollowUp = async (req, res, next) => {
     try {
