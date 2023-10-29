@@ -134,8 +134,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="font-primary w-full h-full ">
-      <div className="md:opacity-100 opacity-0 left-0 bottom-[-20%] absolute h-[52%] w-[25%]">
+    <div className="font-primary w-full h-full bg-[#F6F9FA]">
+      <div className="md:opacity-100 opacity-0 left-0 bottom-[-4%] absolute h-[52%] w-[25%]">
         <img src="/images/login-1.png" />
       </div>
       <div className="pb-10">
@@ -242,25 +242,10 @@ const Signup = () => {
                     onChange={(e) => handleChange("city", e.target.value)}
                     className="w-[20rem] h-[40px] px-[8px] border-b-[1px] p-2 border-[#c1c1c1] cursor-pointer text-black"
                   >
-                    <option value={""}>None</option>
+                    <option value={""}>City</option>
                     {pakistanCities.map((city, key) => (
                       <option key={key} value={city}>
                         {city}
-                      </option>
-                    ))}
-                  </CFormSelect>
-                </FormControl>
-                {/* project */}
-                <FormControl>
-                  <CFormSelect
-                    value={userData.project}
-                    onChange={(e) => handleChange("project", e.target.value)}
-                    className="w-[20rem] h-[40px] px-[8px] border-b-[1px] p-2 border-[#c1c1c1] cursor-pointer text-black"
-                  >
-                    <option value={""}>None</option>
-                    {projects.map((project, key) => (
-                      <option key={key} value={project._id}>
-                        {project.title}
                       </option>
                     ))}
                   </CFormSelect>

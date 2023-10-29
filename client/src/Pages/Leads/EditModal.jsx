@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLead, updateLead } from "../../redux/action/lead";
-import { pakistanCities } from "../../constant";
+import { pakistanCities, countries } from "../../constant";
 import {
   Divider,
   Dialog,
@@ -26,7 +26,6 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   const dispatch = useDispatch();
   const { currentLead, isFetching } = useSelector((state) => state.lead);
   const { employees, loggedUser } = useSelector((state) => state.user);
-  const { projects } = useSelector((state) => state.project);
   const priorities = [
     { name: "Very Cold", value: "veryCold" },
     { name: "Cold", value: "cold" },
@@ -109,9 +108,8 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
       email: currentLead?.client?.email,
     });
   }, [currentLead]);
-  useEffect(() => {
-    dispatch(getProjects());
-  }, []);
+
+
   useEffect(() => {
     leadId && dispatch(getLead(leadId));
   }, [leadId]);
@@ -313,11 +311,11 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.country}
                     onChange={(e) => handleChange("country", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
-                    {/* {countries.map((country, key) => (
-                      <option key={key} value={country.value}>
+                    {countries.map((country, key) => (
+                      <option key={key} value={country.name}>
                         {country.name}
                       </option>
-                    ))} */}
+                    ))}
                   </CFormSelect>
                 </td>
               </tr>

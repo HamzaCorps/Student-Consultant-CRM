@@ -68,12 +68,12 @@ const Lead = ({ open, setOpen, leadId, scroll }) => {
 
               <div className="flex items-center pt-6 pb-2 gap-3 text-[20px]">
                 <PiHouseLine className="text-[25px]" />
-                Property Details
+                User Details
               </div>
               <Divider />
               <div className="pt-2 text-lg font-[350]">
-                Project :{" "}
-                <span className="text-black font-normal">{currentLead?.property.title}</span>
+                Degree :{" "}
+                <span className="text-black font-normal">{currentLead?.degree}</span>
               </div>
               <div className="text-lg font-[350]">
                 Priority :{" "}
@@ -88,6 +88,9 @@ const Lead = ({ open, setOpen, leadId, scroll }) => {
               <div className="pt-2 text-lg font-[350]">
                 Required City : <span className="text-black font-normal">{currentLead?.city}</span>
               </div>
+              <div className="pt-2 text-lg font-[350]">
+                Required Country : <span className="text-black font-normal">{currentLead?.country}</span>
+              </div>
 
               <div className="flex items-center pt-4 pb-2 gap-3 text-[20px]">
                 <PiRuler className="text-[25px]" />
@@ -98,6 +101,10 @@ const Lead = ({ open, setOpen, leadId, scroll }) => {
               <div className="text-lg font-[350] pt-2">
                 Source :{" "}
                 <span className="text-black font-normal capitalize">{currentLead?.source}</span>
+              </div>
+              <div className="text-lg font-[350] pt-2">
+                Visa :{" "}
+                <span className="text-black font-normal capitalize">{currentLead?.visa}</span>
               </div>
 
               <div className="flex items-center pt-4 pb-2 gap-3 text-[20px]">

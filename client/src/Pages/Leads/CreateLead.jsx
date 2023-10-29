@@ -5,7 +5,7 @@ import { createLead, getLeads } from "../../redux/action/lead";
 import Topbar from "./Topbar";
 import { register } from "../../redux/action/user";
 import { CFormSelect } from "@coreui/react";
-import { pakistanCities } from "../../constant";
+import { pakistanCities, countries } from "../../constant";
 import {
   Divider,
   Dialog,
@@ -32,8 +32,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isFetching } = useSelector((state) => state.lead);
-  const { projects } = useSelector((state) => state.project);
-  const projectsTitles = projects.map(({ _id, title }) => ({ _id, title }));
   let initialLeadState = {
     firstName: "",
     lastName: "",
@@ -96,9 +94,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
   const [leadCountsToCreate, setLeadCountsToCreate] = useState(1);
 
   //////////////////////////////////////// USE EFFECTS ////////////////////////////////
-  useEffect(() => {
-    dispatch(getProjects());
-  }, []);
 
   //////////////////////////////////////// FUNCTIONS //////////////////////////////////
   const handleSubmit = (e) => {
@@ -111,7 +106,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       clientCity,
       city,
       priority,
-      property,
       status,
       source,
       description,
@@ -124,7 +118,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       !clientCity ||
       !city ||
       !priority ||
-      !property ||
       !status ||
       !source ||
       !description
@@ -302,11 +295,11 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                     onChange={(e) => handleChange("country", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
                     <option value="">Select an Option</option>
-                    {/* {countries.map((country, key) => (
-                      <option key={key} value={country.value}>
-                        {coountry.title}
+                    {countries.map((country, key) => (
+                      <option key={key} value={country.name}>
+                        {country.name}
                       </option>
-                    ))} */}
+                    ))}
                   </CFormSelect>
                 </td>
               </tr>

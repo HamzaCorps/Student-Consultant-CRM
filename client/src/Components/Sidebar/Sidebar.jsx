@@ -50,31 +50,6 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     },
     {
       id: 3,
-      title: "Inventory",
-      icon: <PiFoldersLight className="text-[25px]" />,
-      childrens: [
-        {
-          title: "Societies",
-          icon: <PiWarehouseLight className="text-[25px]" />,
-          link: "/societies",
-          role: ["employee", "manager", "super_admin"],
-        },
-        {
-          title: "Projects",
-          icon: <PiDatabaseLight className="text-[25px]" />,
-          link: "/projects",
-          role: ["employee", "manager", "super_admin"],
-        },
-        {
-          title: "Inventories",
-          icon: <PiHardDrivesLight className="text-[25px]" />,
-          link: "/inventory",
-          role: ["employee", "manager", "super_admin"],
-        },
-      ],
-    },
-    {
-      id: 4,
       title: "To Do Tasks",
       icon: <PiListChecksLight className="text-[25px]" />,
       link: "/tasks",
@@ -82,7 +57,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       childrens: [],
     },
     {
-      id: 5,
+      id: 4,
       title: "User",
       icon: <PiUserCircleLight className="text-[25px]" />,
       childrens: [
@@ -101,7 +76,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       ],
     },
     {
-      id: 6,
+      id: 5,
       title: "Authorization",
       icon: <PiLockKeyLight className="text-[25px]" />,
       childrens: [
@@ -120,7 +95,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       ],
     },
     {
-      id: 7,
+      id: 6,
       title: "Sales",
       icon: <PiShoppingCartSimpleLight className="text-[25px]" />,
       role: ["employee", "manager", "super_admin"],
@@ -128,7 +103,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       childrens: [],
     },
     {
-      id: 8,
+      id: 7,
       title: "Cash Book",
       icon: <PiBankLight className="text-[25px]" />,
       childrens: [
@@ -147,7 +122,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       ],
     },
     {
-      id: 9,
+      id: 8,
       title: "Vouchers",
       icon: <PiReceiptLight className="text-[25px]" />,
       role: ["employee", "manager", "super_admin"],
@@ -260,7 +235,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           } bg-white z-[1000] border-r-[1px] border-r-[#eeeff0] border-b-[1px] border-b-[#eeeff0]`}>
         <a href="/">
           <div className="flex border-b-[1px] border-b-[#eeeff0] h-[4rem] items-center justify-center">
-            {!showSidebar ? "" : <img className="h-[45px]" src="/favicon/GrowLOGO.png" />}
+            {!showSidebar ? "" : <img className="h-[40px]" src="/background/A-consultant-logo.png" />}
           </div>
         </a>
 

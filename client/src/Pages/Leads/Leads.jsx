@@ -169,11 +169,11 @@ function Leads({ type, showSidebar }) {
       ),
     },
     {
-      field: "project",
-      headerName: "Project",
+      field: "degree",
+      headerName: "Degree",
       width: 170,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => <div className="font-primary font-light">{params.row?.property?.title}</div>,
+      renderCell: (params) => <div className="font-primary font-light">{params.row?.degree}</div>,
     },
     {
       field: "actions",
