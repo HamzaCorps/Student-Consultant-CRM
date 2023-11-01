@@ -91,14 +91,16 @@ export const deleteEvent = (eventId) => API.delete(`/event/delete/${eventId}`)
 
 
 // APROVAL
-export const getApprovals = (type, leadId) => API.get(`/approval/get/all?type=${type}&leadId=${leadId}`)
+export const getApprovals = (type, leadId) => API.get(`/approval/get/all?type=${type}`)
 export const getApproval = () => API.get(`/approval/get/single/${approvalId}`)
 export const createRequestApproval = (data) => API.post(`/approval/create/request`, data)
 export const rejectRequestApproval = (email) => API.post(`/approval/reject/request`, { email })
 export const createVoucherApproval = (data) => API.post(`/approval/create/voucher`, data)
+export const acceptVoucherApproval = (approvalId, password) => API.post(`/approval/accept/voucher/${approvalId}`, { password })
+export const rejectVoucherApproval = (approvalId, password) => API.post(`/approval/reject/voucher/${approvalId}`, { password })
 export const createReceiptApproval = (data) => API.post(`/approval/create/receipt`, data)
 export const createRefundApproval = (data) => API.post(`/approval/create/refund`, data)
-export const deleteApproval = (approvalId, password) => API.delete(`/approval/delete/${approvalId}?password=${password}`,)
+export const deleteApproval = (approvalId) => API.delete(`/approval/delete/${approvalId}`,)
 
 
 // LEAD 
@@ -133,7 +135,7 @@ export const updateRefund = (refundId, refundData) => API.put(`/refund/update/${
 export const acceptRefund = (refundId, cashbookData) => API.put(`/refund/accept/${refundId}`, cashbookData) // on successful approval, cashbook out should be generated
 export const rejectRefund = (refundId, password) => API.put(`/refund/reject/${refundId}`, { password })
 export const deleteRefund = (refundId) => API.delete(`/refund/delete/${refundId}`)
- 
+
 // CASHBOOK
 export const getCashbook = (cashbookId) => API.get(`/cashbook/get/single/${cashbookId}`)
 export const getIncomeAndExpenses = (year) => API.get(`/cashbook/get/income_and_expenses`, { year })
