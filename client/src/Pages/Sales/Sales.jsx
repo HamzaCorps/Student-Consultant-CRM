@@ -49,7 +49,7 @@ function Sales() {
       field: "createdAt",
       headerClassName: "super-app-theme--header",
       headerName: "Created At",
-      width: 130,
+      width: 150,
       renderCell: (params) => (
         <div className="font-primary">{new Date(params.row.createdAt).toLocaleDateString()}</div>
       ),
@@ -65,7 +65,7 @@ function Sales() {
       field: "received",
       headerClassName: "super-app-theme--header",
       headerName: "Amount Received",
-      width: 180,
+      width: 200,
       renderCell: (params) => <div className="font-primary">{params.row.received}</div>,
     },
 
@@ -73,7 +73,7 @@ function Sales() {
       field: "top",
       headerClassName: "super-app-theme--header",
       headerName: "Type of Payment",
-      width: 130,
+      width: 200,
       renderCell: (params) => <div className="font-primary">{params.row.top}</div>,
     },
     {

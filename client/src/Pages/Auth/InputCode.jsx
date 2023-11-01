@@ -13,7 +13,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { PiEyeSlashThin, PiEyeThin, PiX } from "react-icons/pi";
 
-const ForgotPassword = () => {
+const InputCode = () => {
   /////////////////////////////////// VARIABLES /////////////////////////////////
 
   /////////////////////////////////// STATES /////////////////////////////////////
@@ -37,26 +37,32 @@ const ForgotPassword = () => {
               Forgot Password
             </p>
             <p className="flex justify-center text-center pt-2 font-Mulish text-slate-500 text-xs px-10">
-              Enter your email address below and we'll send you a link to reset your password.
+              We have sent a code to your phone number. Please enter the code below to reset your
+              password.
             </p>
             <form className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
               <div className="flex flex-col gap-8">
                 <Input
                   type="number"
-                  name="phone"
-                  placeholder="Enter Your Phone Number"
+                  name="code"
+                  placeholder="Enter Your Code Here"
                   className="w-[20rem] h-[40px] px-[8px] font-primary"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 />
               </div>
               <br />
-              <Link to="/auth/forgot_password/enter_code">
+              <div className="flex items-center justify-end gap-4 mr-8">
                 <button
-                  className={`w-[20rem] bg-[#42acd2] hover:bg-[#45b8e2] p-2 rounded-lg transition-all text-white font-medium tracking-wider `}
+                  className={`w-2/4 bg-red-400 hover:bg-red-500 p-2 rounded-lg transition-all text-white font-medium tracking-wider `}
                   variant="contained">
-                  Send Code
+                  Send Again
                 </button>
-              </Link>
+                <button
+                  className={`w-2/4 bg-[#42acd2] hover:bg-[#45b8e2] p-2 rounded-lg transition-all text-white font-medium tracking-wider `}
+                  variant="contained">
+                  <Link to="/auth/forgot_password/reset">Submit</Link>
+                </button>
+              </div>
               <div className="font-primary font-light text-slate-500 flex justify-center p-2 pr-7">
                 <Link to="/auth/login" className="text-sky-400 hover:text-sky-600">
                   Back To Login Page
@@ -71,4 +77,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default InputCode;

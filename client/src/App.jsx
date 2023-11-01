@@ -23,6 +23,8 @@ import {
   Ledger,
   AllFollowUps,
   ForgotPassword,
+  InputCode,
+  ResetPassword,
 } from "./Pages";
 import { Navbar, Sidebar } from "./Components";
 import { useSelector } from "react-redux";
@@ -62,6 +64,8 @@ const App = () => {
               <Route exact path="/auth/register" element={<Register />} />
               <Route exact path="/auth/login" element={<Login />} />
               <Route exact path="/auth/forgot_password" element={<ForgotPassword />} />
+              <Route exact path="/auth/forgot_password/reset" element={<ResetPassword />} />
+              <Route exact path="/auth/forgot_password/enter_code" element={<InputCode />} />
               <Route
                 exact
                 path="/auth/change_password"

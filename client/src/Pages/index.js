@@ -23,3 +23,5 @@ export { default as FollowUps } from "./Leads/FollowUps/FollowUps";
 export { default as Ledger } from "./Leads/Ledger/Ledger";
 export { default as AllFollowUps } from "./Leads/AllFollowUps/AllFollowUps";
 export { default as ForgotPassword } from "./Auth/ForgotPassword";
+export { default as InputCode } from "./Auth/InputCode";
+export { default as ResetPassword } from "./Auth/ResetPassword";
