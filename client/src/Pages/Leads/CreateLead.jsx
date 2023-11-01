@@ -39,10 +39,10 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     CNIC: "",
     clientCity: "",
     email: "",
-    city: "",
     priority: "",
     country: "",
     degree: "",
+    degreeName: "",
     visa: "",
     status: "",
     source: "",
@@ -62,7 +62,7 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     { name: "Contacted Client (Call)", value: "contactedCall" },
     { name: "Followed Up (Email)", value: "followedUpEmail" },
     { name: "Contacted Client (Email)", value: "contactedEmail" },
-    { name: "New<", value: "new" },
+    { name: "New", value: "new" },
     { name: "Meeting (Done)", value: "meetingDone" },
     { name: "Closed (Won)", value: "closedWon" },
     { name: "Meeting (Attempt)", value: "meetingAttempt" },
@@ -80,6 +80,8 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     {name: "Bacholers", value: "bacholers"},
     {name: "Masters", value: "masters"},
     {name: "PHD", value: "phd"},
+    {name: "Language", value: "language"},
+    {name: "Diploma", value: "diploma"},
     {name: "Other", value: "other"},
   ]
   const Visa = [
@@ -103,9 +105,12 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       username,
       phone,
       clientCity,
-      city,
       priority,
       status,
+      degree,
+      degreeName,
+      visa,
+      country,
       source,
       description,
     } = leadData;
@@ -115,8 +120,11 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       !username ||
       !phone ||
       !clientCity ||
-      !city ||
       !priority ||
+      !degree ||
+      !degreeName ||
+      !visa ||
+      !country ||
       !status ||
       !source ||
       !description
@@ -270,23 +278,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
             <Divider />
             <table className="mt-4">
               <tr>
-                <td className="pb-4 text-lg">City </td>
-                <td className="pb-4">
-                  <CFormSelect
-                    value={leadData.city}
-                    onChange={(e) => handleChange("city", e.target.value)}
-                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
-                    <option value="">Select an Option</option>
-
-                    {pakistanCities.map((city, key) => (
-                      <option key={key} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </CFormSelect>
-                </td>
-              </tr>
-              <tr>
                 <td className="pb-4 text-lg">Country </td>
                 <td className="pb-4">
                   <CFormSelect
@@ -318,6 +309,21 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                   </CFormSelect>
                 </td>
               </tr>
+              {leadData.degree == "other" && (
+                <tr>
+                  <td className="pb-4 text-lg">Degree Name </td>
+                  <td className="pb-4">
+                    <TextField
+                      onChange={(e) => handleChange("degreeName", e.target.value)}
+                      value={leadData.degreeName}
+                      name="degreeName"
+                      type="text"
+                      size="small"
+                      fullWidth
+                    />
+                  </td>
+                </tr>
+              )}
               <tr>
                 <td className="pb-4 text-lg">Visa </td>
                 <td className="pb-4">

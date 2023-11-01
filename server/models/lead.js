@@ -4,9 +4,9 @@ import { generateUniqueIdentifier } from '../utils/utils.js'
 const leadSchema = Schema({
 
     client: { type: Schema.Types.ObjectId, ref: 'User', required: true, },
-    city: { type: String, required: true },
     country: { type: String, required: true },
     degree: { type: String, required: true },
+    degreeName: { type: String, required: false },
     visa: { type: String, required: true },
     priority: { type: String, required: true, default: 'moderate', enum: ['veryCold', 'cold', 'moderate', 'hot', 'veryHot'] },
     status: { type: String, required: true },   // closed, followed up, contacted etc.

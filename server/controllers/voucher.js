@@ -29,9 +29,9 @@ export const getVouchers = async (req, res, next) => {
 export const createVoucher = async (req, res, next) => {
     try { 
 
-        const { branch, visa, degree, major, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, } = req.body
+        const { visa, degree, degreeName, major, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, country, note} = req.body
 
-        const newVoucher = await Voucher.create({ branch, major, propertyType: visa, area: degree, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, remained: total - paid, })
+        const newVoucher = await Voucher.create({ major, propertyType: visa, area: degree, degreeName, issuingDate, dueDate, clientName, country, CNIC, phone, type, total, paid, remained: total - paid, note })
         res.status(200).json({ result: newVoucher, message: 'voucher created successfully', success: true })
 
     } catch (err) {
@@ -42,9 +42,9 @@ export const createVoucher = async (req, res, next) => {
 export const updateVoucher = async (req, res, next) => {
     try {
 
-        const { branch, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, remained, } = req.body
+        const { issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, remained, degreeName, country, note} = req.body
 
-        const newVoucher = await Voucher.create({ branch, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, remained, })
+        const newVoucher = await Voucher.create({ issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, remained, degreeName, country, note})
         res.status(200).json({ result: newVoucher, message: 'voucher created successfully', success: true })
 
     } catch (err) {

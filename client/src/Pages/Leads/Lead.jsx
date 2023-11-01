@@ -73,7 +73,7 @@ const Lead = ({ open, setOpen, leadId, scroll }) => {
               <Divider />
               <div className="pt-2 text-lg font-[350]">
                 Degree :{" "}
-                <span className="text-black font-normal">{currentLead?.degree}</span>
+                <span className="text-black font-normal capitalize">{currentLead?.degree == 'other' ? currentLead?.degreeName : currentLead?.degree}</span>
               </div>
               <div className="text-lg font-[350]">
                 Priority :{" "}
@@ -85,9 +85,6 @@ const Lead = ({ open, setOpen, leadId, scroll }) => {
                 Location
               </div>
               <Divider />
-              <div className="pt-2 text-lg font-[350]">
-                Required City : <span className="text-black font-normal">{currentLead?.city}</span>
-              </div>
               <div className="pt-2 text-lg font-[350]">
                 Required Country : <span className="text-black font-normal">{currentLead?.country}</span>
               </div>

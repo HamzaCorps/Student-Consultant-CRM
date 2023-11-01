@@ -7,16 +7,11 @@ const userSchema = Schema({
     lastName: { type: String, required: true },
     username: { type: String, required: true },
     phone: { type: String, required: true },
-    city: { type: String, required: true },
+    city: { type: String, required: false },
     CNIC: { type: String, required: false },
     email: { type: String, required: false, default: '' },
     role: { type: String, required: true, default: 'client', enum: ['client', 'employee', 'manager', 'super_admin'] },
     // below fields are not related to client (rather to employee,manager)
-    salaryType: { type: String, required: false },
-    officialNumber: { type: Number, required: false, default: '' },
-    gender: { type: String, required: false, enum: ['male', 'female'], default: 'male' },
-    martialStatus: { type: String, required: false, enum: ['married', 'single', 'unmarried'], default: 'single' },
-    isActive: { type: Boolean, required: false, default: false },
     uid: { type: String },
 }, { timestamps: true })
 

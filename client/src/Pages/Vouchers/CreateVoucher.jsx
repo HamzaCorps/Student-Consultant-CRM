@@ -21,6 +21,7 @@ import { PiNotepad, PiXLight } from "react-icons/pi";
 import { CFormSelect } from "@coreui/react";
 import JsBarcode from "jsbarcode";
 import VoucherPage from "./VoucherPage";
+import { countries } from "../../constant";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -34,13 +35,14 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
   const navigate = useNavigate();
   const { clients } = useSelector((state) => state.user);
   const initialVoucherState = {
-    branch: "",
     issuingDate: "",
     dueDate: "",
     clientName: "",
     CNIC: "",
     phone: "",
     degree: "",
+    degreeName: "",
+    country: "",
     project: "Null",
     major: "",
     visa: "",
@@ -48,6 +50,7 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     total: "",
     paid: "",
     remained: "",
+    note: ""
   };
 
   ////////////////////////////////////// STATES //////////////////////////////////////
@@ -68,21 +71,22 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
   const handleDownloadPDF = (e) => {
     e.preventDefault();
     const {
-      branch,
       issuingDate,
       dueDate,
       clientName,
       phone,
       type,
       total,
+      degreeName,
+      note,
       paid,
       degree,
+      country,
       visa,
       remained,
       major,
     } = voucherData;
     if (
-      !branch ||
       !visa ||
       !degree ||
       !issuingDate ||
@@ -90,10 +94,12 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
       !clientName ||
       !phone ||
       !type ||
+      !country ||
       !total ||
       !paid ||
       !remained ||
-      !major
+      !major ||
+      !note
     )
       return alert("Make sure to provide all the fields");
 
@@ -107,20 +113,15 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     setOpen(false);
   };
 
-  const majorSubjects = [
-    "Business and Management",
-    "Computer Science",
-    "Engineering",
-    "Health and Medicine",
-    "Social Sciences",
-    "Natural Sciences",
-    "Arts and Humanities",
-    "Law",
-    "Education",
-    "Environmental Studies",
-  ];
+  const today = new Date().toISOString().split("T")[0];
 
-  const degrees = ["Bachelors", "Masters", "MPhil", "PhD"];
+  const degrees = [
+    { name: "Bachelors", value: "bachelors" },
+    { name: "MPhil", value: "mphil" },
+    { name: "PhD", value: "phd" },
+    { name: "Diploma", value: "diploma" },
+    { name: "Other", value: "other" },
+  ];
 
   return (
     <div>
@@ -130,8 +131,8 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        fullWidth="sm"
-        maxWidth="sm"
+        fullWidth="md"
+        maxWidth="md"
         aria-describedby="alert-dialog-slide-description">
         <DialogTitle className="flex items-center justify-between">
           <div className="text-sky-400 font-primary">Add New Voucher</div>
@@ -148,25 +149,13 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
             <Divider />
             <table className="mt-4">
               <tr>
-                <td className="pb-4 text-lg">Voucher Number </td>
-                <td className="pb-4">
-                  <TextField
-                    name="branch"
-                    value={voucherData.branch}
-                    onChange={(e) => handleChange("branch", e.target.value)}
-                    size="small"
-                    type="text"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
                 <td className="pb-4 text-lg">Date of Issue </td>
                 <td className="pb-4">
                   <TextField
                     type="date"
                     name="issuingDate"
-                    value={voucherData.issuingDate}
+                    disabled
+                    value={(voucherData.issuingDate = today)}
                     onChange={(e) => handleChange("issuingDate", e.target.value)}
                     size="small"
                     fullWidth
@@ -225,37 +214,67 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
                 </td>
               </tr>
               <tr>
-                <td className="pb-4 text-lg">Degree </td>
+                <td className="pb-4 text-lg">Country </td>
                 <td className="pb-4">
                   <CFormSelect
-                    value={voucherData.degree}
+                    value={voucherData.country}
+                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black"
                     onChange={(e) => {
-                      handleChange("degree", e.target.value);
-                    }}
-                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                      handleChange("country", e.target.value);
+                    }}>
                     <option value={""}>None</option>
-                    {degrees.map((project, key) => (
-                      <option key={key} value={project}>
-                        {project}
+                    {countries.map((project, key) => (
+                      <option key={key} value={project.name}>
+                        {project.name}
                       </option>
                     ))}
                   </CFormSelect>
                 </td>
               </tr>
               <tr>
-                <td className="pb-4 text-lg">Major </td>
+                <td className="pb-4 text-lg">Degree </td>
                 <td className="pb-4">
                   <CFormSelect
-                    value={voucherData.major}
-                    onChange={(e) => handleChange("major", e.target.value)}
-                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    value={voucherData.degree}
+                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black"
+                    onChange={(e) => {
+                      handleChange("degree", e.target.value);
+                    }}>
                     <option value={""}>None</option>
-                    {majorSubjects.map((subject, key) => (
-                      <option key={key} value={subject}>
-                        {subject}
+                    {degrees.map((project, key) => (
+                      <option key={key} value={project.value}>
+                        {project.name}
                       </option>
                     ))}
                   </CFormSelect>
+                </td>
+              </tr>
+              {voucherData.degree === "other" && (
+                <tr>
+                  <td className="pb-4 text-lg">Degree Name </td>
+                  <td className="pb-4">
+                    <TextField
+                      name="degreeName"
+                      value={voucherData.degreeName}
+                      onChange={(e) => handleChange("degreeName", e.target.value)}
+                      size="small"
+                      type="text"
+                      fullWidth
+                    />
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td className="pb-4 text-lg">Major </td>
+                <td className="pb-4">
+                  <TextField
+                    name="major"
+                    value={voucherData.major}
+                    onChange={(e) => handleChange("major", e.target.value)}
+                    size="small"
+                    type="text"
+                    fullWidth
+                  />
                 </td>
               </tr>
               <tr>
@@ -319,10 +338,25 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
                   <TextField
                     disabled
                     name="remained"
-                    value={voucherData.remained = voucherData.total - voucherData.paid}
+                    value={(voucherData.remained = voucherData.total - voucherData.paid)}
                     onChange={(e) => handleChange("remained", e.target.value)}
                     size="small"
                     type="text"
+                    fullWidth
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td className="pt-1 text-lg flex flex-col justify-start">Note </td>
+                <td className="pb-4">
+                  <TextField
+                    name="note"
+                    value={voucherData.note}
+                    onChange={(e) => handleChange("note", e.target.value)}
+                    size="small"
+                    type="text"
+                    rows={4}
+                    multiline
                     fullWidth
                   />
                 </td>
@@ -339,7 +373,6 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
             Cancel
           </button>
           <button
-            // onClick={downloadPdf}
             onClick={handleDownloadPDF}
             variant="contained"
             className="bg-primary-red px-4 py-2 rounded-lg text-white mt-4 hover:bg-red-400 font-thin">

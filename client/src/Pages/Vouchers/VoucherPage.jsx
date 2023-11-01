@@ -66,7 +66,7 @@ const VoucherPage = ({ }) => {
             <table className="border-[1px] border-black w-full " >
               <tr className="text-center border-[1px] border-black">
                 <th className="border-r-[1px] border-[1px] border-black px-6 bg-[#dddddd] pb-4">Branch</th>
-                <td className="px-12 border-[1px] border-black capitalize pb-4">{voucher?.branch}</td>
+                <td className="px-12 border-[1px] border-black capitalize pb-4">{voucher?.uid}</td>
               </tr>
               <tr className='w-full' >
                 <th className="border-[1px] border-black bg-[#dddddd] pb-4">Dated</th>
@@ -91,7 +91,7 @@ const VoucherPage = ({ }) => {
             </tr>
             <tr className='w-full' >
               <td className="px-[1px] border-b-[1px] border-x-[1px] border-black h-[2rem] pb-4 text-red-700"  colSpan={3}>
-                * This Price is not refundable in any case.
+                * {voucher?.note}
               </td>
             </tr>
           </table>
@@ -102,12 +102,12 @@ const VoucherPage = ({ }) => {
           <table className="text-center border-[1px] border-black w-full ">
             <tr className='w-full' >
               <th className="text-center border-y-[1px] border-x-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Type of Payment</th>
-              <th className="text-center border-y-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Amount</th>
+              <th className="text-center border-y-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Country</th>
               <th className="text-center border-y-[1px] border-x-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Payment Date</th>
             </tr>
             <tr className='w-full' >
               <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.type}</td>
-              <td className="text-center border-b-[1px]  border-black h-[2rem] w-[13rem] pb-4">{voucher?.total}</td>
+              <td className="text-center border-b-[1px]  border-black h-[2rem] w-[13rem] pb-4">{voucher?.country}</td>
               <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.dueDate}</td>
             </tr>
           </table>
@@ -122,9 +122,9 @@ const VoucherPage = ({ }) => {
               <th className="text-center border-y-[1px] border-x-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Visa</th>
             </tr>
             <tr className='w-full' >
-              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.degree}</td>
+              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.degree == 'other' ? voucher?.degreeName : voucher?.degree}</td>
               <td className="text-center border-b-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.major}</td>
-              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.visa}</td>
+              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.visa == 'studentVisa' ? <div>Student Visa</div> : voucher?.visa == "visitVisa" ? <div>Visit Visa</div> : voucher?.visa == 'workVisa' ? <div>Work Visa</div> : voucher?.visa}</td>
             </tr>
           </table>
         </div>

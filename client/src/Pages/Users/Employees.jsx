@@ -23,7 +23,7 @@ const Employees = memo(() => {
     {
       field: "uid",
       headerName: "ID",
-      width: 70,
+      width: 120,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <Tooltip title={""}>
@@ -35,7 +35,7 @@ const Employees = memo(() => {
       field: "Employee Name",
       headerName: "Employee Name",
       headerClassName: "super-app-theme--header",
-      width: "200",
+      width: 220,
       renderCell: (params) => (
         <div
           className="text-[#20aee3] capitalize cursor-pointer font-primary font-light hover:text-[#007bff]"
@@ -48,7 +48,7 @@ const Employees = memo(() => {
       field: "username",
       headerName: "Username",
       headerClassName: "super-app-theme--header",
-      width: "170",
+      width: 200,
       renderCell: (params) => (
         <div className="capitalize font-primary" onClick={() => handleClickOpen()}>
           {params.row.username}
@@ -56,33 +56,15 @@ const Employees = memo(() => {
       ),
     },
     {
-      field: "city",
-      headerName: "City",
-      headerClassName: "super-app-theme--header",
-      width: "220",
-      renderCell: (params) => (
-        <div className="font-primary" onClick={() => handleClickOpen()}>
-          {params.row.city}
-        </div>
-      ),
-    },
-    {
       field: "phone",
       headerName: "Phone",
       headerClassName: "super-app-theme--header",
-      width: "170",
+      width: 200,
       renderCell: (params) => (
         <div className="font-primary" onClick={() => handleClickOpen()}>
           {params.row.phone}
         </div>
       ),
-    },
-    {
-      field: "salaryType",
-      headerName: "Salary Type",
-      headerClassName: "super-app-theme--header",
-      width: 200,
-      renderCell: (params) => <div className="font-primary">{params.row.salaryType}</div>,
     },
     {
       field: "action",

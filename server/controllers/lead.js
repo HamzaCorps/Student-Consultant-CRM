@@ -221,7 +221,7 @@ export const createLead = async (req, res, next) => {
     try {
         const {
             firstName, lastName, username, phone, CNIC, clientCity,
-            city, priority, country, visa, degree, status, source, description, count
+            priority, country, visa, degree, degreeName, status, source, description, count
         } = req.body;
 
         if (
@@ -230,11 +230,11 @@ export const createLead = async (req, res, next) => {
             !username ||
             !phone ||
             !clientCity ||
-            !city ||
             !priority ||
             !country ||
             !visa ||
             !degree ||
+            !degreeName ||
             !status ||
             !source ||
             !description
@@ -264,11 +264,11 @@ export const createLead = async (req, res, next) => {
         for (let i = 0; i < leadsToCreate; i++) {
             const newLead = await Lead.create({
                 client: client._id,
-                city,
                 priority,
                 country,
                 visa,
                 degree,
+                degreeName,
                 status,
                 source,
                 description,
@@ -301,13 +301,13 @@ export const updateLead = async (req, res, next) => {
         const { leadId } = req.params
         const {
             firstName, lastName, username, phone, CNIC, clientCity,
-            city, priority, country, degree, visa, status, source, description
+            priority, country, degree, degreeName, visa, status, source, description
         } = req.body
 
         const findedLead = await Lead.findById(leadId)
 
         const updatedUser = await User.findByIdAndUpdate(findedLead.client, { firstName, lastName, username, phone, CNIC, city: clientCity })
-        const updatedLead = await Lead.findByIdAndUpdate(leadId, { city, priority, country, visa, degree, status, source, description, ...req.body }, { new: true }).populate('client').populate('allocatedTo').exec()
+        const updatedLead = await Lead.findByIdAndUpdate(leadId, { priority, country, visa, degree, degreeName, status, source, description, ...req.body }, { new: true }).populate('client').populate('allocatedTo').exec()
 
         res.status(200).json({ result: updatedLead, message: 'lead updated successfully', success: true })
 

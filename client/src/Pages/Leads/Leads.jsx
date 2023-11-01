@@ -166,7 +166,8 @@ function Leads({ type, showSidebar }) {
           ${params.row?.status == "followedUpEmail" ? "border-lime-400 text-lime-500" : ""} 
           ${params.row?.status == "contactedEmail" ? "border-teal-400 text-teal-500" : ""} 
           ${params.row?.status == "meetingDone" ? "border-indigo-400 text-indigo-500" : ""}
-          ${params.row?.status == "meetingAttempt" ? "border-pink-400 text-pink-500" : ""}`}>
+          ${params.row?.status == "meetingAttempt" ? "border-pink-400 text-pink-500" : ""}
+          ${params.row?.status == "new" ? "border-rose-700 text-rose-700" : ""}`}>
           <span>
             {params.row?.status == "closedWon" ? <div>Closed Won</div> : <div></div>}
             {params.row?.status == "closedLost" ? <div>Closed Lost</div> : <div></div>}
@@ -177,6 +178,7 @@ function Leads({ type, showSidebar }) {
             {params.row?.status == "contactedEmail" ? <div>Contacted Email</div> : <div></div>}
             {params.row?.status == "meetingDone" ? <div>Meeting Done</div> : <div></div>}
             {params.row?.status == "meetingAttempt" ? <div>Meeting Attempt</div> : <div></div>}
+            {params.row?.status == "new" ? <div>New</div> : <div></div>}
           </span>
         </span>
       ),
@@ -186,7 +188,7 @@ function Leads({ type, showSidebar }) {
       headerName: "Degree",
       width: 170,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) => <div className="font-primary font-light capitalize">{params.row?.degree}</div>,
+      renderCell: (params) => <div className="font-primary font-light capitalize">{params.row?.degree == 'other' ? params.row?.degreeName : params.row?.degree}</div>,
     },
     {
       field: "actions",

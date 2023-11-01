@@ -200,7 +200,7 @@ const AllFollowUpsTable = () => {
                       <TableRow key={historyRow.date}>
                         <TableCell>
                           <span className="font-primary text-sky-400 cursor-pointer hover:text-sky-500">
-                            {historyRow.leadId.uid}
+                            {historyRow.leadId}
                           </span>
                         </TableCell>
                         <TableCell>
