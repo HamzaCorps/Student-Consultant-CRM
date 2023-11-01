@@ -96,9 +96,7 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     // )
     //   return alert("Make sure to provide all the fields");
 
-    // navigate("/download/voucher", {
-    //   state: { voucher: { ...voucherData, remained: total - paid } },
-    // });
+   
     dispatch(createVoucher(voucherData, setOpen));
   };
 
