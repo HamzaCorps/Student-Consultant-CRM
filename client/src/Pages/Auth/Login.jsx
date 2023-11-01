@@ -77,11 +77,11 @@ const Login = () => {
   return (
     <div className="font-primary">
       <div className="md:opacity-100 opacity-0 left-0 bottom-10 absolute h-[53%] w-[28%]">
-        <img src="/background/" />
+        <img src="/images/login-1.png" />
       </div>
       <div className="w-full h-screen ">
         <div className="flex justify-center pt-16">
-          <img className="w-42 h-12" src="/favicon/GrowLOGO.png" />
+          <img className="h-12" src="/background/A-consultant-logo.png" />
         </div>
         <div className="flex justify-center pt-6 pl-0 ml-0 rounded-lg">
           <div className="w-96 h-auto shadow-xl rounded bg-white">

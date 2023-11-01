@@ -132,7 +132,7 @@ const Signup = () => {
       </div>
       <div className="pb-10">
         <div className="flex justify-center pt-8">
-          <img className="w-41 h-11" src="/favicon/GrowLOGO.png" />
+          <img className="h-12" src="/background/A-consultant-logo.png" />
         </div>
         <div className="flex justify-center pt-6 pl-0 ml-0 rounded-lg">
           <div className="w-96 h-auto shadow-xl rounded bg-white">
