@@ -36,7 +36,6 @@ const Signup = () => {
     phone: "",
     email: "",
     city: "",
-    project: "Null",
     password: "",
   });
   const [inputError, setInputError] = useState({
@@ -45,7 +44,6 @@ const Signup = () => {
     username: "",
     phone: "",
     email: "",
-    project: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -54,9 +52,6 @@ const Signup = () => {
   const [selectedValue, setSelectedValue] = React.useState("");
 
   //////////////////////////////////////// USE EFFECTS ////////////////////////////////
-  useEffect(() => {
-    dispatch(getProjects());
-  }, []);
 
   /////////////////////////////////// FUNCTIONS //////////////////////////////////
   const handleChange = (field, value) => {

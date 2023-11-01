@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const VoucherPage = ({ }) => {
 
   ////////////////////////////////////// VARIABLES ///////////////////////////////////
-  const barcodeValue = "AD157491594D5";
+  const barcodeValue = `ADC-${Math.floor(Math.random() * 1000000000)}`;
   const navigate = useNavigate()
   const { state } = useLocation()
   const voucher = state?.voucher
@@ -85,14 +85,13 @@ const VoucherPage = ({ }) => {
               <th className="text-center border-y-[1px] border-x-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Phone</th>
             </tr>
             <tr className='w-full' >
-              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.type}</td>
+              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.clientName}</td>
               <td className="text-center border-b-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.CNIC}</td>
               <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.phone}</td>
             </tr>
             <tr className='w-full' >
-              <td className="px-[1px] border-b-[1px] border-x-[1px] border-black h-[4rem] pb-4"  colSpan={5}>
-                * If for some reason, the deal fails through, there is no penalty and the same
-                amount will be returned to the buyer by the company.
+              <td className="px-[1px] border-b-[1px] border-x-[1px] border-black h-[2rem] pb-4 text-red-700"  colSpan={3}>
+                * This Price is not refundable in any case.
               </td>
             </tr>
           </table>
@@ -107,7 +106,7 @@ const VoucherPage = ({ }) => {
               <th className="text-center border-y-[1px] border-x-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Payment Date</th>
             </tr>
             <tr className='w-full' >
-              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.top}</td>
+              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.type}</td>
               <td className="text-center border-b-[1px]  border-black h-[2rem] w-[13rem] pb-4">{voucher?.total}</td>
               <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.dueDate}</td>
             </tr>
@@ -150,8 +149,9 @@ const VoucherPage = ({ }) => {
           <img src={barcodeImage} />
         </div>
         
-        <div className="flex justify-center py-2">
-          <p className="text-center">&copy; Right Reserverd by A. Consultant | Office Details</p>
+        <div className="flex justify-center flex-col py-2">
+          <p className="text-center">&copy; Right Reserverd by A. Consultant</p>
+          <p className="text-center">2nd Floor, Plaza 6-A, Vilas Road, Main Boulevard, Park View City, Lahore</p>
         </div>
       </div>
 

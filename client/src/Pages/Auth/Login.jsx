@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/action/user";
- import { PiEyeSlashThin, PiEyeThin, PiX } from "react-icons/pi";
+import { PiEyeSlashThin, PiEyeThin, PiX } from "react-icons/pi";
 
 const Login = () => {
   const PasswordButtonInitialStyle = {
@@ -77,7 +77,7 @@ const Login = () => {
   return (
     <div className="font-primary">
       <div className="md:opacity-100 opacity-0 left-0 bottom-10 absolute h-[53%] w-[28%]">
-        <img src="/images/login-1.png" />
+        <img src="/background/" />
       </div>
       <div className="w-full h-screen ">
         <div className="flex justify-center pt-16">
@@ -153,11 +153,15 @@ const Login = () => {
               </div>
               <FormGroup>
                 <FormControlLabel
-                  className="w-40 text-gray-400 pt-2 pb-6"
+                  className="w-40 text-gray-400 mt-2"
                   control={<Checkbox style={{ color: "#20aee3" }} />}
                   label="Remember Me"
                 />
               </FormGroup>
+
+              <Link to="/auth/forgot_password" className="font-primary font-light flex justify-end mr-10 mb-4 text-gray-500 hover:text-gray-700 cursor-pointer">
+                Forgot Password
+              </Link>
 
               {inputError.password && (
                 <Snackbar

@@ -41,6 +41,7 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     CNIC: "",
     phone: "",
     degree: "",
+    project: "Null",
     major: "",
     visa: "",
     type: "",
@@ -66,23 +67,35 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
 
   const handleDownloadPDF = (e) => {
     e.preventDefault();
-    const { branch, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, degree, visa, major } =
-      voucherData;
-    // if (
-    //   !branch ||
-    //   !issuingDate ||
-    //   !dueDate ||
-    //   !clientName ||
-    //   !CNIC ||
-    //   !phone ||
-    //   !type ||
-    //   !total ||
-    //   !paid ||
-    //   !degree ||
-    //   !visa ||
-    //   !major
-    // )
-    //   return alert("Make sure to provide all the fields");
+    const {
+      branch,
+      issuingDate,
+      dueDate,
+      clientName,
+      phone,
+      type,
+      total,
+      paid,
+      degree,
+      visa,
+      remained,
+      major,
+    } = voucherData;
+    if (
+      !branch ||
+      !visa ||
+      !degree ||
+      !issuingDate ||
+      !dueDate ||
+      !clientName ||
+      !phone ||
+      !type ||
+      !total ||
+      !paid ||
+      !remained ||
+      !major
+    )
+      return alert("Make sure to provide all the fields");
 
     navigate("/download/voucher", {
       state: { voucher: { ...voucherData, remained: total - paid } },
@@ -306,7 +319,7 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
                   <TextField
                     disabled
                     name="remained"
-                    value={voucherData.total - voucherData.paid}
+                    value={voucherData.remained = voucherData.total - voucherData.paid}
                     onChange={(e) => handleChange("remained", e.target.value)}
                     size="small"
                     type="text"

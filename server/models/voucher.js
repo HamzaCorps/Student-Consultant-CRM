@@ -13,7 +13,7 @@ const voucherSchema = Schema({
     total: { type: Number },
     degree: { type: String },
     visa: { type: String },
-    country: { type: String },
+    major: { type: String },
     paid: { type: Number },
     remained: { type: Number },
     uid: { type: String },

@@ -22,6 +22,7 @@ import {
   Notifications,
   Ledger,
   AllFollowUps,
+  ForgotPassword,
 } from "./Pages";
 import { Navbar, Sidebar } from "./Components";
 import { useSelector } from "react-redux";
@@ -60,6 +61,7 @@ const App = () => {
             <Routes>
               <Route exact path="/auth/register" element={<Register />} />
               <Route exact path="/auth/login" element={<Login />} />
+              <Route exact path="/auth/forgot_password" element={<ForgotPassword />} />
               <Route
                 exact
                 path="/auth/change_password"
