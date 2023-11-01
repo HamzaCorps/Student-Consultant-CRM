@@ -51,13 +51,6 @@ function Vouchers() {
       ),
     },
     {
-      field: "project",
-      headerName: "Project",
-      width: 150,
-      headerClassName: "super-app-theme--header",
-      renderCell: (params) => <div className="font-primary">{params.row.paid}</div>,
-    },
-    {
       field: "CNIC",
       headerName: "CNIC",
       width: 150,
@@ -74,7 +67,7 @@ function Vouchers() {
     {
       field: "type",
       headerName: "Payment Type",
-      width: 200,
+      width: 180,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => <div className="font-primary capitalize">{params.row.type}</div>,
     },
