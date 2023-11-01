@@ -1,6 +1,7 @@
 import JsBarcode from "jsbarcode";
 import React, { useEffect, useRef, useState } from "react";
 import CreateVoucher from "./CreateVoucher";
+import QRCode from 'qrcode.react'
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,24 +9,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 const VoucherPage = ({ }) => {
 
   ////////////////////////////////////// VARIABLES ///////////////////////////////////
-  const barcodeValue = `ADC-${Math.floor(Math.random() * 1000000000)}`;
-  const navigate = useNavigate()
   const { state } = useLocation()
   const voucher = state?.voucher
+  const navigate = useNavigate()
   const pdfRef = useRef()
-
-  // Create a barcode canvas using JsBarcode
-  const canvas = document.createElement("canvas");
-  JsBarcode(canvas, barcodeValue, {
-    format: "CODE128", // You can choose a barcode format
-    width: 2,
-    height: 50,
-  });
-
-  // Convert the canvas to an image
-  const barcodeImage = canvas.toDataURL("image/png");
-
-
 
   useEffect(() => {
     const downloadPdf = () => {
@@ -146,7 +133,7 @@ const VoucherPage = ({ }) => {
         </div>
 
         <div className="flex justify-center pt-10">
-          <img src={barcodeImage} />
+          <QRCode value={"growcrm.adotconsultant.com/lead"} size={128} />
         </div>
         
         <div className="flex justify-center flex-col py-2">
