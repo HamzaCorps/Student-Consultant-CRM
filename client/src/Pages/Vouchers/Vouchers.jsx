@@ -112,11 +112,14 @@ function Vouchers() {
               </IconButton>
             </Tooltip>
           }
-          {/* <Tooltip placement="top" title="View">
-            <IconButton onClick={() => setOpenViewModal(true)} className="hover:text-red-500">
-              <OpenInNewOutlined />
-            </IconButton>
-          </Tooltip> */}
+          {
+            params.row.status == 'accepted' &&
+            <Tooltip placement="top" title="Download">
+            <button  onClick={() => handleDownload(params.row)} className="hover:text-red-500">
+              Download
+            </button>
+          </Tooltip>
+          }
         </div>
       ),
     },
@@ -133,6 +136,11 @@ function Vouchers() {
   }, []);
 
   //////////////////////////////////////// FUNCTIONS ////////////////////////////////////
+  const handleDownload = (voucher) => {
+    navigate("/download/voucher", {
+      state: { voucher },
+    });
+  }
 
   return (
     <div className="h-full w-full float-left pb-28">
