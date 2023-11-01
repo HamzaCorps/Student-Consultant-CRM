@@ -1,27 +1,18 @@
 import { Close } from "@mui/icons-material";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Slide,
-} from "@mui/material";
-import { useEffect, useState } from "react";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Slide, } from "@mui/material";
+import { useState } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateLead } from "../../../redux/action/lead";
 import { PiXLight } from "react-icons/pi";
 import { Loader } from "../../../utils";
-import { rejectRefundApproval } from "../../../redux/action/approval";
-import { acceptRefund, rejectRefund } from "../../../redux/action/refund";
+import { acceptVoucherApproval, rejectVoucherApproval } from "../../../redux/action/approval";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const EnterPassword = ({ open, setOpen, type, refund }) => {
+const EnterPassword = ({ open, setOpen, type, approval, approvalId }) => {
   ////////////////////////////////////// VARIABLES  /////////////////////////////////////
   const dispatch = useDispatch();
   const { currentLead, isFetching } = useSelector((state) => state.lead);
@@ -35,23 +26,13 @@ const EnterPassword = ({ open, setOpen, type, refund }) => {
 
   ////////////////////////////////////// FUNCTIONS  /////////////////////////////////////
   const handleApprove = () => {
-    const cashbookData = {
-      leadId: refund.leadId,
-      clientName: refund.clientName,
-      top: "bank",
-      staff: loggedUser.username,
-      remarks: refund.reason,
-      amount: refund.amount,
-      type: "out",
-      password
-    };
-    dispatch(acceptRefund(refund?._id, cashbookData));
+    dispatch(acceptVoucherApproval(approval?._id, password, setOpen));
     setOpen(false)
     setPassword('')
   };
 
   const handleReject = () => {
-    dispatch(rejectRefund(refund._id, password));
+    dispatch(rejectVoucherApproval(approval._id, password, setOpen));
     setOpen(false)
   };
 

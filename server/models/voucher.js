@@ -8,7 +8,7 @@ const voucherSchema = Schema({
     CNIC: { type: Number },
     phone: { type: Number },
     email: { type: String },
-    type: { type: String, enum: ['cash', 'cheque', 'creditCard', 'online',] },
+    type: { type: String, enum: ['cash', 'cheque', 'creditCard', 'card', 'online',] },
     total: { type: Number },
     degree: { type: String },
     degreeName: { type: String },
@@ -18,6 +18,7 @@ const voucherSchema = Schema({
     paid: { type: Number },
     remained: { type: Number },
     note: { type: String },
+    status: { type: String, default: 'underProcess' },   // under process, declined, accepted
     uid: { type: String },
 }, { timestamps: true })
 

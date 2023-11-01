@@ -13,14 +13,9 @@ import {
   Slide,
   DialogActions,
   TextField,
-  Autocomplete,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import { PiNotepad, PiXLight } from "react-icons/pi";
 import { CFormSelect } from "@coreui/react";
-import JsBarcode from "jsbarcode";
-import VoucherPage from "./VoucherPage";
 import { countries } from "../../constant";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -31,9 +26,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
   ////////////////////////////////////// VARIBALES ///////////////////////////////////
+  const { isFetching } = useSelector(state => state.voucher)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { clients } = useSelector((state) => state.user);
   const initialVoucherState = {
     issuingDate: "",
     dueDate: "",
@@ -54,8 +49,6 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
   };
 
   ////////////////////////////////////// STATES //////////////////////////////////////
-  const [modalVisible, setModalVisible] = useState(false);
-  const [isVoucherCreated, setIsVoucherCreated] = useState(false);
   const [voucherData, setVoucherData] = useState(initialVoucherState);
 
   ////////////////////////////////////// Use Effects ///////////////////////////////////////////
@@ -68,7 +61,7 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     setVoucherData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  const handleDownloadPDF = (e) => {
+  const handleCreateVoucher = (e) => {
     e.preventDefault();
     const {
       issuingDate,
@@ -103,9 +96,9 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     // )
     //   return alert("Make sure to provide all the fields");
 
-    navigate("/download/voucher", {
-      state: { voucher: { ...voucherData, remained: total - paid } },
-    });
+    // navigate("/download/voucher", {
+    //   state: { voucher: { ...voucherData, remained: total - paid } },
+    // });
     dispatch(createVoucher(voucherData, setOpen));
   };
 
@@ -373,10 +366,10 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
             Cancel
           </button>
           <button
-            onClick={handleDownloadPDF}
+            onClick={handleCreateVoucher}
             variant="contained"
             className="bg-primary-red px-4 py-2 rounded-lg text-white mt-4 hover:bg-red-400 font-thin">
-            {loader ? <span>Downloading</span> : <span>Download</span>}
+            {isFetching ? <span>Submitting...</span> : <span>Create</span>}
           </button>
         </DialogActions>
       </Dialog>
