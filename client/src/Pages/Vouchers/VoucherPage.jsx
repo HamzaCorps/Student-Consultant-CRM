@@ -52,7 +52,7 @@ const VoucherPage = ({ }) => {
           <div className=" ">
             <table className="border-[1px] border-black w-full " >
               <tr className="text-center border-[1px] border-black">
-                <th className="border-r-[1px] border-[1px] border-black px-6 bg-[#dddddd] pb-4">Branch</th>
+                <th className="border-r-[1px] border-[1px] border-black px-6 bg-[#dddddd] pb-4">Voucher No.</th>
                 <td className="px-12 border-[1px] border-black capitalize pb-4">{voucher?.uid}</td>
               </tr>
               <tr className='w-full' >
@@ -109,7 +109,7 @@ const VoucherPage = ({ }) => {
               <th className="text-center border-y-[1px] border-x-[1px] border-black bg-[#dddddd] h-[2rem] w-[13rem] pb-4">Visa</th>
             </tr>
             <tr className='w-full' >
-              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.degree == 'other' ? voucher?.degreeName : voucher?.degree}</td>
+              <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.degree == 'other' ? <div>{voucher?.degreeName}</div> : <div>{voucher.degree}</div>}</td>
               <td className="text-center border-b-[1px] border-black h-[2rem] w-[13rem] capitalize pb-4">{voucher?.major}</td>
               <td className="text-center border-b-[1px] border-x-[1px] border-black h-[2rem] w-[13rem] pb-4">{voucher?.visa == 'studentVisa' ? <div>Student Visa</div> : voucher?.visa == "visitVisa" ? <div>Visit Visa</div> : voucher?.visa == 'workVisa' ? <div>Work Visa</div> : voucher?.visa}</td>
             </tr>
@@ -133,7 +133,7 @@ const VoucherPage = ({ }) => {
         </div>
 
         <div className="flex justify-center pt-10">
-          <QRCode value={"growcrm.adotconsultant.com/lead"} size={128} />
+          <QRCode value={`Name: ${voucher.clientName}\nPhone: ${voucher.phone}\nCNIC: ${voucher.CNIC}\nAmount Paid: ${voucher.paid}\nPurpose: This person has applied for the degree of ${voucher.degree == 'other' ? voucher.degreeName : voucher.degree} with major as ${voucher.major} on ${voucher.visa} in ${voucher.country}.`} size={128} />
         </div>
         
         <div className="flex justify-center flex-col py-2">

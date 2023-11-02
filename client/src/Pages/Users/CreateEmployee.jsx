@@ -55,6 +55,7 @@ const CreateUser = ({ open, setOpen, scroll }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setEmployeeData(initialEmployeeState)
   };
 
   return (

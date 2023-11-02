@@ -11,7 +11,7 @@ const voucherSchema = Schema({
     type: { type: String, enum: ['cash', 'cheque', 'creditCard', 'card', 'online',] },
     total: { type: Number },
     degree: { type: String },
-    degreeName: { type: String },
+    degreeName: { type: String, default: '' },
     country: { type: String },
     visa: { type: String },
     major: { type: String },

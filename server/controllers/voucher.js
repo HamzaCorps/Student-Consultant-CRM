@@ -31,7 +31,7 @@ export const createVoucher = async (req, res, next) => {
 
         const { visa, degree, degreeName, major, issuingDate, dueDate, clientName, CNIC, phone, type, total, paid, country, note} = req.body
 
-        const newVoucher = await Voucher.create({ major, propertyType: visa, area: degree, degreeName, issuingDate, dueDate, clientName, country, CNIC, phone, type, total, paid, remained: total - paid, note })
+        const newVoucher = await Voucher.create({ major, visa, degree, degreeName, issuingDate, dueDate, clientName, country, CNIC, phone, type, total, paid, remained: total - paid, note })
         res.status(200).json({ result: newVoucher, message: 'voucher created successfully', success: true })
 
     } catch (err) {

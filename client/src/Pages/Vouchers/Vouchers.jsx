@@ -1,6 +1,6 @@
 import { Add, KeyboardArrowRight, Search } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Table } from "../../Components";
 import { getVouchers } from "../../redux/action/voucher";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,10 +19,11 @@ import { DeleteOutline, OpenInNewOutlined } from "@mui/icons-material";
 import View from "./View";
 import Topbar from "./Topbar";
 import DeleteModal from "./DeleteModal";
-import { PiTrashLight } from "react-icons/pi";
+import { PiDownloadSimpleLight, PiTrashLight } from "react-icons/pi";
 
 function Vouchers() {
   //////////////////////////////////////// VARIABLES ////////////////////////////////////
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { vouchers, isFetching, error } = useSelector((state) => state.voucher);
   const { loggedUser } = useSelector((state) => state.user);
@@ -92,8 +93,7 @@ function Vouchers() {
       width: 120,
       renderCell: (params) => (
         <div className="flex gap-[4px] ">
-          {
-            loggedUser?.role != 'employee' &&
+          {loggedUser?.role != "employee" && (
             <Tooltip placement="top" title="Delete">
               <IconButton
                 onClick={() => {
@@ -104,15 +104,14 @@ function Vouchers() {
                 <PiTrashLight className="text-red-500" />
               </IconButton>
             </Tooltip>
-          }
-          {
-            params.row.status == 'accepted' &&
+          )}
+          {params.row.status == "accepted" && (
             <Tooltip placement="top" title="Download">
-            <button  onClick={() => handleDownload(params.row)} className="hover:text-red-500">
-              Download
-            </button>
-          </Tooltip>
-          }
+              <IconButton onClick={() => handleDownload(params.row)} className="hover:text-red-500">
+                <PiDownloadSimpleLight className="text-green-500" />
+              </IconButton>
+            </Tooltip>
+          )}
         </div>
       ),
     },
@@ -133,7 +132,7 @@ function Vouchers() {
     navigate("/download/voucher", {
       state: { voucher },
     });
-  }
+  };
 
   return (
     <div className="h-full w-full float-left pb-28">
