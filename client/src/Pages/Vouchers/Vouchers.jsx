@@ -2,16 +2,9 @@ import { Add, KeyboardArrowRight, Search } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Table } from "../../Components";
-import { getVouchers } from "../../redux/action/voucher";
+import { getVouchers,getEmployeeVouchers } from "../../redux/action/voucher";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   IconButton,
   Tooltip,
 } from "@mui/material";
@@ -124,6 +117,10 @@ function Vouchers() {
 
   //////////////////////////////////////// USE EFFECTS //////////////////////////////////
   useEffect(() => {
+    loggedUser.role == 'employee'
+    ?
+    dispatch(getEmployeeVouchers())
+    :
     dispatch(getVouchers());
   }, []);
 

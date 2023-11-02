@@ -150,5 +150,6 @@ export const deleteCashbook = (cashbookId) => API.delete(`/cashbook/delete/${cas
 // VOUCHER
 export const getVoucher = (voucherId) => API.get(`/voucher/get/single/${voucherId}`)
 export const getVouchers = () => API.get(`/voucher/get/all`)
+export const getEmployeeVouchers = () => API.get(`/voucher/get/employee`)
 export const createVoucher = (voucherData) => API.post(`/voucher/create`, voucherData)
 export const deleteVoucher = (voucherId) => API.delete(`/voucher/delete/${voucherId}`)
