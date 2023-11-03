@@ -117,11 +117,7 @@ function Vouchers() {
 
   //////////////////////////////////////// USE EFFECTS //////////////////////////////////
   useEffect(() => {
-    loggedUser.role == 'employee'
-    ?
-    dispatch(getEmployeeVouchers())
-    :
-    dispatch(getVouchers());
+    loggedUser.role == 'employee' ? dispatch(getEmployeeVouchers()) : dispatch(getVouchers())
   }, []);
 
   //////////////////////////////////////// FUNCTIONS ////////////////////////////////////

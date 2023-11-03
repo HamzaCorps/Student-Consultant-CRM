@@ -1,4 +1,5 @@
 import Voucher from '../models/voucher.js'
+import Lead from '../models/lead.js'
 import { createError } from '../utils/error.js'
 
 export const getVoucher = async (req, res, next) => {

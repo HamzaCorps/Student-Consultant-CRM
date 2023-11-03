@@ -294,9 +294,9 @@ function Leads({ type, showSidebar }) {
   useEffect(() => {
     loggedUser.role == 'employee'
     ?
-    dispatch(getEmployeeLeads());
+    dispatch(getEmployeeLeads())
     :
-    dispatch(getLeads());
+    dispatch(getLeads())
   }, []);
   useEffect(() => {
     if (!isFiltered) {

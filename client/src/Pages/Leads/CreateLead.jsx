@@ -108,7 +108,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       priority,
       status,
       degree,
-      degreeName,
       visa,
       country,
       source,
@@ -122,7 +121,6 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       !clientCity ||
       !priority ||
       !degree ||
-      !degreeName ||
       !visa ||
       !country ||
       !status ||

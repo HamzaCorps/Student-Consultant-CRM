@@ -47,6 +47,7 @@ const CreateUser = ({ open, setOpen, scroll }) => {
     if (!firstName || !lastName || !username || !password || !phone )
       return alert("Make sure to provide all the fields")
     dispatch(createEmployee(employeeData, setOpen));
+    setEmployeeData(initialEmployeeState)
   };
 
   const handleChange = (field, value) => {

@@ -234,7 +234,6 @@ export const createLead = async (req, res, next) => {
             !country ||
             !visa ||
             !degree ||
-            !degreeName ||
             !status ||
             !source ||
             !description

@@ -148,25 +148,6 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       childrens: [],
     },
     {
-      id: 3,
-      title: "Inventory",
-      icon: <PiFoldersLight className="text-[25px]" />,
-      childrens: [
-        {
-          title: "Projects",
-          icon: <PiDatabaseLight className="text-[25px]" />,
-          link: "/projects",
-          role: ["employee", "manager", "super_admin"],
-        },
-        {
-          title: "Inventories",
-          icon: <PiHardDrivesLight className="text-[25px]" />,
-          link: "/inventory",
-          role: ["employee", "manager", "super_admin"],
-        },
-      ],
-    },
-    {
       id: 4,
       title: "To Do Tasks",
       icon: <PiListChecksLight className="text-[25px]" />,
@@ -188,7 +169,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       ],
     },
     {
-      id: 7,
+      id: 6,
       title: "Sales",
       icon: <PiShoppingCartSimpleLight className="text-[25px]" />,
       role: ["employee", "manager", "super_admin"],
@@ -196,7 +177,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       childrens: [],
     },
     {
-      id: 8,
+      id: 7,
       title: "Cash Book",
       icon: <PiBankLight className="text-[25px]" />,
       childrens: [
@@ -215,7 +196,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       ],
     },
     {
-      id: 9,
+      id: 8,
       title: "Vouchers",
       icon: <PiReceiptLight className="text-[25px]" />,
       role: ["employee", "manager", "super_admin"],
