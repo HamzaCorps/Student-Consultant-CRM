@@ -293,10 +293,10 @@ function Leads({ type, showSidebar }) {
   ////////////////////////////////////// USE EFFECTS //////////////////////////////
   useEffect(() => {
     loggedUser.role == 'employee'
-    ?
-    dispatch(getEmployeeLeads());
-    :
-    dispatch(getLeads());
+      ?
+      dispatch(getEmployeeLeads())
+      :
+      dispatch(getLeads());
   }, []);
   useEffect(() => {
     if (!isFiltered) {
