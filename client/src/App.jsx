@@ -71,7 +71,7 @@ const App = () => {
             </Routes>
           </div>
         ) : (
-          <div className={`flex h-screen font-primary ${`${pathname.includes('/client/') || pathname.includes('download') ? 'block' : 'visible'}`}`}>
+          <div className={`flex h-screen font-primary ${`${pathname.includes('/client/') || pathname.includes('download') ? 'hidden' : 'visible'}`}`}>
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <div
               className={`${showSidebar ? "w-full " : "w-full "} flex flex-col overflow-y-scroll `}>

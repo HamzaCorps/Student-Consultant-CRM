@@ -27,7 +27,7 @@ const SidebarItem = ({ item, child, openedMenu, setOpenedMenu, setShowSidebar })
   return (
     <div
       className={`${
-        pathname.includes("/client/") || pathname.includes("download") ? "invisible" : "visible"
+        pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
       }`}>
       <div
         className={`${child ? "pl-4 hover:text-[#20aee3] font-primary font-light" : "pl-4"} ${

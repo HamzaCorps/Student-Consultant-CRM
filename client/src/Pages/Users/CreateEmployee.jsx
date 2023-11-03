@@ -33,6 +33,7 @@ const CreateUser = ({ open, setOpen, scroll }) => {
     username: "",
     password: "",
     phone: "",
+    email: "",
   }
 
   //////////////////////////////////////// STATES /////////////////////////////////////
@@ -43,8 +44,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
   //////////////////////////////////////// FUNCTIONS /////////////////////////////////////
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, username, password, phone } = employeeData
-    if (!firstName || !lastName || !username || !password || !phone )
+    const { firstName, lastName, username, password, phone, email } = employeeData
+    if (!firstName || !lastName || !username || !password || !phone  )
       return alert("Make sure to provide all the fields")
     dispatch(createEmployee(employeeData, setOpen));
     setEmployeeData(initialEmployeeState)
@@ -114,6 +115,18 @@ const CreateUser = ({ open, setOpen, scroll }) => {
                     fullWidth
                     value={employeeData.username}
                     onChange={(e) => handleChange('username', e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td className="pb-4 text-lg">Email </td>
+                <td className="pb-4">
+                  <TextField
+                    size="small"
+                    fullWidth
+                    placeholder="Optional"
+                    value={employeeData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
                   />
                 </td>
               </tr>

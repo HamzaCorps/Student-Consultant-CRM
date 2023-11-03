@@ -40,7 +40,7 @@ const Table = ({ columns, rows, isFetching, error, rowsPerPage }) => {
         <Box sx={{ width: 500 }}>
           <Snackbar
             anchorOrigin={{ vertical, horizontal }}
-            open={error ? handleClick : handleClose}
+            open={error ? handleClick({ vertical: 'bottom', horizontal: 'right' }) : handleClose}
             onClose={handleClose}
             message={error}
             key={vertical + horizontal}

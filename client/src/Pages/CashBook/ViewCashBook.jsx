@@ -11,6 +11,7 @@ import { getSpecificDateCashbook } from "../../redux/action/cashbook";
 import DeleteModal from "./DeleteModal";
 import Topbar from "./Topbar";
 import { format } from "timeago.js";
+import { PiTrashThin } from "react-icons/pi";
 
 const ViewCashBook = () => {
   ////////////////////////////////////// VARIABLES /////////////////////////////////////
@@ -82,11 +83,12 @@ const ViewCashBook = () => {
       headerClassName: "super-app-theme--header",
       renderCell: () => (
         <div className="flex gap-[4px] ">
-          <Tooltip placement="top" title="Delete">
-            <IconButton onClick={handleOpenDeleteModal} className="hover:text-red-500">
-              <DeleteOutline />
-            </IconButton>
-          </Tooltip>
+          {
+            loggedUser?.role != 'employee' &&
+            <Tooltip arrow placement="top" title="Delete">
+              <PiTrashThin onClick={() => handleOpenDeleteModal(params.row._id)} className="text-red-500 text-[23px] cursor-pointer" />
+            </Tooltip>
+          }
         </div>
       ),
     },

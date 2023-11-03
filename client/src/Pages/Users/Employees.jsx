@@ -37,9 +37,7 @@ const Employees = memo(() => {
       headerClassName: "super-app-theme--header",
       width: 220,
       renderCell: (params) => (
-        <div
-          className="text-[#20aee3] capitalize cursor-pointer font-primary font-light hover:text-[#007bff]"
-          onClick={() => handleClickOpen()}>
+        <div className="text-[#20aee3] capitalize font-primary font-light">
           {params.row.firstName} {params.row.lastName}
         </div>
       ),
@@ -50,9 +48,19 @@ const Employees = memo(() => {
       headerClassName: "super-app-theme--header",
       width: 200,
       renderCell: (params) => (
-        <div className="capitalize font-primary" onClick={() => handleClickOpen()}>
+        <div className="font-primary capitalize">
           {params.row.username}
         </div>
+      ),
+    },
+
+    {
+      field: "email",
+      headerName: "Email",
+      headerClassName: "super-app-theme--header",
+      width: 200,
+      renderCell: (params) => (
+        <div className="text-[#20aee3] capitalize font-primary font-light">{params.row.email}</div>
       ),
     },
     {
@@ -60,11 +68,7 @@ const Employees = memo(() => {
       headerName: "Phone",
       headerClassName: "super-app-theme--header",
       width: 200,
-      renderCell: (params) => (
-        <div className="font-primary" onClick={() => handleClickOpen()}>
-          {params.row.phone}
-        </div>
-      ),
+      renderCell: (params) => <div className="font-primary">{params.row.phone}</div>,
     },
     {
       field: "action",
@@ -105,12 +109,12 @@ const Employees = memo(() => {
     if (employees.length === 0) {
       dispatch(getEmployees());
     }
-    }, []);
+  }, []);
   useEffect(() => {
     if (!isFiltered) {
-      dispatch(getEmployeesReducer(allEmployees))
+      dispatch(getEmployeesReducer(allEmployees));
     }
-  }, [isFiltered])
+  }, [isFiltered]);
 
   /////////////////////////////////////// FUNCTIONS /////////////////////////////////////
   const hanldeOpenViewModal = (taskId) => {
@@ -132,7 +136,12 @@ const Employees = memo(() => {
       <DeleteEmployee open={openDeleteModal} setOpen={setOpenDeleteModal} userId={selectedUserId} />
       <User open={openView} setOpen={setOpenViewk} />
 
-      <Topbar openFilters={openFilters} setOpenFilters={setOpenFilters} isFiltered={isFiltered} setIsFiltered={setIsFiltered} />
+      <Topbar
+        openFilters={openFilters}
+        setOpenFilters={setOpenFilters}
+        isFiltered={isFiltered}
+        setIsFiltered={setIsFiltered}
+      />
 
       <Table
         rows={employees}
