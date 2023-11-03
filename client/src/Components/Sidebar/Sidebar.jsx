@@ -228,7 +228,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const [openedMenu, setOpenedMenu] = useState(false);
 
   return (
-    <div className={`${pathname.includes("download") ? "hidden" : null}`}>
+    <div  className={`${pathname.includes('/client/') || pathname.includes('download') ? 'invisible' : 'visible'}`}>
       {/* desktop sidebar */}
       <Box
         className={`w-[220px] sticky top-0 flex flex-col shadow-none h-screen ${showSidebar ? "md:flex hidden" : "hidden"

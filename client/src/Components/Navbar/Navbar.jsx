@@ -130,7 +130,7 @@ const Navbar = ({ setShowSidebar, showSidebar, open, setOpen }) => {
   };
 
   return (
-    <div>
+    <div className={`${pathname.includes('/client/') || pathname.includes('download') ? 'invisible' : 'visible'}`}>
       <div
         className={`flex flex-col z-10 sticky top-0 w-full sm:h-[4rem] h-[4rem] bg-white border-b-[1px] border-b-[#eeeff0] font-primary`}>
         <div

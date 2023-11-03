@@ -28,12 +28,9 @@ import {
 } from "./Pages";
 import { Navbar, Sidebar } from "./Components";
 import { useSelector } from "react-redux";
-import Home from "./Client Panel/pages/Dashboard/Home";
-import ClientHeader from "./Client Panel/components/ClientHeader";
-import ClientProjects from "./Client Panel/pages/Your Projects/ClientProjects";
-import Contact from "./Client Panel/pages/Contact Us/Contact";
 import LeadRefunds from "./Pages/Leads/Refund/Refund";
 import VoucherPage from "./Pages/Vouchers/VoucherPage";
+import Home from "./Client Panel/Home";
 
 const App = () => {
   ///////////////////////////////////// VARIABLES ////////////////////////////////////////
@@ -50,8 +47,6 @@ const App = () => {
     if (window.innerWidth < 768) setShowSidebar(false);
     else setShowSidebar(true);
   }, [window.innerWidth]);
-
-  const ClientPanelLayout = () => <ClientHeader />;
 
   ///////////////////////////////////// Functions ////////////////////////////////////////
 
@@ -76,7 +71,7 @@ const App = () => {
             </Routes>
           </div>
         ) : (
-          <div className="flex h-screen font-primary">
+          <div className={`flex h-screen font-primary ${`${pathname.includes('/client/') || pathname.includes('download') ? 'block' : 'visible'}`}`}>
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <div
               className={`${showSidebar ? "w-full " : "w-full "} flex flex-col overflow-y-scroll `}>
@@ -116,14 +111,11 @@ const App = () => {
         )}
 
         <Routes>
-          <Route path="/download/voucher" element={<VoucherPage />} />
+          <Route path="/client/dashboard" element={<Home />} />
         </Routes>
+
         <Routes>
-          <Route path="/client" element={<ClientPanelLayout />}>
-            <Route path="/client/home" element={<Home />} />
-            <Route path="/client/projects" element={<ClientProjects />} />
-            <Route path="/client/contact" element={<Contact />} />
-          </Route>
+          <Route path="/download/voucher" element={<VoucherPage />} />
         </Routes>
       </div>
     </div>
