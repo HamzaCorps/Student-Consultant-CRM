@@ -26,6 +26,15 @@ export const getVouchers = async (req, res, next) => {
     }
 }
 
+export const getEmployeeVouchers = async (req, res, next) => {
+    try {
+        const findedVouchers = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
+        res.status(200).json({ result: findedVouchers, message: 'Vouchers fetched successfully', success: true });
+    } catch (err) {
+        next(createError(500, err.message));
+    }
+}
+
 export const createVoucher = async (req, res, next) => {
     try { 
 
