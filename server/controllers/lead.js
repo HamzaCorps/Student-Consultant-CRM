@@ -219,17 +219,10 @@ export const filterLead = async (req, res, next) => {
 
 export const createLead = async (req, res, next) => {
     try {
-        const {
-            firstName, lastName, username, phone, CNIC, clientCity,
-            priority, country, visa, degree, degreeName, status, source, description, count
-        } = req.body;
+        const {clientPhone,priority, country, visa, degree, degreeName, status, source, description, count} = req.body;
 
         if (
-            !firstName ||
-            !lastName ||
-            !username ||
-            !phone ||
-            !clientCity ||
+            !clientPhone ||
             !priority ||
             !country ||
             !visa ||
@@ -242,28 +235,13 @@ export const createLead = async (req, res, next) => {
             return next(createError(401, 'Make sure to provide all the fields.'));
         }
 
-        const findedClient = await User.findOne({ username });
-        if (Boolean(findedClient)) {
-            return next(createError(400, 'Username is already exist'));
-        }
-
-        // Create the client (user) once
-        const client = await User.create({
-            firstName,
-            lastName,
-            username,
-            phone,
-            CNIC,
-            city: clientCity,
-        });
-
         // Create the lead(s) based on the counts value or once if counts is undefined
         const leadsToCreate = Number(count) || 1;
         const createdLeads = [];
 
         for (let i = 0; i < leadsToCreate; i++) {
             const newLead = await Lead.create({
-                client: client._id,
+                clientPhone,
                 priority,
                 country,
                 visa,
@@ -278,7 +256,6 @@ export const createLead = async (req, res, next) => {
             // Query to populate the fields
             const populatedLead = await Lead.findById(newLead._id)
                 .populate('allocatedTo')
-                .populate('client')
                 .exec();
 
             createdLeads.push(populatedLead);
@@ -286,7 +263,7 @@ export const createLead = async (req, res, next) => {
 
         res.status(200).json({
             result: createdLeads,
-            message: `Lead(s) created successfully (${createdLeads.length} lead(s) created)`,
+            message: `Lead(s) created successfully. (${createdLeads.length} lead(s) created)`,
             success: true
         });
     } catch (err) {
