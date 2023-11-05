@@ -34,6 +34,16 @@ export const getLead = (leadId) => async (dispatch) => {
         dispatch(error(err.message))
     }
 }
+export const getLeadByPhone = (phone) => async (dispatch) => {
+    try {
+        dispatch(start())
+        const { data } = await api.getLeadByPhone(phone)
+        dispatch(getLeadReducer(data.result))
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
 export const getLeadsStat = (type) => async (dispatch) => {
     try {
         dispatch(start())

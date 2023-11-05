@@ -16,6 +16,19 @@ export const getLead = async (req, res, next) => {
         next(createError(500, err.message))
     }
 }
+export const getLeadByPhone = async (req, res, next) => {
+    try {
+
+        const { phone } = req.params
+        const findedLead = await Lead.findOne({ clientPhone: phone }).populate('client').populate('allocatedTo').exec()
+        if (!findedLead) return next(createError(400, 'Lead not exist'))
+
+        res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
+
+    } catch (err) {
+        next(createError(500, err.message))
+    }
+}
 export const getLeads = async (req, res, next) => {
     try {
 
@@ -113,30 +126,30 @@ export const getLeadsStat = async (req, res, next) => {
 
         const aggregatedResult = await Lead.aggregate(pipeline);
 
-            // For priorities, sources, and statuses, create a map to store counts
-            const itemCounts = {};
+        // For priorities, sources, and statuses, create a map to store counts
+        const itemCounts = {};
 
-            // Initialize counts to zero for all items
-            const allItems = type == 'priority' ? priorities : type == 'source' ? sources : statuses; // Change to sources, statuses, etc. as needed
-            allItems.forEach((item) => {
-                itemCounts[item.value] = 0;
-            });
+        // Initialize counts to zero for all items
+        const allItems = type == 'priority' ? priorities : type == 'source' ? sources : statuses; // Change to sources, statuses, etc. as needed
+        allItems.forEach((item) => {
+            itemCounts[item.value] = 0;
+        });
 
-            // Update counts based on the aggregated result
-            aggregatedResult.forEach((item) => {
-                const itemName = item._id;
-                const count = item.count || 0; // Use 0 if count is not present
-                itemCounts[itemName] = count;
-            });
+        // Update counts based on the aggregated result
+        aggregatedResult.forEach((item) => {
+            const itemName = item._id;
+            const count = item.count || 0; // Use 0 if count is not present
+            itemCounts[itemName] = count;
+        });
 
-            // Convert the itemCounts map into an array with all three fields
-            const updatedResult = Object.keys(itemCounts).map((itemValue) => {
-                const itemName = allItems.find((item) => item.value === itemValue)?.name || itemValue;
-                return { _id: itemValue, name: itemName, count: itemCounts[itemValue] };
-            });
+        // Convert the itemCounts map into an array with all three fields
+        const updatedResult = Object.keys(itemCounts).map((itemValue) => {
+            const itemName = allItems.find((item) => item.value === itemValue)?.name || itemValue;
+            return { _id: itemValue, name: itemName, count: itemCounts[itemValue] };
+        });
 
-            res.status(200).json({ result: updatedResult, message: 'Stats fetched successfully.' });
-        
+        res.status(200).json({ result: updatedResult, message: 'Stats fetched successfully.' });
+
     } catch (error) {
         next(createError(500, error));
     }
@@ -215,11 +228,11 @@ export const filterLead = async (req, res, next) => {
 };
 
 
- 
+
 
 export const createLead = async (req, res, next) => {
     try {
-        const {clientPhone,priority, country, visa, degree, degreeName, status, source, description, count} = req.body;
+        const { clientPhone, priority, country, visa, degree, degreeName, status, source, description, count } = req.body;
 
         if (
             !clientPhone ||
@@ -296,7 +309,7 @@ export const shiftLead = async (req, res, next) => {
     try {
         const { leadId } = req.params;
         const { shiftTo } = req.body; // lead data
-        
+
         const updatedLead = await Lead.findByIdAndUpdate(
             leadId,
             { $set: { allocatedTo: [shiftTo] } },
