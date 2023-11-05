@@ -32,17 +32,13 @@ const CreateLead = ({ setOpen, open, scroll }) => {
   const navigate = useNavigate();
   const { isFetching } = useSelector((state) => state.lead);
   let initialLeadState = {
-    firstName: "",
-    lastName: "",
-    username: "",
-    phone: "",
-    CNIC: "",
-    clientCity: "",
-    email: "",
+    clientName: "",
+    clientPhone: "",
     priority: "",
     country: "",
     degree: "",
-    degreeName: "",
+    major: "",
+    degreeName: "Null",
     visa: "",
     status: "",
     source: "",
@@ -77,17 +73,17 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     { name: "Referral", value: "referral" },
   ];
   const degrees = [
-    {name: "Bacholers", value: "bacholers"},
-    {name: "Masters", value: "masters"},
-    {name: "PHD", value: "phd"},
-    {name: "Language", value: "language"},
-    {name: "Diploma", value: "diploma"},
-    {name: "Other", value: "other"},
-  ]
+    { name: "Bacholers", value: "bacholers" },
+    { name: "Masters", value: "masters" },
+    { name: "PHD", value: "phd" },
+    { name: "Language", value: "language" },
+    { name: "Diploma", value: "diploma" },
+    { name: "Other", value: "other" },
+  ];
   const Visa = [
-    {name: 'Student Visa', value: 'studentVisa'},
-    {name: 'Visit Visa', value: 'visitVisa'}
-  ]
+    { name: "Student Visa", value: "studentVisa" },
+    { name: "Visit Visa", value: "visitVisa" },
+  ];
 
   //////////////////////////////////////// STATES ////////////////////////////////////
   const [leadData, setLeadData] = useState(initialLeadState);
@@ -100,26 +96,22 @@ const CreateLead = ({ setOpen, open, scroll }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const {
-      firstName,
-      lastName,
-      username,
-      phone,
-      clientCity,
+      clientName,
+      clientPhone,
+      country,
       priority,
       status,
       degree,
+      major,
       visa,
-      country,
       source,
       description,
     } = leadData;
     if (
-      !firstName ||
-      !lastName ||
-      !username ||
-      !phone ||
-      !clientCity ||
+      !clientName ||
+      !clientPhone ||
       !priority ||
+      !major ||
       !degree ||
       !visa ||
       !country ||
@@ -172,36 +164,13 @@ const CreateLead = ({ setOpen, open, scroll }) => {
             <Divider />
             <table className="mt-4">
               <tr>
-                <td className="pb-4 text-lg">First Name </td>
+                <td className="pb-4 text-lg">Client Name </td>
                 <td className="pb-4">
                   <TextField
+                    name="clientName"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    value={leadData.firstName}
-                    onChange={(e) => handleChange("firstName", e.target.value)}
-                    size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Last Name </td>
-                <td className="pb-4">
-                  <TextField
-                    name="lastName"
-                    value={leadData.lastName}
-                    onChange={(e) => handleChange("lastName", e.target.value)}
-                    size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Username </td>
-                <td className="pb-4">
-                  <TextField
-                    name="username"
-                    value={leadData.username}
-                    onChange={(e) => handleChange("username", e.target.value)}
+                    value={leadData.clientName}
+                    onChange={(e) => handleChange("clientName", e.target.value)}
                     size="small"
                     fullWidth
                   />
@@ -211,56 +180,11 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                 <td className="pb-4 text-lg">Phone </td>
                 <td className="pb-4">
                   <TextField
-                    name="phone"
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    value={leadData.phone}
+                    name="clientPhone"
+                    onChange={(e) => handleChange("clientPhone", e.target.value)}
+                    value={leadData.clientPhone}
                     type="number"
                     size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">CNIC </td>
-                <td className="pb-4">
-                  <TextField
-                    name="CNIC"
-                    onChange={(e) => handleChange("CNIC", e.target.value)}
-                    value={leadData.CNIC}
-                    type="number"
-                    placeholder="Optional"
-                    size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Client City </td>
-                <td className="pb-4">
-                  <CFormSelect
-                    value={leadData.clientCity}
-                    onChange={(e) => handleChange("clientCity", e.target.value)}
-                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
-                    <option value="">Select an Option</option>
-
-                    {pakistanCities.map((city, key) => (
-                      <option key={key} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </CFormSelect>
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Email </td>
-                <td className="pb-4">
-                  <TextField
-                    type="email"
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    value={leadData.email}
-                    name="email"
-                    size="small"
-                    placeholder="Optional"
                     fullWidth
                   />
                 </td>
@@ -322,6 +246,19 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                   </td>
                 </tr>
               )}
+              <tr>
+                <td className="pb-4 text-lg">Major </td>
+                <td className="pb-4">
+                  <TextField
+                    name="major"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    value={leadData.major}
+                    onChange={(e) => handleChange("major", e.target.value)}
+                    size="small"
+                    fullWidth
+                  />
+                </td>
+              </tr>
               <tr>
                 <td className="pb-4 text-lg">Visa </td>
                 <td className="pb-4">

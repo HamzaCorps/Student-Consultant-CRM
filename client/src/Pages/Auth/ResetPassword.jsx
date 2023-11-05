@@ -12,15 +12,30 @@ const ResetPassword = () => {
   const navigate = useNavigate()
 
   /////////////////////////////////// STATES /////////////////////////////////////
-  const [OTP, setOTP] = useState('')
-  const [password, setPassword] = useState('')
+  const [OTP, setOTP] = useState({ otp: '' })
+  const [password, setPassword] = useState({ password: '' })
 
   /////////////////////////////////// USE EFFECTS ////////////////////////////////
 
   /////////////////////////////////// FUNCTIONS //////////////////////////////////
-  const handleSubmit = () => {
-    dispatch(newpassword({ otp: OTP, password }, navigate))
-  }
+  const handleInputChange = (e) => {
+    setOTP({
+      ...OTP,
+      [e.target.name]: e.target.value,
+    });
+    setPassword({
+      ...password,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(newpassword({ otp: OTP, password }))
+    setEmail({ email: "" });
+    setOTP({ otp: '' })
+    navigate("/auth/login");
+  };
 
   return (
     <div className="font-primary">
@@ -42,19 +57,19 @@ const ResetPassword = () => {
             <form className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
               <div className="flex flex-col gap-8">
                 <Input
-                  type="text"
+                  type="number"
                   name="otp"
                   placeholder="Enter OTP"
-                  value={OTP}
-                  onChange={(e) => setOTP(e.target.value)}
+                  value={OTP.otp}
+                  onChange={handleInputChange}
                   className="w-[20rem] h-[40px] px-[8px] font-primary"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 />
                 <Input
                   type="password"
                   name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={password.password}
+                  onChange={handleInputChange}
                   placeholder="Enter Your New Password"
                   className="w-[20rem] h-[40px] px-[8px] font-primary"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}

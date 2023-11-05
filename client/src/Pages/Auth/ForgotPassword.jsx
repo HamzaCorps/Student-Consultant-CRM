@@ -12,24 +12,35 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PiEyeSlashThin, PiEyeThin, PiX } from "react-icons/pi";
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { forget_password } from '../../redux/action/user'
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { forget_password } from "../../redux/action/user";
 
 const ForgotPassword = () => {
   /////////////////////////////////// VARIABLES /////////////////////////////////
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   /////////////////////////////////// STATES /////////////////////////////////////
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState({ email: "" });
 
   /////////////////////////////////// USE EFFECTS ////////////////////////////////
 
   /////////////////////////////////// FUNCTIONS //////////////////////////////////
-  const handleSendOTP = () => {
-    dispatch(forget_password(email, navigate))
-  }
+
+  const handleInputChange = (e) => {
+    setEmail({
+      ...email,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(forget_password(email));
+    setEmail({ email: "" });
+    navigate("/auth/newpassword");
+  };
 
   return (
     <div className="font-primary">
@@ -48,13 +59,13 @@ const ForgotPassword = () => {
             <p className="flex justify-center text-center pt-2 font-Mulish text-slate-500 text-xs px-10">
               Enter your email address below and we'll send you a link to reset your password.
             </p>
-            <form className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
+            <div className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
               <div className="flex flex-col gap-8">
                 <Input
                   type="email"
                   name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={email.email}
+                  onChange={handleInputChange}
                   placeholder="Enter Your Email Here"
                   className="w-[20rem] h-[40px] px-[8px] font-primary"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -62,7 +73,7 @@ const ForgotPassword = () => {
               </div>
               <br />
               <button
-                onClick={handleSendOTP}
+                onClick={handleSubmit}
                 className={`w-[20rem] bg-[#42acd2] hover:bg-[#45b8e2] p-2 rounded-lg transition-all text-white font-medium tracking-wider `}
                 variant="contained">
                 Send Code
@@ -73,7 +84,7 @@ const ForgotPassword = () => {
                 </Link>
               </div>
               <br />
-            </form>
+            </div>
           </div>
         </div>
       </div>

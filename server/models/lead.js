@@ -2,11 +2,12 @@ import { Schema, model } from 'mongoose'
 import { generateUniqueIdentifier } from '../utils/utils.js'
 
 const leadSchema = Schema({
-
-    clientPhone: { type:Number, required: true},
+    clientName: { type: String, required: true },
+    clientPhone: { type: Number, required: true},
     country: { type: String, required: true },
     degree: { type: String, required: true },
     degreeName: { type: String, required: false },
+    major: { type: String, required: true },
     visa: { type: String, required: true },
     priority: { type: String, required: true, default: 'moderate', enum: ['veryCold', 'cold', 'moderate', 'hot', 'veryHot'] },
     status: { type: String, required: true },   // closed, followed up, contacted etc.

@@ -37,12 +37,11 @@ export const changePassword = (passwordData, navigate) => async (dispatch) => {
         dispatch(error(err.message))
     }
 }
-export const forget_password = (email, navigate) => async (dispatch) => {
+export const forget_password = (email) => async (dispatch) => {
     try {
         dispatch(start())
         await api.forget_password(email)
         localStorage.setItem('otpSendToEmail', email)
-        navigate('/newpassword')
         dispatch(end())
     } catch (err) {
         dispatch(error(err.message))

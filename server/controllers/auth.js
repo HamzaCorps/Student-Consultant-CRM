@@ -118,12 +118,12 @@ export const sendForgetPasswordOTP = async (req, res) => {
             else return null //console.log(info);
         });
 
-
         res.status(200).json({ result: newOTP, otp, message: 'forget_password_otp send successfully', success: true })
 
     }
     catch (error) {
         res.status(404).json({ message: 'error in sendForgetPasswordOTP - controllers/user.js', error, success: false })
+        console.log(error)
     }
 }
 
