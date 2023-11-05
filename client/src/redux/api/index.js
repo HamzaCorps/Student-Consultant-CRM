@@ -107,6 +107,7 @@ export const deleteApproval = (approvalId) => API.delete(`/approval/delete/${app
 
 // LEAD 
 export const getLead = (leadId) => API.get(`/lead/get/single/${leadId}`)
+export const getLeadByPhone = (phone) => API.get(`/lead/get/phone/${phone}`)
 export const getLeads = () => API.get(`/lead/get/all`)
 export const getEmployeeLeads = () => API.get(`/lead/get/employee`)
 export const getLeadsStat = (type) => API.get(`/lead/get/stats?type=${type}`)

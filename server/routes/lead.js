@@ -1,5 +1,5 @@
 import express from 'express'
-import { createLead,   getLead, getEmployeeLeads, getLeadsStat, getLeads, filterLead, updateLead, shiftLead, shareLead, archiveLead, deleteLead, deleteWholeCollection, searchLead, } from '../controllers/lead.js'
+import { createLead, getLeadByPhone, getLead, getEmployeeLeads, getLeadsStat, getLeads, filterLead, updateLead, shiftLead, shareLead, archiveLead, deleteLead, deleteWholeCollection, searchLead, } from '../controllers/lead.js'
 import { verifyEmployee, verifyManager, verifyToken } from '../middleware/auth.js'
 import Lead from '../models//lead.js'
 import { createError } from '../utils/error.js'
@@ -22,6 +22,7 @@ const verifyIsAllocatedTo = async (req, res, next) => {
 
 // GET
 router.get('/get/single/:leadId', getLead)
+router.get('/get/phone/:phone', verifyToken, getLeadByPhone)
 router.get('/get/employee', verifyToken, verifyEmployee, getEmployeeLeads)
 router.get('/get/all', verifyToken, verifyManager, getLeads)
 router.get('/get/stats', verifyToken, verifyEmployee, getLeadsStat)
