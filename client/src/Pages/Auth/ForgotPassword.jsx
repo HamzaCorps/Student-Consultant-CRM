@@ -9,18 +9,27 @@ import {
   InputAdornment,
   Snackbar,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PiEyeSlashThin, PiEyeThin, PiX } from "react-icons/pi";
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { forget_password } from '../../redux/action/user'
 
 const ForgotPassword = () => {
   /////////////////////////////////// VARIABLES /////////////////////////////////
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   /////////////////////////////////// STATES /////////////////////////////////////
+  const [email, setEmail] = useState('')
 
   /////////////////////////////////// USE EFFECTS ////////////////////////////////
 
   /////////////////////////////////// FUNCTIONS //////////////////////////////////
+  const handleSendOTP = () => {
+    dispatch(forget_password(email, navigate))
+  }
 
   return (
     <div className="font-primary">
@@ -42,21 +51,22 @@ const ForgotPassword = () => {
             <form className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
               <div className="flex flex-col gap-8">
                 <Input
-                  type="number"
-                  name="phone"
-                  placeholder="Enter Your Phone Number"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Your Email Here"
                   className="w-[20rem] h-[40px] px-[8px] font-primary"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 />
               </div>
               <br />
-              <Link to="/auth/forgot_password/enter_code">
-                <button
-                  className={`w-[20rem] bg-[#42acd2] hover:bg-[#45b8e2] p-2 rounded-lg transition-all text-white font-medium tracking-wider `}
-                  variant="contained">
-                  Send Code
-                </button>
-              </Link>
+              <button
+                onClick={handleSendOTP}
+                className={`w-[20rem] bg-[#42acd2] hover:bg-[#45b8e2] p-2 rounded-lg transition-all text-white font-medium tracking-wider `}
+                variant="contained">
+                Send Code
+              </button>
               <div className="font-primary font-light text-slate-500 flex justify-center p-2 pr-7">
                 <Link to="/auth/login" className="text-sky-400 hover:text-sky-600">
                   Back To Login Page

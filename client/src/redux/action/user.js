@@ -37,6 +37,29 @@ export const changePassword = (passwordData, navigate) => async (dispatch) => {
         dispatch(error(err.message))
     }
 }
+export const forget_password = (email, navigate) => async (dispatch) => {
+    try {
+        dispatch(start())
+        await api.forget_password(email)
+        localStorage.setItem('otpSendToEmail', email)
+        navigate('/newpassword')
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
+export const newpassword = ({otp, password}, navigate) => async (dispatch) => {
+    try {
+        dispatch(start())
+        const email = localStorage.getItem('otpSendToEmail')
+        await api.newpassword({email,otp, password})
+        localStorage.removeItem('otpSendToEmail')
+        navigate('/auth/login')
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
 export const logout = (navigate) => async (dispatch) => {
     try {
         dispatch(start())

@@ -3,6 +3,7 @@ import { Schema, model } from 'mongoose'
 
 const voucherSchema = Schema({
     issuingDate: { type: String },
+    allocatedTo: { type: Schema.Types.ObjectId, ref:'User' },
     dueDate: { type: String },
     clientName: { type: String },
     CNIC: { type: Number },

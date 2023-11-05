@@ -293,10 +293,17 @@ function Leads({ type, showSidebar }) {
   ////////////////////////////////////// USE EFFECTS //////////////////////////////
   useEffect(() => {
     loggedUser.role == 'employee'
+<<<<<<< HEAD
     ?
     dispatch(getEmployeeLeads())
     :
     dispatch(getLeads())
+=======
+      ?
+      dispatch(getEmployeeLeads())
+      :
+      dispatch(getLeads());
+>>>>>>> faaf9d90cca22f8688008b26bd7f3f39921238b5
   }, []);
   useEffect(() => {
     if (!isFiltered) {
