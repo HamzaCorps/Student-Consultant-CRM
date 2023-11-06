@@ -15,21 +15,20 @@ const Table = () => {
   //////////////////////////////////////// VARIABLES ///////////////////////////////////
 
   const dispatch = useDispatch();
-  const { currentLead } = useSelector((state) => state.lead);
-  console.log(currentLead);
+  const { currentLead, isFetching, error } = useSelector((state) => state.lead);
+  console.log(currentLead)
   const { loggedUser } = useSelector((state) => state.user);
-  const { isFetching, error } = useSelector((state) => state.lead);
   const phoneNumber = loggedUser?.phone;
 
   const columns = [
     {
-      field: "uid",
+      field: "_id",
       headerName: "ID",
       width: 100,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
-        <Tooltip arrow placement="bottom" title={params.uid}>
-          <div className="font-primary font-light capitalize">{params.uid}</div>
+        <Tooltip arrow placement="bottom" title={params.currentLead?.uid}>
+          <div className="font-primary font-light capitalize">{params.currentLead?.uid}</div>
         </Tooltip>
       ),
     },
@@ -39,8 +38,8 @@ const Table = () => {
       width: 190,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
-        <Tooltip arrow placement="bottom" title={params.value}>
-          <div className="font-primary font-light capitalize">{params.value}</div>
+        <Tooltip arrow placement="bottom" title={params.currentLead?.allocatedTo?.firstName}>
+          <div className="font-primary font-light capitalize">{params.currentLead?.allocatedTo?.firstName}</div>
         </Tooltip>
       ),
     },
@@ -50,8 +49,8 @@ const Table = () => {
       width: 170,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
-        <Tooltip arrow placement="bottom" title={params.value}>
-          <div className="font-primary font-light capitalize">{params.value}</div>
+        <Tooltip arrow placement="bottom" title={params.currentLead?.createdAt}>
+          <div className="font-primary font-light capitalize">{params.currentLead?.createdAt}</div>
         </Tooltip>
       ),
     },
@@ -61,8 +60,8 @@ const Table = () => {
       width: 160,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
-        <Tooltip arrow placement="bottom" title={params.value}>
-          <div className="font-primary font-light capitalize">{params.value}</div>
+        <Tooltip arrow placement="bottom" title={params.currentLead?.degree}>
+          <div className="font-primary font-light capitalize">{params.currentLead?.degree}</div>
         </Tooltip>
       ),
     },
@@ -73,7 +72,7 @@ const Table = () => {
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <Tooltip arrow placement="bottom" title={params.value}>
-          <div className="font-primary font-light capitalize">{params.value}</div>
+          <div className="font-primary font-light capitalize">{console.log(params.row)}</div>
         </Tooltip>
       ),
     },
@@ -84,7 +83,7 @@ const Table = () => {
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <Tooltip arrow placement="bottom" title={params.value}>
-          <div className="font-primary font-light capitalize">{params.value}</div>
+          <div className="font-primary font-light capitalize">{params.country}</div>
         </Tooltip>
       ),
     },
@@ -134,26 +133,12 @@ const Table = () => {
     },
   ];
 
-  const rows = [
-    currentLead && {
-      id: 1,
-      uid: currentLead?.uid,
-      employeeName: currentLead?.allocatedTo?.firstName,
-      createdAt: currentLead?.createdAt,
-      degree: currentLead?.degree,
-      major: currentLead?.major,
-      country: currentLead?.country,
-      visa: currentLead?.visa,
-      status: currentLead?.status,
-    },
-  ];
-
   //////////////////////////////////////// STATES //////////////////////////////////////
   const [searchValue, setSearchValue] = useState("");
   const [state, setState] = React.useState({
     open: false,
-    vertical: "top",
-    horizontal: "center",
+    vertical: "bottom",
+    horizontal: "right",
   });
   const { vertical, horizontal, open } = state;
 
@@ -183,9 +168,9 @@ const Table = () => {
         <Box sx={{ width: 500 }}>
           <Snackbar
             anchorOrigin={{ vertical, horizontal }}
-            open={error ? handleClick({ vertical: "bottom", horizontal: "right" }) : handleClose}
+            open={error ? handleClick({ vertical: "bottom", horizontal: "right" }) : error}
             onClose={handleClose}
-            message={error}
+            message={error == "Request failed with status code 400" ? "No Lead Found" : error}
             key={vertical + horizontal}
           />
         </Box>
@@ -204,8 +189,14 @@ const Table = () => {
             }}>
             <DataGrid
               className="bg-white rounded-[6px] p-[15px]"
-              rows={rows}
+              rows={currentLead}
               columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { pageSize: 5 },
+                },
+              }}
+              getRowId={(row) => console.log(row)}
               pageSizeOptions={[5, 10]}
               disableRowSelectionOnClick
               disableColumnMenu

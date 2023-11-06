@@ -61,13 +61,20 @@ const App = () => {
               <Route exact path="/auth/forgot_password" element={<ForgotPassword />} />
               <Route exact path="/auth/newpassword" element={<ResetPassword />} />
               <Route exact path="/auth/forgot_password/enter_code" element={<InputCode />} />
-              <Route exact path="/auth/change_password" element={<Navigate to="/auth/register" />} />
+              <Route
+                exact
+                path="/auth/change_password"
+                element={<Navigate to="/auth/register" />}
+              />
               <Route path="/" element={<Navigate to="/auth/login" />} />
               <Route path="/:anyotherRoutes" element={<Navigate to="/auth/login" />} />
             </Routes>
           </div>
-        ) : (
-          <div className={`flex h-screen font-primary ${`${pathname.includes('/client/') || pathname.includes('download') ? 'hidden' : 'visible'}`}`}>
+        ) : loggedUser.role != "client" ? (
+          <div
+            className={`flex h-screen font-primary ${`${
+              pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
+            }`}`}>
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <div
               className={`${showSidebar ? "w-full " : "w-full "} flex flex-col overflow-y-scroll `}>
@@ -104,11 +111,11 @@ const App = () => {
               </div>
             </div>
           </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
         )}
-
-        <Routes>
-          <Route path="/client/dashboard" element={<Home />} />
-        </Routes>
 
         <Routes>
           <Route path="/download/voucher" element={<VoucherPage />} />

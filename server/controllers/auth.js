@@ -165,5 +165,6 @@ export const setNewPassword = async (req, res) => {
     }
     catch (error) {
         res.status(404).json({ message: 'error in changePassword - controllers/user.js', error, success: false })
+        console.log(error)
     }
 }

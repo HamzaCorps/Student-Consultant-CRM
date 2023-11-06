@@ -12,8 +12,7 @@ const ResetPassword = () => {
   const navigate = useNavigate()
 
   /////////////////////////////////// STATES /////////////////////////////////////
-  const [OTP, setOTP] = useState({ otp: '' })
-  const [password, setPassword] = useState({ password: '' })
+  const [OTP, setOTP] = useState({ otp: '', password: '' })
 
   /////////////////////////////////// USE EFFECTS ////////////////////////////////
 
@@ -23,19 +22,17 @@ const ResetPassword = () => {
       ...OTP,
       [e.target.name]: e.target.value,
     });
-    setPassword({
-      ...password,
-      [e.target.name]: e.target.value,
-    });
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(newpassword({ otp: OTP, password }))
-    setEmail({ email: "" });
-    setOTP({ otp: '' })
+    dispatch(newpassword({ otp: OTP.otp, password: OTP.password}))
+    setOTP({ otp: '', password: '' })
     navigate("/auth/login");
   };
+
+  console.log(OTP)
 
   return (
     <div className="font-primary">
@@ -57,7 +54,7 @@ const ResetPassword = () => {
             <form className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
               <div className="flex flex-col gap-8">
                 <Input
-                  type="number"
+                  type="text"
                   name="otp"
                   placeholder="Enter OTP"
                   value={OTP.otp}
@@ -68,7 +65,7 @@ const ResetPassword = () => {
                 <Input
                   type="password"
                   name="password"
-                  value={password.password}
+                  value={OTP.password}
                   onChange={handleInputChange}
                   placeholder="Enter Your New Password"
                   className="w-[20rem] h-[40px] px-[8px] font-primary"

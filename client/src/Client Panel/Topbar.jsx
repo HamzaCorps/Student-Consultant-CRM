@@ -29,11 +29,6 @@ const Topbar = () => {
               />
             </FormControl>
           </div>
-          <Tooltip title="Archived" arrow placement="top">
-            <div className={` p-2 rounded-md cursor-pointer bg-[#ebf2f5] hover:bg-[#dfe6e8] text-[#a6b5bd] `}>
-              <PiArchive className="text-[25px]" />
-            </div>
-          </Tooltip>
         </div>
       </div>
     </div>

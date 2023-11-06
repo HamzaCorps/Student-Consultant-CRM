@@ -62,7 +62,7 @@ const ForgotPassword = () => {
             <div className="flex flex-col gap-[10px] w-auto pl-[2rem] pt-[2rem] ">
               <div className="flex flex-col gap-8">
                 <Input
-                  type="email"
+                  type="string"
                   name="email"
                   value={email.email}
                   onChange={handleInputChange}
