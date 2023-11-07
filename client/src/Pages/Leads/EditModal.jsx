@@ -82,7 +82,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   const [leadData, setLeadData] = useState({
     ...currentLead,
     clientName: currentLead?.client?.clientName,
-    clientPhone: currentLead?.client?.clientPhone,
+    clientPhone: currentLead?.client?.phone,
   });
 
   ////////////////////////////////////// USE EFFECTS  /////////////////////////////////////
@@ -90,7 +90,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
     setLeadData({
       ...currentLead,
       clientName: currentLead?.client?.clientName,
-      clientPhone: currentLead?.client?.clientPhone,
+      clientPhone: currentLead?.client?.phone,
     });
   }, [currentLead]);
 
@@ -128,7 +128,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
     setOpen(false);
   };
 
-  console.log(currentLead)
+  console.log(currentLead);
 
   return (
     <div>
@@ -171,9 +171,9 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                 <td className="pb-4 text-lg">Phone </td>
                 <td className="pb-4">
                   <TextField
-                    name="clientPhone"
-                    onChange={(e) => handleChange("clientPhone", e.target.value)}
-                    value={leadData?.clientPhone}
+                    name="phone"
+                    onChange={(e) => handleChange("phone", e.target.value)}
+                    value={leadData?.client?.phone}
                     type="number"
                     size="small"
                     fullWidth
@@ -197,6 +197,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.country}
                     onChange={(e) => handleChange("country", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select Country</option>
                     {countries.map((country, key) => (
                       <option key={key} value={country.name}>
                         {country.name}
@@ -212,6 +213,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.degree}
                     onChange={(e) => handleChange("degree", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select Degree</option>
                     {degrees.map((item, key) => (
                       <option key={key} value={item.value}>
                         {item.name}
@@ -242,6 +244,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.visa}
                     onChange={(e) => handleChange("visa", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select Visa</option>
                     {Visa.map((item, key) => (
                       <option key={key} value={item.value}>
                         {item.name}
@@ -257,6 +260,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.priority}
                     onChange={(e) => handleChange("priority", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select Priority</option>
                     {priorities.map((item, key) => (
                       <option key={key} value={item.value}>
                         {item.name}
@@ -272,6 +276,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.status}
                     onChange={(e) => handleChange("status", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select Status</option>
                     {statuses.map((item, key) => (
                       <option key={key} value={item.value}>
                         {item.name}
@@ -287,6 +292,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                     value={leadData?.source}
                     onChange={(e) => handleChange("source", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
+                    <option value="">Select Source</option>
                     {sources.map((item, key) => (
                       <option key={key} value={item.value}>
                         {item.name}

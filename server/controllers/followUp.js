@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import FollowUp from '../models/followUp.js'
 import { createError } from '../utils/error.js'
-import mongoose from 'mongoose'
 
 export const getFollowUp = async (req, res, next) => {
     try {

@@ -8,6 +8,7 @@ import { IoOpenOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { getLeadByPhone } from "../redux/action/lead";
 import { format } from "timeago.js";
+import ViewAttachments from "./ViewAttachments";
 
 const Table = () => {
   //////////////////////////////////////// VARIABLES ///////////////////////////////////
@@ -103,13 +104,8 @@ const Table = () => {
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <div
-          className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium ${params.row?.status == "Successful"
-              ? "border-green-500 text-green-500"
-              : params.value == "Pending"
-                ? "border-yellow-500 text-yellow-500"
-                : "border-red-500 text-red-500"
-            }`}>
-          {params.value}
+          className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium`}>
+          {params.row?.status}
         </div>
       ),
     },
@@ -121,7 +117,7 @@ const Table = () => {
       renderCell: (params) => (
         <div>
           <Tooltip placement="bottom" arrow title="View Attachments">
-            <div className="cursor-pointer">
+            <div onClick={() => handleOpenAttachments(params.row?._id)} className="cursor-pointer">
               <IoOpenOutline className="cursor-pointer text-orange-500 text-[23px] hover:text-orange-400" />
             </div>
           </Tooltip>
@@ -132,6 +128,8 @@ const Table = () => {
 
   //////////////////////////////////////// STATES //////////////////////////////////////
   const [searchValue, setSearchValue] = useState("");
+  const [selectedLeadId, setSelectedLeadId] = useState(null);
+  const [openAttachments, setOpenAttachments] = useState(false);
   const [state, setState] = React.useState({
     open: false,
     vertical: "bottom",
@@ -151,6 +149,11 @@ const Table = () => {
 
   const handleClose = () => {
     setState({ ...state, open: false });
+  };
+
+  const handleOpenAttachments = (leadId) => {
+    setSelectedLeadId(leadId);
+    setOpenAttachments(true);
   };
 
   return (
@@ -201,6 +204,13 @@ const Table = () => {
           </Box>
         </div>
       )}
+
+      <ViewAttachments
+        open={openAttachments}
+        setOpen={setOpenAttachments}
+        leadId={selectedLeadId}
+      />
+
     </div>
   );
 };
