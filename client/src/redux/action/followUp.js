@@ -21,10 +21,30 @@ export const getFollowUps = (leadId) => async (dispatch) => {
         dispatch(error(err.message))
     }
 }
+export const getEmployeeFollowUps = (leadId) => async (dispatch) => {
+    try {
+        dispatch(start())
+        const { data } = await api.getEmployeeFollowUps(leadId)
+        dispatch(getFollowUpsReducer(data.result))
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
 export const getFollowUpsStats = () => async (dispatch) => {
     try {
         dispatch(start())
         const { data } = await api.getFollowUpsStats()
+        dispatch(getFollowUpsStatsReducer(data.result))
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
+export const getEmployeeFollowUpsStats = () => async (dispatch) => {
+    try {
+        dispatch(start())
+        const { data } = await api.getEmployeeFollowUpsStats()
         dispatch(getFollowUpsStatsReducer(data.result))
         dispatch(end())
     } catch (err) {

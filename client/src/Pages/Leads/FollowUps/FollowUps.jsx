@@ -1,7 +1,7 @@
 import React from "react";
 import Topbar from "./Topbar";
 import { Table } from "../../../Components";
-import { getFollowUps } from "../../../redux/action/followUp";
+import { getFollowUps, getEmployeeFollowUps } from "../../../redux/action/followUp";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ const FollowUps = () => {
 
   /////////////////////////////////////////// VARIABLES //////////////////////////////////////////// 
   const { followUps, error, isFetching } = useSelector(state => state.followUp)
+  const { loggedUser } = useSelector(state => state.user)
   const { leadId } = useParams()
   const dispatch = useDispatch()
 
@@ -20,7 +21,7 @@ const FollowUps = () => {
       headerName: "ID",
       headerClassName: "super-app-theme--header",
       width: 100,
-      renderCell: (params) => <div className="font-primary font-light">{params.row._id}</div>,
+      renderCell: (params) => <div className="font-primary font-light">{params.row.uid}</div>,
     },
     {
       field: "status",
@@ -58,7 +59,11 @@ const FollowUps = () => {
 
   /////////////////////////////////////////// USE EFFECTS //////////////////////////////////////////// 
   useEffect(() => {
-    dispatch(getFollowUps(leadId))
+    loggedUser.role == 'employee'
+      ?
+      dispatch(getFollowUps(leadId))
+      :
+      dispatch(getEmployeeFollowUps(leadId))
   }, [])
 
   /////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////// 

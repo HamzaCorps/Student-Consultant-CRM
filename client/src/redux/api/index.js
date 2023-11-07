@@ -125,7 +125,9 @@ export const deleteLead = (leadId) => API.delete(`/lead/delete/${leadId}`)
 // FOLLOW UPS
 export const getFollowUp = (followUpId) => API.get(`/followUp/get/single/${followUpId}`)
 export const getFollowUps = (leadId) => API.get(`/followUp/get/all/${leadId}`)
+export const getEmployeeFollowUps = (leadId) => API.get(`/followUp/get/employee/${leadId}`)
 export const getFollowUpsStats = () => API.get(`/followUp/get/stats`)
+export const getEmployeeFollowUpsStats = () => API.get(`/followUp/get/stats/employee`)
 export const createFollowUp = (followUpData) => API.post(`/followUp/create`, followUpData)
 export const deleteFollowUp = (followUpId) => API.delete(`/followUp/delete/${followUpId}',`)
 

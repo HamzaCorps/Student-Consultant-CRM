@@ -72,9 +72,8 @@ const App = () => {
           </div>
         ) : loggedUser.role != "client" ? (
           <div
-            className={`flex h-screen font-primary ${`${
-              pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
-            }`}`}>
+            className={`flex h-screen font-primary ${`${pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
+              }`}`}>
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <div
               className={`${showSidebar ? "w-full " : "w-full "} flex flex-col overflow-y-scroll `}>
@@ -82,6 +81,7 @@ const App = () => {
               <div className="flex p-[1rem] w-full">
                 <Routes>
                   <Route path="/" element={<DashBoard />} />
+                  <Route path="/dashboard" element={<DashBoard />} />
                   <Route path="/auth/register" element={<Navigate to="/" />} />
                   <Route path="/auth/login" element={<Navigate to="/" />} />
                   <Route path="/myLeads" element={<Leads />} />
@@ -107,6 +107,7 @@ const App = () => {
                   <Route path="/sales/create" element={<CreateSale />} />
                   <Route path="/voucher" element={<Vouchers showSidebar={showSidebar} />} />
                   <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/client" element={<Home />} />
                 </Routes>
               </div>
             </div>

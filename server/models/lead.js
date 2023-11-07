@@ -3,14 +3,15 @@ import { generateUniqueIdentifier } from '../utils/utils.js'
 
 const leadSchema = Schema({
     clientName: { type: String, required: false },
-    clientPhone: { type: Number, required: false},
+    clientPhone: { type: String, required: false },
+    client: { type: Schema.Types.ObjectId, ref: 'User', required: false },
     country: { type: String, required: false },
     degree: { type: String, required: false },
     degreeName: { type: String, required: false },
     major: { type: String, required: false },
     visa: { type: String, required: false },
     priority: { type: String, required: false, default: 'moderate'  },
-    status: { type: String, required: false },   // closed, followed up, contacted etc.
+    status: { type: String, required: false, default: 'New' },   // closed, followed up, contacted etc.
     source: { type: String, required: false },   // facebook,instagram etc.
     description: { type: String, required: false },
     allocatedTo: { type: [Schema.Types.ObjectId], ref: 'User' },

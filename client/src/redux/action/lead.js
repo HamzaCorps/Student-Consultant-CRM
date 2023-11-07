@@ -38,7 +38,7 @@ export const getLeadByPhone = (phone) => async (dispatch) => {
     try {
         dispatch(start())
         const { data } = await api.getLeadByPhone(phone)
-        dispatch(getLeadReducer(data.result))
+        dispatch(getLeadsReducer(data.result))
         dispatch(end())
     } catch (err) {
         dispatch(error(err.message))

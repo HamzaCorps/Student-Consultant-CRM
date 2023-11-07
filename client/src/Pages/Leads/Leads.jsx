@@ -130,7 +130,7 @@ function Leads({ type, showSidebar }) {
       headerClassName: "super-app-theme--header",
       width: 180,
       renderCell: (params) => (
-        <div className={`font-primary font-light`}>{params.row?.clientPhone}</div>
+        <div className={`font-primary font-light`}>{params.row?.client?.phone || params.row?.clientPhone }</div>
       ),
     },
     {

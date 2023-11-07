@@ -7,7 +7,7 @@ export const getLead = async (req, res, next) => {
     try {
 
         const { leadId } = req.params
-        const findedLead = await Lead.findById(leadId).populate('clientPhone').populate('allocatedTo').exec()
+        const findedLead = await Lead.findById(leadId).populate('client').populate('allocatedTo').exec()
         if (!findedLead) return next(createError(400, 'Lead not exist'))
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
@@ -20,8 +20,10 @@ export const getLeadByPhone = async (req, res, next) => {
     try {
 
         const { phone } = req.params
-        const findedLead = await Lead.findOne({ clientPhone: phone }).populate('clientPhone').populate('allocatedTo').exec()
-        if (!findedLead) return next(createError(400, 'Lead not exist'))
+
+        const findedUser = await User.findOne({ phone })
+
+        const findedLead = await Lead.find({ client: findedUser._id }).populate('client').populate('allocatedTo').exec()
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
 
@@ -32,7 +34,7 @@ export const getLeadByPhone = async (req, res, next) => {
 
 export const getLeads = async (req, res, next) => {
     try {
-        const findedLeads = await Lead.find().populate('clientPhone').populate('allocatedTo').exec();
+        const findedLeads = await Lead.find().populate('client').populate('allocatedTo').exec();
 
         res.status(200).json({ result: findedLeads, message: 'Leads fetched successfully', success: true });
     } catch (err) {
@@ -43,7 +45,7 @@ export const getLeads = async (req, res, next) => {
 export const getEmployeeLeads = async (req, res, next) => {
     try {
         const findedLeads = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
-            .populate('clientPhone').populate('allocatedTo')
+            .populate('client').populate('allocatedTo')
             .exec();
 
         res.status(200).json({ result: findedLeads, message: 'Leads fetched successfully', success: true });
@@ -164,7 +166,7 @@ export const searchLead = async (req, res, next) => {
             {
                 $lookup: {
                     from: 'users',
-                    localField: 'clientPhone',
+                    localField: 'client',
                     foreignField: '_id',
                     as: 'clientData',
                 },
@@ -219,7 +221,7 @@ export const filterLead = async (req, res, next) => {
             }
         }
 
-        query = await query.populate('clientPhone').populate('allocatedTo').exec();
+        query = await query.populate('client').populate('allocatedTo').exec();
         res.status(200).json({ result: query });
 
     } catch (error) {
@@ -234,6 +236,8 @@ export const createLead = async (req, res, next) => {
     try {
         const { clientName, clientPhone, priority, country, visa, degree, degreeName, status, source, description, count, major } = req.body;
 
+        const findedLead = await User.findOne({ phone: clientPhone })
+        
         // Create the lead(s) based on the counts value or once if counts is undefined
         const leadsToCreate = Number(count) || 1;
         const createdLeads = [];
@@ -241,7 +245,7 @@ export const createLead = async (req, res, next) => {
         for (let i = 0; i < leadsToCreate; i++) {
             const newLead = await Lead.create({
                 clientName,
-                clientPhone,
+                client: findedLead._id,
                 priority,
                 country,
                 visa,
@@ -303,7 +307,7 @@ export const shiftLead = async (req, res, next) => {
             leadId,
             { $set: { allocatedTo: [shiftTo] } },
             { new: true }
-        ).populate('clientPhone').populate('allocatedTo').exec();
+        ).populate('client').populate('allocatedTo').exec();
 
         res.status(200).json({
             result: updatedLead,
@@ -325,7 +329,7 @@ export const shareLead = async (req, res, next) => {
             leadId,
             { $push: { allocatedTo: shareWith } }, // Use $push to add userId to allocatedTo array
             { new: true }
-        ).populate('clientPhone').populate('allocatedTo').exec();
+        ).populate('client').populate('allocatedTo').exec();
 
         res.status(200).json({
             result: updatedLead,
