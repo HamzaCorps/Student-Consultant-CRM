@@ -21,7 +21,7 @@ export const getLeadByPhone = async (req, res, next) => {
 
         const { phone } = req.params
 
-        const findedUser = await findOne({ phone })
+        const findedUser = await User.findOne({ phone })
 
         const findedLead = await Lead.findById(findedUser._id).populate('client').populate('allocatedTo').exec()
         if (!findedLead) return next(createError(400, 'Lead not exist'))

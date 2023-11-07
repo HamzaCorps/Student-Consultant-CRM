@@ -36,6 +36,44 @@ export const getFollowUps = async (req, res, next) => {
         next(createError(500, err.message))
     }
 }
+export const getEmployeeFollowUps = async (req, res, next) => {
+    try {
+        const { leadId } = req.params;
+
+        const findedFollowUp = await FollowUp.aggregate([
+            {
+                $match: { leadId: mongoose.Types.ObjectId(leadId) }
+            },
+            {
+                $lookup: {
+                    from: 'leads',
+                    localField: 'leadId',
+                    foreignField: '_id',
+                    as: 'lead'
+                }
+            },
+            {
+                $unwind: '$lead'
+            },
+            {
+                $match: { 'lead.allocatedTo': mongoose.Types.ObjectId(req.user._id) }
+            },
+            {
+                $lookup: {
+                    from: 'users', // Replace 'clients' with the actual name of your collection
+                    localField: 'lead.client',
+                    foreignField: '_id',
+                    as: 'lead.client'
+                }
+            }
+        ]);
+
+        res.status(200).json({ result: findedFollowUp, message: 'FollowUps retrieved successfully', success: true });
+    } catch (err) {
+        next(createError(500, err.message));
+    }
+};
+
 
 export const getFollowUpsStatsByCreatedAt = async (req, res, next) => {
     try {
@@ -74,7 +112,7 @@ export const getFollowUpsStatsByCreatedAt = async (req, res, next) => {
             },
             {
                 $lookup: {
-                    from: 'clients', // Replace 'clients' with the actual name of your collection
+                    from: 'users', // Replace 'clients' with the actual name of your collection
                     localField: 'followUps.lead.client',
                     foreignField: '_id',
                     as: 'followUps.lead.client'
@@ -89,6 +127,67 @@ export const getFollowUpsStatsByCreatedAt = async (req, res, next) => {
         ]);
         
 
+        res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
+    } catch (error) {
+        next(createError(500, error.message))
+    }
+};
+export const getEmployeeFollowUpsStats = async (req, res, next) => {
+    try {
+        const response = await FollowUp.aggregate([
+            {
+                $sort: { createdAt: 1 },
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: '%Y-%m-%d', date: '$createdAt' },
+                    },
+                    followUps: { $push: '$$ROOT' },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: '$_id',
+                    followUps: 1,
+                },
+            },
+            {
+                $unwind: '$followUps'
+            },
+            {
+                $lookup: {
+                    from: 'leads',
+                    localField: 'followUps.leadId',
+                    foreignField: '_id',
+                    as: 'followUps.lead'
+                }
+            },
+            {
+                $unwind: '$followUps.lead'
+            },
+            {
+                $match: {
+                    'followUps.lead.allocatedTo': req.user._id
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'followUps.lead.client',
+                    foreignField: '_id',
+                    as: 'followUps.lead.client'
+                }
+            },
+            {
+                $group: {
+                    _id: '$date',
+                    followUps: { $push: '$followUps' }
+                }
+            },
+        ]);
+        
         res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
     } catch (error) {
         next(createError(500, error.message))
