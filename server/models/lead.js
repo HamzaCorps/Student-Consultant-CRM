@@ -3,7 +3,7 @@ import { generateUniqueIdentifier } from '../utils/utils.js'
 
 const leadSchema = Schema({
     clientName: { type: String, required: true },
-    clientPhone: { type: Number, required: true},
+    client: { type: Schema.Types.ObjectId, required: true},
     country: { type: String, required: true },
     degree: { type: String, required: true },
     degreeName: { type: String, required: false },

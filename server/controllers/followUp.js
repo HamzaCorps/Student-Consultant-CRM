@@ -5,7 +5,12 @@ export const getFollowUp = async (req, res, next) => {
     try {
 
         const { followUpId } = req.params
-        const findedFollowUp = await FollowUp.findById(followUpId)
+        const findedFollowUp = await FollowUp.findById(followUpId).populate({
+            path: 'leadId',
+            populate: {
+                path: 'client' 
+            }
+        })
         if (!findedFollowUp) return next(createError(400, 'FollowUp not exist'))
 
         res.status(200).json({ result: findedFollowUp, message: 'followUp created successfully', success: true })
@@ -18,7 +23,12 @@ export const getFollowUp = async (req, res, next) => {
 export const getFollowUps = async (req, res, next) => {
     try {
         const { leadId } = req.params
-        const findedFollowUp = await FollowUp.find({ leadId })
+        const findedFollowUp = await FollowUp.find({ leadId }).populate({
+            path: 'leadId',
+            populate: {
+                path: 'client' 
+            }
+        })
 
         res.status(200).json({ result: findedFollowUp, message: 'followUp created successfully', success: true })
 
@@ -48,7 +58,36 @@ export const getFollowUpsStatsByCreatedAt = async (req, res, next) => {
                     followUps: 1,
                 },
             },
+            {
+                $unwind: '$followUps' // Unwind the followUps array
+            },
+            {
+                $lookup: {
+                    from: 'leads', // Replace 'leads' with the actual name of your collection
+                    localField: 'followUps.leadId',
+                    foreignField: '_id',
+                    as: 'followUps.lead'
+                }
+            },
+            {
+                $unwind: '$followUps.lead' // Unwind the lead array
+            },
+            {
+                $lookup: {
+                    from: 'clients', // Replace 'clients' with the actual name of your collection
+                    localField: 'followUps.lead.client',
+                    foreignField: '_id',
+                    as: 'followUps.lead.client'
+                }
+            },
+            {
+                $group: {
+                    _id: '$date',
+                    followUps: { $push: '$followUps' }
+                }
+            },
         ]);
+        
 
         res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
     } catch (error) {
@@ -86,7 +125,13 @@ export const getFollowUpsStatsByDate = async (req, res, next) => {
 export const getFollowUpsStats = async (req, res, next) => {
     try {
 
-        const followUps = await FollowUp.find().populate('leadId')
+        const followUps = await FollowUp.find()
+            .populate({
+                path: 'leadId',
+                populate: {
+                    path: 'client' 
+                }
+            });
 
         const reducedFollowUps = followUps.reduce((result, followUp) => {
             const createdAtDate = new Date(followUp.createdAt).toLocaleDateString();

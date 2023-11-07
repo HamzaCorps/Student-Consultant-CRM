@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import {
@@ -19,9 +19,10 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getFollowUpsStats } from "../../../redux/action/followUp";
 import { format } from "timeago.js";
+import Lead from "../Lead";
 
 const Row = ({ row }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -117,6 +118,21 @@ Row.propTypes = {
 
 const AllFollowUpsTable = () => {
   /////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
+  const dispatch = useDispatch()
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const { followUpsStats } = useSelector(state => state.followUp)
+  { console.log('followUpsStats', followUpsStats) }
+
+  /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
+  const [showLead, setShowLead] = useState(false)
+  const [selectedLeadId, setSelectedLeadId] = useState(false)
+
+  /////////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////
+  useEffect(() => {
+    dispatch(getFollowUpsStats());
+  }, []);
+
+  /////////////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////////
   const createData = (date, day, followUps = []) => {
     return {
       date,
@@ -125,9 +141,6 @@ const AllFollowUpsTable = () => {
       history: followUps
     };
   };
-  const dispatch = useDispatch()
-  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  const { followUpsStats } = useSelector(state => state.followUp)
   const rows = followUpsStats?.map((stat) => {
     const dateParts = stat.date.split("/");
     const year = parseInt(dateParts[2]);
@@ -137,21 +150,11 @@ const AllFollowUpsTable = () => {
 
     return createData(stat.date, DAYS[date.getDay()], stat.followUps)
   })
-  /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
-
-  /////////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////
-  useEffect(() => {
-    dispatch(getFollowUpsStats());
-  }, []);
-
-  /////////////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////////
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   const Row = (props) => {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
       <React.Fragment>
@@ -199,8 +202,8 @@ const AllFollowUpsTable = () => {
                     {row.history.map((historyRow) => (
                       <TableRow key={historyRow.date}>
                         <TableCell>
-                          <span className="font-primary text-sky-400 cursor-pointer hover:text-sky-500">
-                            {historyRow.leadId}
+                          <span onClick={() => { setSelectedLeadId(historyRow.leadId?._id); setShowLead(true) }} className="font-primary text-sky-400 cursor-pointer hover:text-sky-500">
+                            {historyRow.leadId?._id}
                           </span>
                         </TableCell>
                         <TableCell>
@@ -245,31 +248,34 @@ const AllFollowUpsTable = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>
-              <span className="text-sky-400 font-primary text-lg font-medium">Date</span>
-            </TableCell>
-            <TableCell>
-              <span className="text-sky-400 font-primary text-lg font-medium">Day</span>
-            </TableCell>
-            <TableCell>
-              <span className="text-sky-400 font-primary text-lg font-medium">
-                Total Follow Ups
-              </span>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <Lead open={showLead} setOpen={setShowLead} leadId={selectedLeadId} />
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>
+                <span className="text-sky-400 font-primary text-lg font-medium">Date</span>
+              </TableCell>
+              <TableCell>
+                <span className="text-sky-400 font-primary text-lg font-medium">Day</span>
+              </TableCell>
+              <TableCell>
+                <span className="text-sky-400 font-primary text-lg font-medium">
+                  Total Follow Ups
+                </span>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <Row key={row.name} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 

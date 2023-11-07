@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLead } from "../../redux/action/lead";
 import { format } from "timeago.js";
-import { Loader } from "../../utils";
 import {
   PiCalendar,
   PiEnvelopeSimple,
-  PiGenderMaleDuotone,
-  PiGitBranch,
   PiHandCoins,
   PiHouseLine,
   PiIdentificationCard,
@@ -16,7 +12,6 @@ import {
   PiPhone,
   PiRuler,
   PiSealQuestion,
-  PiUser,
   PiUserFocus,
   PiXLight,
 } from "react-icons/pi";

@@ -20,7 +20,7 @@ const FollowUps = () => {
       headerName: "ID",
       headerClassName: "super-app-theme--header",
       width: 100,
-      renderCell: (params) => <div className="font-primary font-light">{params.row._id}</div>,
+      renderCell: (params) => <div className="font-primary font-light">{params.row.uid}</div>,
     },
     {
       field: "status",

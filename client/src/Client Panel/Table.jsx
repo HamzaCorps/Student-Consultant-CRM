@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { Search } from "@mui/icons-material";
-import { Box, CircularProgress, Tooltip } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Tooltip } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Loader } from "../utils";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import { IoOpenOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,8 +12,7 @@ const Table = () => {
   //////////////////////////////////////// VARIABLES ///////////////////////////////////
 
   const dispatch = useDispatch();
-  const { currentLead, isFetching, error } = useSelector((state) => state.lead);
-  console.log(currentLead)
+  const { leads, isFetching, error } = useSelector((state) => state.lead);
   const { loggedUser } = useSelector((state) => state.user);
   const phoneNumber = loggedUser?.phone;
 
@@ -105,13 +101,12 @@ const Table = () => {
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <div
-          className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium ${
-            params.value == "Successful"
+          className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium ${params.value == "Successful"
               ? "border-green-500 text-green-500"
               : params.value == "Pending"
-              ? "border-yellow-500 text-yellow-500"
-              : "border-red-500 text-red-500"
-          }`}>
+                ? "border-yellow-500 text-yellow-500"
+                : "border-red-500 text-red-500"
+            }`}>
           {params.value}
         </div>
       ),
@@ -143,7 +138,6 @@ const Table = () => {
   const { vertical, horizontal, open } = state;
 
   //////////////////////////////////////// USEEFFECTS //////////////////////////////////
-
   useEffect(() => {
     dispatch(getLeadByPhone(phoneNumber));
   }, []);
@@ -189,7 +183,7 @@ const Table = () => {
             }}>
             <DataGrid
               className="bg-white rounded-[6px] p-[15px]"
-              rows={currentLead}
+              rows={leads}
               columns={columns}
               initialState={{
                 pagination: {
