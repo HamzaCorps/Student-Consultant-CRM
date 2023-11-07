@@ -23,8 +23,7 @@ export const getLeadByPhone = async (req, res, next) => {
 
         const findedUser = await User.findOne({ phone })
 
-        const findedLead = await Lead.findById(findedUser._id).populate('client').populate('allocatedTo').exec()
-        if (!findedLead) return next(createError(400, 'Lead not exist'))
+        const findedLead = await Lead.find({ client: findedUser._id }).populate('client').populate('allocatedTo').exec()
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
 
