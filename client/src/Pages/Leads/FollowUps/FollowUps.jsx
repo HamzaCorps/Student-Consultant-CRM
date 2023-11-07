@@ -65,7 +65,7 @@ const FollowUps = () => {
 
 
   return (
-    <div>
+    <div className="w-full">
       <Topbar />
       <Table
         rows={followUps}

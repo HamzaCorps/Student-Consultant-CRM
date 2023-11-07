@@ -204,19 +204,27 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       childrens: [],
     },
   ];
-  const links = loggedUser.role == 'employee' ? employeeLinks : adminLinks
+  const links = loggedUser.role == "employee" ? employeeLinks : adminLinks;
 
   const [openedMenu, setOpenedMenu] = useState(false);
 
   return (
-    <div className={`${pathname.includes('/client/') || pathname.includes('download') ? 'hidden' : 'visible'}`}>
+    <div
+      className={`${
+        pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
+      }`}>
       {/* desktop sidebar */}
       <Box
-        className={`w-[220px] sticky top-0 flex flex-col shadow-none h-screen ${showSidebar ? "md:flex hidden" : "hidden"
-          } bg-white z-[1000] border-r-[1px] border-r-[#eeeff0] border-b-[1px] border-b-[#eeeff0]`}>
+        className={`w-[220px] sticky top-0 flex flex-col shadow-none h-screen ${
+          showSidebar ? "md:flex hidden" : "hidden"
+        } bg-white z-[1000] border-r-[1px] border-r-[#eeeff0] border-b-[1px] border-b-[#eeeff0]`}>
         <a href="/">
           <div className="flex border-b-[1px] border-b-[#eeeff0] h-[4rem] items-center justify-center">
-            {!showSidebar ? "" : <img className="h-[40px]" src="/background/A-consultant-logo.png" />}
+            {!showSidebar ? (
+              ""
+            ) : (
+              <img className="h-[40px]" src="/background/A-consultant-logo.png" />
+            )}
           </div>
         </a>
 
@@ -233,7 +241,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             />
           ))}
         </div>
-        
+
         {/* </div> */}
       </Box>
 
@@ -242,7 +250,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         <Box className="absolute top-0 left-0 bg-white shadow-box w-[16rem] h-screen md:hidden flex z-[1100]">
           <div className="wrapper flex flex-col w-full h-full overflow-y-scroll p-[10px]">
             <div className="w-full flex justify-between items-center mb-[1rem] h-[4rem]">
-              <img src="/favicon/GrowLOGO.png" />
+              <img className="h-[40px]" src="/background/A-consultant-logo.png" />
               <IconButton onClick={() => setShowSidebar(false)}>
                 <Close />
               </IconButton>

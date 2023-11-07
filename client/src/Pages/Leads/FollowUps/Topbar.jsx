@@ -41,12 +41,12 @@ const Topbar = () => {
   };
 
   return (
-    <div className="flex flex-col tracking-wide pb-8 font-primary">
+    <div className="flex w-full flex-col tracking-wide pb-8 font-primary">
       <div className="w-full text-[14px]">
         <Path />
       </div>
 
-      <div className="md:flex justify-between items-center flex-none">
+      <div className="md:flex w-full justify-between items-center flex-none">
         <h1 className="text-primary-blue text-[32px] capitalize font-light">Follow Ups</h1>
 
         <div className="flex items-center justify-end gap-2 md:mt-0 mt-4">

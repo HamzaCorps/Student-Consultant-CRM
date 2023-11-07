@@ -234,21 +234,6 @@ export const createLead = async (req, res, next) => {
     try {
         const { clientName, clientPhone, priority, country, visa, degree, degreeName, status, source, description, count, major } = req.body;
 
-        if (
-            !clientName ||
-            !clientPhone ||
-            !priority ||
-            !country ||
-            !visa ||
-            !degree ||
-            !status ||
-            !source ||
-            !description ||
-            !major
-        ) {
-            return next(createError(401, 'Make sure to provide all the fields.'));
-        }
-
         // Create the lead(s) based on the counts value or once if counts is undefined
         const leadsToCreate = Number(count) || 1;
         const createdLeads = [];

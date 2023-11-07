@@ -107,19 +107,7 @@ const CreateLead = ({ setOpen, open, scroll }) => {
       source,
       description,
     } = leadData;
-    if (
-      !clientName ||
-      !clientPhone ||
-      !priority ||
-      !major ||
-      !degree ||
-      !visa ||
-      !country ||
-      !status ||
-      !source ||
-      !description
-    )
-      return alert("Make sure to provide all the fields");
+
     dispatch(
       createLead({ ...leadData, count: leadCountsToCreate < 1 ? 1 : leadCountsToCreate }, navigate)
     );

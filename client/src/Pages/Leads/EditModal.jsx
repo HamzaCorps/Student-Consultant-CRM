@@ -54,28 +54,24 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
     { name: "Referral", value: "referral" },
   ];
   const degrees = [
-    {name: "Bacholers", value: "bacholers"},
-    {name: "Masters", value: "masters"},
-    {name: "PHD", value: "phd"},
-    {name: "Diploma", value: "diploma"},
-    {name: "Other", value: "other"},
-  ]
+    { name: "Bacholers", value: "bacholers" },
+    { name: "Masters", value: "masters" },
+    { name: "PHD", value: "phd" },
+    { name: "Diploma", value: "diploma" },
+    { name: "Other", value: "other" },
+  ];
   const Visa = [
-    {name: 'Student Visa', value: 'studentVisa'},
-    {name: 'Visit Visa', value: 'visitVisa'}
-  ]
+    { name: "Student Visa", value: "studentVisa" },
+    { name: "Visit Visa", value: "visitVisa" },
+  ];
 
   let initialLeadState = {
-    firstName: "",
-    lastName: "",
-    username: "",
-    phone: "",
-    CNIC: "",
-    clientCity: "",
-    email: "",
+    clientName: "",
+    clientPhone: "",
     priority: "",
     country: "",
     degree: "",
+    major: "",
     degreeName: "",
     visa: "",
     status: "",
@@ -85,30 +81,18 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   ////////////////////////////////////// STATES  /////////////////////////////////////
   const [leadData, setLeadData] = useState({
     ...currentLead,
-    property: currentLead?.project?._id,
-    firstName: currentLead?.client?.firstName,
-    lastName: currentLead?.client?.lastName,
-    username: currentLead?.client?.username,
-    phone: currentLead?.client?.phone,
-    CNIC: currentLead?.client?.CNIC,
-    clientCity: currentLead?.client?.city,
-    email: currentLead?.client?.email,
+    clientName: currentLead?.client?.clientName,
+    clientPhone: currentLead?.client?.clientPhone,
   });
 
   ////////////////////////////////////// USE EFFECTS  /////////////////////////////////////
   useEffect(() => {
     setLeadData({
       ...currentLead,
-      firstName: currentLead?.client?.firstName,
-      lastName: currentLead?.client?.lastName,
-      username: currentLead?.client?.username,
-      phone: currentLead?.client?.phone,
-      CNIC: currentLead?.client?.CNIC,
-      clientCity: currentLead?.client?.city,
-      email: currentLead?.client?.email,
+      clientName: currentLead?.client?.clientName,
+      clientPhone: currentLead?.client?.clientPhone,
     });
   }, [currentLead]);
-
 
   useEffect(() => {
     leadId && dispatch(getLead(leadId));
@@ -118,36 +102,18 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const {
-      firstName,
-      lastName,
-      username,
-      phone,
-      clientCity,
-      priority,
+      clientName,
+      clientPhone,
       country,
-      degree,
-      degreeName,
-      visa,
+      priority,
       status,
+      degree,
+      major,
+      visa,
       source,
       description,
     } = leadData;
-    if (
-      !firstName ||
-      !lastName ||
-      !username ||
-      !phone ||
-      !clientCity ||
-      !priority ||
-      !country ||
-      !degree ||
-      !degreeName ||
-      !visa ||
-      !status ||
-      !source ||
-      !description
-    )
-      return alert("Make sure to provide all the fields");
+
     dispatch(updateLead(currentLead?._id, leadData));
     dispatch(getLeadReducer(null));
     setLeadData(initialLeadState);
@@ -161,6 +127,8 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  console.log(currentLead)
 
   return (
     <div>
@@ -188,36 +156,12 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
             <Divider />
             <table className="mt-4">
               <tr>
-                <td className="pb-4 text-lg">First Name </td>
+                <td className="pb-4 text-lg">Client Name </td>
                 <td className="pb-4">
                   <TextField
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                    value={leadData?.firstName}
-                    onChange={(e) => handleChange("firstName", e.target.value)}
-                    size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Last Name </td>
-                <td className="pb-4">
-                  <TextField
-                    name="lastName"
-                    value={leadData?.lastName}
-                    onChange={(e) => handleChange("lastName", e.target.value)}
-                    size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Username </td>
-                <td className="pb-4">
-                  <TextField
-                    name="username"
-                    value={leadData?.username}
-                    onChange={(e) => handleChange("username", e.target.value)}
+                    value={leadData?.clientName}
+                    name="clientName"
+                    onChange={(e) => handleChange("clientName", e.target.value)}
                     size="small"
                     fullWidth
                   />
@@ -227,54 +171,11 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                 <td className="pb-4 text-lg">Phone </td>
                 <td className="pb-4">
                   <TextField
-                    name="phone"
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    value={leadData?.phone}
+                    name="clientPhone"
+                    onChange={(e) => handleChange("clientPhone", e.target.value)}
+                    value={leadData?.clientPhone}
                     type="number"
                     size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">CNIC </td>
-                <td className="pb-4">
-                  <TextField
-                    name="CNIC"
-                    onChange={(e) => handleChange("CNIC", e.target.value)}
-                    value={leadData?.CNIC}
-                    type="number"
-                    placeholder="Optional"
-                    size="small"
-                    fullWidth
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Client City </td>
-                <td className="pb-4">
-                  <CFormSelect
-                    value={leadData?.clientCity}
-                    onChange={(e) => handleChange("clientCity", e.target.value)}
-                    className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
-                    {pakistanCities.map((city, key) => (
-                      <option key={key} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </CFormSelect>
-                </td>
-              </tr>
-              <tr>
-                <td className="pb-4 text-lg">Email </td>
-                <td className="pb-4">
-                  <TextField
-                    type="email"
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    value={leadData?.email}
-                    name="email"
-                    size="small"
-                    placeholder="Optional"
                     fullWidth
                   />
                 </td>

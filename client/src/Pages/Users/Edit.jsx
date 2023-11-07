@@ -30,6 +30,7 @@ const EditModal = ({ open, setOpen }) => {
     firstName: "",
     lastName: "",
     username: "",
+    email: "",
     phone: "",
   };
 
@@ -102,6 +103,18 @@ const EditModal = ({ open, setOpen }) => {
                 />
               </td>
             </tr>
+            <tr>
+                <td className="pb-4 text-lg">Email </td>
+                <td className="pb-4">
+                  <TextField
+                    size="small"
+                    fullWidth
+                    placeholder="Optional"
+                    value={employeeData?.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                  />
+                </td>
+              </tr>
             <tr>
               <td className="pb-4 text-lg">User Name </td>
               <td className="pb-4">

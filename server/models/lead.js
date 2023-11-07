@@ -2,19 +2,19 @@ import { Schema, model } from 'mongoose'
 import { generateUniqueIdentifier } from '../utils/utils.js'
 
 const leadSchema = Schema({
-    clientName: { type: String, required: true },
-    clientPhone: { type: Number, required: true},
-    country: { type: String, required: true },
-    degree: { type: String, required: true },
+    clientName: { type: String, required: false },
+    clientPhone: { type: Number, required: false},
+    country: { type: String, required: false },
+    degree: { type: String, required: false },
     degreeName: { type: String, required: false },
-    major: { type: String, required: true },
-    visa: { type: String, required: true },
-    priority: { type: String, required: true, default: 'moderate', enum: ['veryCold', 'cold', 'moderate', 'hot', 'veryHot'] },
-    status: { type: String, required: true },   // closed, followed up, contacted etc.
-    source: { type: String, required: true },   // facebook,instagram etc.
-    description: { type: String, required: true },
+    major: { type: String, required: false },
+    visa: { type: String, required: false },
+    priority: { type: String, required: false, default: 'moderate'  },
+    status: { type: String, required: false },   // closed, followed up, contacted etc.
+    source: { type: String, required: false },   // facebook,instagram etc.
+    description: { type: String, required: false },
     allocatedTo: { type: [Schema.Types.ObjectId], ref: 'User' },
-    images: { type: [String], required: true, default: [] },
+    images: { type: [String], required: false, default: [] },
     isArchived: { type: Boolean, required: false, default: false },
     followUps: { type: [Schema.Types.ObjectId], ref: 'FollowUp', default: [] },
     isAppliedForRefund: { type: Boolean, default: false },
