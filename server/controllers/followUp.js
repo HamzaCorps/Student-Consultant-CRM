@@ -1,5 +1,6 @@
 import FollowUp from '../models/followUp.js'
 import { createError } from '../utils/error.js'
+import mongoose from 'mongoose'
 
 export const getFollowUp = async (req, res, next) => {
     try {
@@ -36,17 +37,19 @@ export const getFollowUps = async (req, res, next) => {
         next(createError(500, err.message))
     }
 }
+
+
 export const getEmployeeFollowUps = async (req, res, next) => {
     try {
         const { leadId } = req.params;
 
         const findedFollowUp = await FollowUp.aggregate([
             {
-                $match: { leadId: mongoose.Types.ObjectId(leadId) }
+                $match: { leadId: new mongoose.Types.ObjectId(leadId) }
             },
             {
                 $lookup: {
-                    from: 'leads',
+                    from: 'leads', // Replace 'leads' with the actual name of your collection
                     localField: 'leadId',
                     foreignField: '_id',
                     as: 'lead'
@@ -56,11 +59,11 @@ export const getEmployeeFollowUps = async (req, res, next) => {
                 $unwind: '$lead'
             },
             {
-                $match: { 'lead.allocatedTo': mongoose.Types.ObjectId(req.user._id) }
+                $match: { 'lead.allocatedTo': new mongoose.Types.ObjectId(req.user._id) }
             },
             {
                 $lookup: {
-                    from: 'users', // Replace 'clients' with the actual name of your collection
+                    from: 'clients', // Replace 'clients' with the actual name of your collection
                     localField: 'lead.client',
                     foreignField: '_id',
                     as: 'lead.client'
@@ -73,6 +76,8 @@ export const getEmployeeFollowUps = async (req, res, next) => {
         next(createError(500, err.message));
     }
 };
+
+
 
 
 export const getFollowUpsStatsByCreatedAt = async (req, res, next) => {
