@@ -38,7 +38,7 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     country: "",
     degree: "",
     major: "",
-    degreeName: "Null",
+    degreeName: "",
     visa: "",
     status: "",
     source: "",

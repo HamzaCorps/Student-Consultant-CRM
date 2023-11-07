@@ -22,7 +22,7 @@ const Table = () => {
 
   const columns = [
     {
-      field: "_id",
+      field: "currentLead?.uid",
       headerName: "ID",
       width: 100,
       headerClassName: "super-app-theme--header",
@@ -196,7 +196,7 @@ const Table = () => {
                   paginationModel: { pageSize: 5 },
                 },
               }}
-              getRowId={(row) => console.log(row)}
+              getRowId={(row) => row._id}
               pageSizeOptions={[5, 10]}
               disableRowSelectionOnClick
               disableColumnMenu

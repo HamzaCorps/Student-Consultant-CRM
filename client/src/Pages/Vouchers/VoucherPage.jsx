@@ -127,7 +127,7 @@ const VoucherPage = ({ }) => {
             <tr className='w-full flex justify-around mt-[8px] ' >
               <td className="text-center border-[1px] border-black h-[2rem] min-w-[30%] max-w-[30%] pb-4">{voucher?.total}</td>
               <td className="text-center border-[1px] border-black h-[2rem] min-w-[30%] max-w-[30%] pb-4">{voucher?.paid}</td>
-              <td className="text-center border-[1px] border-black h-[2rem] min-w-[30%] max-w-[30%] pb-4">{voucher?.total - voucher?.paid}</td>
+              <td className="text-center border-[1px] border-black h-[2rem] min-w-[30%] max-w-[30%] pb-4">{voucher?.remained}</td>
             </tr>
           </table>
         </div>

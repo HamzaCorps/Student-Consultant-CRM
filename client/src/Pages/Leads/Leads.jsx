@@ -98,6 +98,7 @@ function Leads({ type, showSidebar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { leads, allLeads, isFetching, error } = useSelector((state) => state.lead);
+  console.log(leads)
   const archivedLeads = leads.filter((lead) => lead.isArchived);
   const unarchivedLeads = leads.filter((lead) => !lead.isArchived);
   const { loggedUser } = useSelector((state) => state.user);
@@ -111,25 +112,25 @@ function Leads({ type, showSidebar }) {
       renderCell: (params) => <div className="font-primary font-light">{params.row?.uid}</div>,
     },
     {
-      field: "client.username",
-      headerName: "Client Username",
+      field: "clientName",
+      headerName: "Client Name",
       headerClassName: "super-app-theme--header",
       width: 180,
       renderCell: (params) => (
         <div
           className={`text-[#20aee3] hover:text-[#007bff] capitalize cursor-pointer font-primary font-light`}
           onClick={() => handleOpenViewModal(params.row?._id)}>
-          {params.row?.client?.username}
+          {params.row?.clientName}
         </div>
       ),
     },
     {
-      field: "client?.phone",
+      field: "clientPhone",
       headerName: "Client Phone",
       headerClassName: "super-app-theme--header",
       width: 180,
       renderCell: (params) => (
-        <div className={`font-primary font-light`}>{params.row?.client?.phone}</div>
+        <div className={`font-primary font-light`}>{params.row?.clientPhone}</div>
       ),
     },
     {

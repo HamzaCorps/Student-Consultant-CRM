@@ -114,6 +114,15 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
     { name: "Other", value: "other" },
   ];
 
+  const handleRemainingAmount = () => {
+    const [number1, postfix1] =  voucherData.total.split(" ");
+    const [number2, postfix2] =  voucherData.paid.split(" ");
+    const total = parseInt(number1);
+    const paid = parseInt(number2);
+    const remained = total - paid;
+    return remained + " " + postfix2;
+  }
+
   return (
     <div>
       <Dialog
@@ -329,7 +338,7 @@ const CreateVoucher = ({ open, setOpen, scroll, downloadPdf, loader }) => {
                   <TextField
                     disabled
                     name="remained"
-                    value={(voucherData.remained = voucherData.total - voucherData.paid)}
+                    value={voucherData.remained = handleRemainingAmount()}
                     onChange={(e) => handleChange("remained", e.target.value)}
                     size="small"
                     type="text"
