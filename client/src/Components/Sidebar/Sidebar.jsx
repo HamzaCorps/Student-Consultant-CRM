@@ -103,6 +103,14 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       childrens: [],
     },
     {
+      id: 6,
+      title: "Transcript",
+      icon: <PiMoneyLight className="text-[25px]" />,
+      role: ["manager", "super_admin"],
+      link: "/transcript",
+      childrens: [],
+    },
+    {
       id: 7,
       title: "Cash Book",
       icon: <PiBankLight className="text-[25px]" />,

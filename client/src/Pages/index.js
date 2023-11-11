@@ -25,3 +25,4 @@ export { default as AllFollowUps } from "./Leads/AllFollowUps/AllFollowUps";
 export { default as ForgotPassword } from "./Auth/ForgotPassword";
 export { default as InputCode } from "./Auth/InputCode";
 export { default as ResetPassword } from "./Auth/ResetPassword";
+export { default as Transcript } from './Transcript/Transcript'

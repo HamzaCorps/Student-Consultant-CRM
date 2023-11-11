@@ -25,12 +25,14 @@ import {
   ForgotPassword,
   InputCode,
   ResetPassword,
+  Transcript,
 } from "./Pages";
 import { Navbar, Sidebar } from "./Components";
 import { useSelector } from "react-redux";
 import LeadRefunds from "./Pages/Leads/Refund/Refund";
 import VoucherPage from "./Pages/Vouchers/VoucherPage";
 import Home from "./Client Panel/Home";
+import TranscriptPage from "./Pages/Transcript/TranscriptPage";
 
 const App = () => {
   ///////////////////////////////////// VARIABLES ////////////////////////////////////////
@@ -72,8 +74,9 @@ const App = () => {
           </div>
         ) : loggedUser.role != "client" ? (
           <div
-            className={`flex h-screen font-primary ${`${pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
-              }`}`}>
+            className={`flex h-screen font-primary ${`${
+              pathname.includes("/client/") || pathname.includes("download") ? "hidden" : "visible"
+            }`}`}>
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <div
               className={`${showSidebar ? "w-full " : "w-full "} flex flex-col overflow-y-scroll `}>
@@ -105,6 +108,7 @@ const App = () => {
                   <Route path="/view/cashbook" element={<ViewCashBook />} />
                   <Route path="/sales" element={<Sales />} />
                   <Route path="/sales/create" element={<CreateSale />} />
+                  <Route path="/transcript" element={<Transcript />} />
                   <Route path="/voucher" element={<Vouchers showSidebar={showSidebar} />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/client" element={<Home />} />
@@ -119,6 +123,7 @@ const App = () => {
         )}
 
         <Routes>
+          <Route path="/download/transcript" element={<TranscriptPage />} />
           <Route path="/download/voucher" element={<VoucherPage />} />
         </Routes>
       </div>
