@@ -9,14 +9,20 @@ import {
   TextField,
 } from "@mui/material";
 import { PiNotepad, PiXLight } from "react-icons/pi";
+import { useDispatch, useSelector } from "react-redux";
+import { getDeductions, updateDeduction } from "../../redux/action/deduction";
+import { getDeductionsReducer } from "../../redux/reducer/deduction";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const SetDeductions = ({ open, setOpen, scroll }) => {
+const SetDeductions = ({ open, setOpen }) => {
   ////////////////////////////////////////// VARIABLES //////////////////////////////////
 
+  const dispatch = useDispatch();
+  const { deductions } = useSelector((state) => state.deduction);
+  console.log(deductions)
   const initialState = {
     halfDays: "",
     dayOffs: "",
@@ -24,18 +30,22 @@ const SetDeductions = ({ open, setOpen, scroll }) => {
   };
 
   ////////////////////////////////////////// STATES /////////////////////////////////////
-  const [deductions, setDeductions] = useState(initialState);
+  const [deductionsData, setDeductionsData] = useState(deductions);
 
   ////////////////////////////////////////// USE EFFECTS /////////////////////////////////
+  useEffect(() => {
+    dispatch(getDeductionsReducer(deductions));
+  }, [deductions]);
+  
 
   ////////////////////////////////////////// FUNCTIONS ///////////////////////////////////
 
   const handleChange = (field, value) => {
-    setDeductions({ ...deductions, [field]: value });
+    setDeductionsData({ ...deductionsData, [field]: value });
   };
 
   const handleClose = () => {
-    setDeductions(initialState);
+    setDeductionsData(initialState);
     setOpen(false);
   };
 
@@ -43,7 +53,6 @@ const SetDeductions = ({ open, setOpen, scroll }) => {
     <div>
       <Dialog
         open={open}
-        scroll={scroll}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
@@ -69,7 +78,7 @@ const SetDeductions = ({ open, setOpen, scroll }) => {
                 <td className="pb-4">
                   <TextField
                     onChange={(e) => handleChange("lateArrivals", e.target.value)}
-                    value={deductions.lateArrivals}
+                    value={deductionsData?.lateArrivals}
                     name="lateArrivals"
                     size="small"
                     type="number"
@@ -83,7 +92,7 @@ const SetDeductions = ({ open, setOpen, scroll }) => {
                 <td className="pb-4">
                   <TextField
                     onChange={(e) => handleChange("halfDays", e.target.value)}
-                    value={deductions.halfDays}
+                    value={deductionsData?.halfDays}
                     name="halfDays"
                     size="small"
                     type="number"
@@ -97,7 +106,7 @@ const SetDeductions = ({ open, setOpen, scroll }) => {
                 <td className="pb-4">
                   <TextField
                     onChange={(e) => handleChange("dayOffs", e.target.value)}
-                    value={deductions.dayOffs}
+                    value={deductionsData?.dayOffs}
                     name="dayOffs"
                     size="small"
                     type="number"

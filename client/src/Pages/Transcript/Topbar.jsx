@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Path } from "../../utils";
 import { Add } from "@mui/icons-material";
 import { FormControl, Input, InputAdornment, Tooltip } from "@mui/material";
-import { PiBackspace, PiMagnifyingGlass, PiXCircle } from "react-icons/pi";
+import { PiBackspace, PiMagnifyingGlass, PiTag, PiXCircle } from "react-icons/pi";
 import CreateTranscript from "./CreateTranscript";
 import { FiFilter } from "react-icons/fi";
 import SetDeductions from "./SetDeductions";
@@ -70,7 +70,7 @@ const Topbar = () => {
             <div
               onClick={handleDeductionopen("body")}
               className={` p-2 rounded-md cursor-pointer bg-[#ebf2f5] hover:bg-[#dfe6e8] text-[#a6b5bd]`}>
-              <PiBackspace className="text-[25px] " />
+              <PiTag className="text-[25px] " />
             </div>
           </Tooltip>
           <div>

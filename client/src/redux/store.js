@@ -11,6 +11,7 @@ import followUpReducer from './reducer/followUp';
 import refundReducer from './reducer/refund';
 import cashbookReducer from './reducer/cashbook';
 import voucherReducer from './reducer/voucher';
+import deductionReducer from './reducer/deduction';
 
 const rootReducer = combineReducers({
     upload: uploadReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     refund: refundReducer,
     cashbook: cashbookReducer,
     voucher: voucherReducer,
+    deduction: deductionReducer,
 });
 
 export const store = configureStore({

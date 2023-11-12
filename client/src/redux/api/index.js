@@ -158,3 +158,10 @@ export const getVouchers = () => API.get(`/voucher/get/all`)
 export const getEmployeeVouchers = () => API.get(`/voucher/get/employee`)
 export const createVoucher = (voucherData) => API.post(`/voucher/create`, voucherData)
 export const deleteVoucher = (voucherId) => API.delete(`/voucher/delete/${voucherId}`)
+
+// DEDUCTION
+export const getDeduction = (deductionId) => API.get(`/deduction/get/single/${deductionId}`)
+export const getDeductions = () => API.get(`/deduction/get/all`)
+export const createDeduction = (deductionData) => API.post(`/deduction/create`, deductionData)
+export const updateDeduction = (deductionId, deductionData) => API.put(`/deduction/update/${deductionId}`, deductionData)
+export const deleteDeduction = (deductionId) => API.delete(`/deduction/delete/${deductionId}`)
