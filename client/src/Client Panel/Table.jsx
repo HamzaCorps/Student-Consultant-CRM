@@ -139,6 +139,7 @@ const Table = () => {
 
   //////////////////////////////////////// USEEFFECTS //////////////////////////////////
   useEffect(() => {
+    console.log('phone',phoneNumber)
     dispatch(getLeadByPhone(phoneNumber));
   }, []);
 

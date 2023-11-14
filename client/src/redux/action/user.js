@@ -6,6 +6,7 @@ export const register = (userData, navigate) => async (dispatch) => {
     try {
         dispatch(start())
         const { data } = await api.register(userData)
+        console.log('register data',data)
         dispatch(registerReducer(data.result))
         navigate('/auth/login')
         dispatch(end())

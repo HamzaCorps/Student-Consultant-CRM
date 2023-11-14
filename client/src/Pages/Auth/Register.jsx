@@ -93,7 +93,7 @@ const Signup = () => {
     if (email && !validator.validate(email))
       return setInputError((pre) => ({ ...pre, email: "Make sure to provide a valid email" }));
     if (!phone) return setInputError((pre) => ({ ...pre, phone: "Phone Number is required" }));
-    if (phone.length < 6)
+    if (phone.length < 0)
       return setInputError((pre) => ({ ...pre, phone: "Please provide a valid phone number" }));
     if (!password) return setInputError((pre) => ({ ...pre, password: "Password is required" }));
     if (password.length < 6)

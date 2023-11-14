@@ -29,12 +29,15 @@ export const register = async (req, res, next) => {
         else
             role = role || 'client'
 
-        const findLead = await Lead.findOne({ clientPhone: phone })
+        const findedLead = await Lead.findOne({ clientPhone: phone })
+        console.log('findedLead',findedLead)
 
         const newUser = await User.create({ firstName, lastName, username, email, phone, password: hashedPassword, city, role })
+        console.log('newUser',newUser)
 
-        if(findLead){
-            await Lead.findByIdAndUpdate(findLead._id, {$set: {client: newUser._id}} , { new: true }).populate('client').populate('allocatedTo').exec()
+        if(findedLead){
+           const updatedLead = await Lead.findByIdAndUpdate(findedLead._id, {$set: {client: newUser._id}} , { new: true }).populate('client').populate('allocatedTo').exec()
+            console.log('updatedLead',updatedLead)
         }
 
         res.status(200).json({ result: newUser, message: 'User created successfully', success: true })

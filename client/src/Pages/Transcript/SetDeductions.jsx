@@ -51,6 +51,11 @@ const SetDeductions = ({ open, setOpen }) => {
     setOpen(false);
   };
 
+  const handleSubmit = () => {
+    dispatch(updateDeduction(deductionsData._id, deductionsData));
+    setOpen(false);
+  }
+
   return (
     <div>
       <Dialog
@@ -80,7 +85,7 @@ const SetDeductions = ({ open, setOpen }) => {
                 <td className="pb-4">
                   <TextField
                     onChange={(e) => handleChange("lateArrivals", e.target.value)}
-                    value={deductionsData[0]?.lateArrivals}
+                    value={deductionsData?.lateArrivals}
                     name="lateArrivals"
                     size="small"
                     type="number"
@@ -129,6 +134,7 @@ const SetDeductions = ({ open, setOpen }) => {
             Cancel
           </button>
           <button
+          onClick={handleSubmit}
             variant="contained"
             className="bg-primary-red px-4 py-2 font-primary rounded-lg text-white mt-4 hover:bg-red-400">
             Submit
