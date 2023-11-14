@@ -7,6 +7,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import nodemailer from "nodemailer"
 import otpGenerator from 'otp-generator'
+import Lead from '../models/lead.js'
 
 export const register = async (req, res, next) => {
     try {
@@ -28,7 +29,14 @@ export const register = async (req, res, next) => {
         else
             role = role || 'client'
 
+        const findLead = await Lead.findOne({ clientPhone: phone })
+
         const newUser = await User.create({ firstName, lastName, username, email, phone, password: hashedPassword, city, role })
+
+        if(findLead){
+            await Lead.findByIdAndUpdate(findLead._id, {$set: {client: newUser._id}} , { new: true }).populate('client').populate('allocatedTo').exec()
+        }
+
         res.status(200).json({ result: newUser, message: 'User created successfully', success: true })
 
     } catch (err) {

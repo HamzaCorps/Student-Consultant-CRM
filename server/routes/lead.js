@@ -22,9 +22,9 @@ const verifyIsAllocatedTo = async (req, res, next) => {
 
 // GET
 router.get('/get/single/:leadId', getLead)
-router.get('/get/phone/:phone', verifyToken, getLeadByPhone)
+router.get('/get/phone/:phone', getLeadByPhone)
 router.get('/get/employee', verifyToken, verifyEmployee, getEmployeeLeads)
-router.get('/get/all', verifyToken, verifyManager, getLeads)
+router.get('/get/all', verifyToken, getLeads)
 router.get('/get/stats', verifyToken, verifyEmployee, getLeadsStat)
 router.get('/search', verifyToken, searchLead)
 router.get('/filter', verifyToken, filterLead)

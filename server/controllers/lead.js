@@ -22,8 +22,10 @@ export const getLeadByPhone = async (req, res, next) => {
         const { phone } = req.params
 
         const findedUser = await User.findOne({ phone })
+        console.log(findedUser)
 
         const findedLead = await Lead.find({ client: findedUser._id }).populate('client').populate('allocatedTo').exec()
+        console.log(findedLead)
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
 
@@ -245,7 +247,8 @@ export const createLead = async (req, res, next) => {
         for (let i = 0; i < leadsToCreate; i++) {
             const newLead = await Lead.create({
                 clientName,
-                client: findedLead._id,
+                client: findedLead ? findedLead._id : null,
+                clientPhone,
                 priority,
                 country,
                 visa,
@@ -257,7 +260,7 @@ export const createLead = async (req, res, next) => {
                 description,
                 allocatedTo: [req.user?._id]
             });
-
+            console.log(newLead, newLead.client)
             // Query to populate the fields
             const populatedLead = await Lead.findById(newLead._id)
                 .populate('allocatedTo')

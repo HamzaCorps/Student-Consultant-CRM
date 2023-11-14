@@ -7,6 +7,7 @@ import { PiBackspace, PiMagnifyingGlass, PiTag, PiXCircle } from "react-icons/pi
 import CreateTranscript from "./CreateTranscript";
 import { FiFilter } from "react-icons/fi";
 import SetDeductions from "./SetDeductions";
+import ShowDeductions from "./ShowDeductions";
 
 const Topbar = () => {
   ///////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
@@ -85,7 +86,7 @@ const Topbar = () => {
         </div>
       </div>
 
-      <SetDeductions scroll={scroll} open={openDeductionModal} setOpen={setOpenDeductionModal} />
+      <ShowDeductions scroll={scroll} open={openDeductionModal} setOpen={setOpenDeductionModal} />
       <CreateTranscript scroll={scroll} open={openCreateModal} setOpen={setOpenCreateModal} />
     </div>
   );

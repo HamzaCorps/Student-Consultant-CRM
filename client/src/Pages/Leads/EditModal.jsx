@@ -125,6 +125,7 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   };
 
   const handleClose = () => {
+    setLeadData(initialLeadState)
     setOpen(false);
   };
 
@@ -171,9 +172,9 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
                 <td className="pb-4 text-lg">Phone </td>
                 <td className="pb-4">
                   <TextField
-                    name="phone"
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    value={leadData?.client?.phone}
+                    name="clientPhone"
+                    onChange={(e) => handleChange("clientPhone", e.target.value)}
+                    value={leadData?.clientPhone}
                     type="number"
                     size="small"
                     fullWidth

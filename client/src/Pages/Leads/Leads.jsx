@@ -98,7 +98,6 @@ function Leads({ type, showSidebar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { leads, allLeads, isFetching, error } = useSelector((state) => state.lead);
-  console.log(leads)
   const archivedLeads = leads.filter((lead) => lead.isArchived);
   const unarchivedLeads = leads.filter((lead) => !lead.isArchived);
   const { loggedUser } = useSelector((state) => state.user);
@@ -115,7 +114,7 @@ function Leads({ type, showSidebar }) {
       field: "clientName",
       headerName: "Client Name",
       headerClassName: "super-app-theme--header",
-      width: 180,
+      width: 140,
       renderCell: (params) => (
         <div
           className={`text-[#20aee3] hover:text-[#007bff] capitalize cursor-pointer font-primary font-light`}
@@ -128,15 +127,15 @@ function Leads({ type, showSidebar }) {
       field: "clientPhone",
       headerName: "Client Phone",
       headerClassName: "super-app-theme--header",
-      width: 180,
+      width: 150,
       renderCell: (params) => (
         <div className={`font-primary font-light`}>{params.row?.client?.phone || params.row?.clientPhone }</div>
       ),
     },
     {
       field: "createdAt",
-      headerName: "Date",
-      width: 120,
+      headerName: "Created",
+      width: 110,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
         <div className="font-primary font-light">{format(params.row?.createdAt)}</div>
@@ -155,7 +154,7 @@ function Leads({ type, showSidebar }) {
       field: "status",
       headerName: "Status",
       headerClassName: "super-app-theme--header",
-      width: 200,
+      width: 150,
       renderCell: (params) => (
         <span
           className={`border-[1px] px-[8px] py-[4px] rounded-full capitalize font-primary font-medium 
@@ -187,7 +186,7 @@ function Leads({ type, showSidebar }) {
     {
       field: "degree",
       headerName: "Degree",
-      width: 170,
+      width: 150,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => <div className="font-primary font-light capitalize">{params.row?.degree == 'other' ? params.row?.degreeName : params.row?.degree}</div>,
     },

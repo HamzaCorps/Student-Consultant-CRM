@@ -10,18 +10,19 @@ import {
 } from "@mui/material";
 import { PiNotepad, PiXLight } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { getDeduction, getDeductions, updateDeduction } from "../../redux/action/deduction";
-import { getDeductionsReducer } from "../../redux/reducer/deduction";
+import { getDeductions, updateDeduction } from "../../redux/action/deduction";
+import { getDeductionReducer, getDeductionsReducer } from "../../redux/reducer/deduction";
+import SetDeductions from "./SetDeductions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const SetDeductions = ({ open, setOpen }) => {
+const ShowDeductions = ({ open, setOpen }) => {
   ////////////////////////////////////////// VARIABLES //////////////////////////////////
 
   const dispatch = useDispatch();
-  const { currentDeduction } = useSelector((state) => state.deduction);
+  const { deductions } = useSelector((state) => state.deduction);
   const initialState = {
     halfDays: "",
     dayOffs: "",
@@ -29,21 +30,28 @@ const SetDeductions = ({ open, setOpen }) => {
   };
 
   ////////////////////////////////////////// STATES /////////////////////////////////////
-  const [deductionsData, setDeductionsData] = useState(currentDeduction);
+  const [deductionsData, setDeductionsData] = useState(deductions);
+  const [openChangeModel, setOpenChangeModel] = useState(false);
 
   ////////////////////////////////////////// USE EFFECTS /////////////////////////////////
   useEffect(() => {
-    dispatch(getDeduction());
+    dispatch(getDeductions());
   }, []);
-  
+
   useEffect(() => {
-    setDeductionsData(currentDeduction);
-  }, [currentDeduction]);
+    setDeductionsData(deductions);
+  }, [deductions]);
 
   ////////////////////////////////////////// FUNCTIONS ///////////////////////////////////
 
   const handleChange = (field, value) => {
     setDeductionsData({ ...deductionsData, [field]: value });
+  };
+
+  const handleChangeDecutions = (deduction) => {
+    setOpen(false);
+    setOpenChangeModel(true);
+    dispatch(getDeductionReducer(deduction));
   };
 
   const handleClose = () => {
@@ -84,8 +92,11 @@ const SetDeductions = ({ open, setOpen }) => {
                     name="lateArrivals"
                     size="small"
                     type="number"
-                    placeholder="Enter Amount per Late Arrival"
+                    disabled
                     fullWidth
+                    InputProps={{
+                      startAdornment: <div style={{ marginRight: 8 }}>Rs.</div>,
+                    }}
                   />
                 </td>
               </tr>
@@ -94,12 +105,16 @@ const SetDeductions = ({ open, setOpen }) => {
                 <td className="pb-4">
                   <TextField
                     onChange={(e) => handleChange("halfDays", e.target.value)}
-                    value={deductionsData?.halfDays}
+                    value={deductionsData[0]?.halfDays}
                     name="halfDays"
                     size="small"
                     type="number"
-                    placeholder="Enter Amount per Half Day"
                     fullWidth
+                    disabled
+                    initialState
+                    InputProps={{
+                      startAdornment: <div style={{ marginRight: 8 }}>Rs.</div>,
+                    }}
                   />
                 </td>
               </tr>
@@ -108,12 +123,15 @@ const SetDeductions = ({ open, setOpen }) => {
                 <td className="pb-4">
                   <TextField
                     onChange={(e) => handleChange("dayOffs", e.target.value)}
-                    value={deductionsData?.dayOffs}
+                    value={deductionsData[0]?.dayOffs}
                     name="dayOffs"
                     size="small"
                     type="number"
-                    placeholder="Enter Amount per Day Off"
+                    disabled
                     fullWidth
+                    InputProps={{
+                      startAdornment: <div style={{ marginRight: 8 }}>Rs.</div>,
+                    }}
                   />
                 </td>
               </tr>
@@ -129,14 +147,17 @@ const SetDeductions = ({ open, setOpen }) => {
             Cancel
           </button>
           <button
+            onClick={() => handleChangeDecutions(deductionsData[0])}
             variant="contained"
             className="bg-primary-red px-4 py-2 font-primary rounded-lg text-white mt-4 hover:bg-red-400">
-            Submit
+            Change
           </button>
         </DialogActions>
       </Dialog>
+
+      <SetDeductions open={openChangeModel} setOpen={setOpenChangeModel}  />
     </div>
   );
 };
 
-export default SetDeductions;
+export default ShowDeductions;
