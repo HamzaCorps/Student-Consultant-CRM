@@ -7,6 +7,7 @@ import Table from "../../Components/Table/Table";
 import { PiDownloadSimpleLight, PiTrashLight } from "react-icons/pi";
 import DeleteTranscript from "./DeleteTranscript";
 import { useNavigate } from "react-router-dom";
+import { getTranscriptReducer } from "../../redux/reducer/transcript";
 
 const Transcript = () => {
   //////////////////////////////// VARIABLES /////////////////////////////////
@@ -135,9 +136,8 @@ const Transcript = () => {
   };
 
   const handleDownload = (transcript) => {
-    navigate("/download/transcript", {
-      state: { transcript },
-    });
+    dispatch(getTranscriptReducer(transcript))
+    navigate("/download/transcript");
   };
 
   return (

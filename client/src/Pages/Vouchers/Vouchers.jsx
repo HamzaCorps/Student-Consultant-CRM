@@ -122,7 +122,7 @@ function Vouchers() {
 
   //////////////////////////////////////// FUNCTIONS ////////////////////////////////////
   const handleDownload = (voucher) => {
-    navigate("/download/voucher", {
+    navigate("/download/voucher", { 
       state: { voucher },
     });
   };
