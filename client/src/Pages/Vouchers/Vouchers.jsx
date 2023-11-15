@@ -19,7 +19,6 @@ function Vouchers() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { vouchers, isFetching, error } = useSelector((state) => state.voucher);
-  console.log(vouchers)
   const { loggedUser } = useSelector((state) => state.user);
 
   const columns = [

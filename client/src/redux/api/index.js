@@ -163,3 +163,10 @@ export const getDeductions = () => API.get(`/deduction/get/all`)
 export const createDeduction = (deductionData) => API.post(`/deduction/create`, deductionData)
 export const updateDeduction = (deductionId, deductionData) => API.put(`/deduction/update/${deductionId}`, deductionData)
 export const deleteDeduction = (deductionId) => API.delete(`/deduction/delete/${deductionId}`)
+
+// TRANSCRIPT
+export const getTranscript = (transcriptId) => API.get(`/trasncript/get/single/${transcriptId}`)
+export const getTranscripts = () => API.get(`/trasncript/get/all`)
+export const createTranscript = (transcriptData) => API.post(`/trasncript/create`, transcriptData)
+export const updateTranscript = (transcriptId, transcriptData) => API.put(`/trasncript/update/${transcriptId}`, transcriptData)
+export const deleteTranscript = (transcriptId) => API.delete(`/trasncript/delete/${transcriptId}`)

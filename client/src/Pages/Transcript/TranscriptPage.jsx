@@ -6,8 +6,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const TranscriptPage = () => {
   ////////////////////////////////////// VARIABLES ///////////////////////////////////
-
-  const { state } = useLocation();
+  const { state } = useLocation()
+  console.log('state', state)
+  const trancscript = state.trancscript
+  console.log('trancscript', trancscript)
   const navigate = useNavigate();
   const pdfRef = useRef();
 
@@ -48,7 +50,7 @@ const TranscriptPage = () => {
         <table className="flex flex-col gap-4">
           <tr>
             <th className="px-10 text-lg">Date Of Issue :</th>
-            <td className="w-[18rem] text-lg">00/00/0000</td>
+            <td className="w-[18rem] text-lg">{console.log(trancscript)}</td>
             <th className="px-10 text-lg">Employee Name :</th>
             <td className="px-10 text-lg">Demo</td>
           </tr>

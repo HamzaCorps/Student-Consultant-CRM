@@ -12,6 +12,8 @@ import {
 import { PiNotepad, PiXLight } from "react-icons/pi";
 import { CFormSelect } from "@coreui/react";
 import { getEmployees } from "../../redux/action/user";
+import { createTranscript } from "../../redux/action/transcript";
+import { getDeductions } from "../../redux/action/deduction";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -21,17 +23,19 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
   ////////////////////////////////////////// VARIABLES //////////////////////////////////
   const dispatch = useDispatch();
   const { employees } = useSelector((state) => state.user);
+  const { isFetching } = useSelector((state) => state.transcript);
+  const { deductions } = useSelector((state) => state.deduction);
 
   const initialState = {
-    staff: "",
+    employeeName: "",
     designation: "",
     phone: "",
-    month: "",
-    TSalary: "",
+    salaryMonth: "",
+    totalSalary: "",
     lateArrivals: "",
     halfDays: "",
     dayOffs: "",
-    NSalary: "",
+    netSalary: "",
   };
 
   const months = [
@@ -52,11 +56,22 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
   const [transcriptData, setTranscriptData] = useState(initialState);
 
   ////////////////////////////////////////// USE EFFECTS /////////////////////////////////
+
+  useEffect(() => {
+    dispatch(getDeductions());
+  }, []);
+
   useEffect(() => {
     dispatch(getEmployees());
   }, [open]);
 
   ////////////////////////////////////////// FUNCTIONS ///////////////////////////////////
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createTranscript(transcriptData));
+    handleClose();
+  };
 
   const handleChange = (field, value) => {
     setTranscriptData({ ...transcriptData, [field]: value });
@@ -96,8 +111,8 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                 <td className="pb-4 text-lg">Employee Name </td>
                 <td className="pb-4">
                   <CFormSelect
-                    value={transcriptData.staff}
-                    onChange={(e) => handleChange("staff", e.target.value)}
+                    value={transcriptData.employeeName}
+                    onChange={(e) => handleChange("employeeName", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
                     <option value={""}>Select an Option</option>
                     {employees.map((employee, key) => (
@@ -136,8 +151,8 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                 <td className="pb-4 text-lg">Salary Month </td>
                 <td className="pb-4">
                   <CFormSelect
-                    value={transcriptData.month}
-                    onChange={(e) => handleChange("month", e.target.value)}
+                    value={transcriptData.salaryMonth}
+                    onChange={(e) => handleChange("salaryMonth", e.target.value)}
                     className="border-[1px] p-2 rounded-md w-full border-[#c1c1c1] cursor-pointer text-black">
                     <option value={""}>Select an Option</option>
                     {months.map((employee, key) => (
@@ -152,9 +167,9 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                 <td className="pb-4 text-lg">Total Salary </td>
                 <td className="pb-4">
                   <TextField
-                    onChange={(e) => handleChange("TSalary", e.target.value)}
-                    value={transcriptData.TSalary}
-                    name="TSalary"
+                    onChange={(e) => handleChange("totalSalary", e.target.value)}
+                    value={transcriptData.totalSalary}
+                    name="totalSalary"
                     size="small"
                     type="number"
                     fullWidth
@@ -175,7 +190,7 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                     type="number"
                     fullWidth
                     InputProps={{
-                      endAdornment: <div style={{ marginRight: 8, opacity: 0.5 }}>X&nbsp;200</div>,
+                      endAdornment: <div style={{ marginRight: 8, opacity: 0.5 }}>X&nbsp;{deductions[0]?.lateArrivals}</div>,
                     }}
                   />
                 </td>
@@ -191,7 +206,7 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                     type="number"
                     fullWidth
                     InputProps={{
-                      endAdornment: <div style={{ marginRight: 8, opacity: 0.5 }}>X&nbsp;200</div>,
+                      endAdornment: <div style={{ marginRight: 8, opacity: 0.5 }}>X&nbsp;{deductions[0]?.halfDays}</div>,
                     }}
                   />
                 </td>
@@ -207,7 +222,7 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                     type="number"
                     fullWidth
                     InputProps={{
-                      endAdornment: <div style={{ marginRight: 8, opacity: 0.5 }}>X&nbsp;200</div>,
+                      endAdornment: <div style={{ marginRight: 8, opacity: 0.5 }}>X&nbsp;{deductions[0]?.dayOffs}</div>,
                     }}
                   />
                 </td>
@@ -216,9 +231,15 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
                 <td className="pb-4 text-lg">Net Salary </td>
                 <td className="pb-4">
                   <TextField
-                    onChange={(e) => handleChange("NSalary", e.target.value)}
-                    value={transcriptData.NSalary = transcriptData.TSalary - (transcriptData.lateArrivals * 200) - (transcriptData.halfDays * 200) - (transcriptData.dayOffs * 200)}
-                    name="NSalary"
+                    onChange={(e) => handleChange("netSalary", e.target.value)}
+                    value={
+                      (transcriptData.netSalary =
+                        transcriptData.totalSalary -
+                        transcriptData.lateArrivals * deductions[0]?.lateArrivals -
+                        transcriptData.halfDays * deductions[0]?.halfDays -
+                        transcriptData.dayOffs * deductions[0]?.dayOffs)
+                    }
+                    name="netSalary"
                     size="small"
                     type="number"
                     fullWidth
@@ -240,6 +261,7 @@ const CreateTranscript = ({ open, setOpen, scroll }) => {
             Cancel
           </button>
           <button
+            onClick={handleSubmit}
             variant="contained"
             className="bg-primary-red px-4 py-2 font-primary rounded-lg text-white mt-4 hover:bg-red-400">
             Submit

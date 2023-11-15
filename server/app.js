@@ -19,6 +19,7 @@ import cashbookRoutes from './routes/cashbook.js'
 import refundRoutes from './routes/refund.js'
 import voucherRoutes from './routes/voucher.js'
 import deductionRoutes from './routes/deduction.js'
+import transcriptRoutes from './routes/transcript.js'
 
 dotenv.config()
 const app = express()
@@ -48,6 +49,7 @@ app.use('/api/v1/cashbook', cashbookRoutes)
 app.use('/api/v1/refund', refundRoutes)
 app.use('/api/v1/voucher', voucherRoutes)
 app.use('/api/v1/deduction', deductionRoutes)
+app.use('/api/v1/trasncript', transcriptRoutes)
  
 app.use((err, req, res, next) => {
     const message = err.message || 'Something went wrong.'
@@ -55,7 +57,6 @@ app.use((err, req, res, next) => {
     res.status(status).json({ message, status, stack: err.stack })
     next()
 })
-
 
 mongoose.connect(CONNECTION_URL)
     .then(() => app.listen(PORT, () => console.log('listening at port ' + PORT)))

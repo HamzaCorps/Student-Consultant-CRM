@@ -382,7 +382,6 @@ function Leads({ type, showSidebar }) {
             columns={modifiedColumns}
             rowsPerPage={10}
             isFetching={isFetching}
-            error={error}
             showSidebar={showSidebar}
           />
         </CCallout>

@@ -5,7 +5,7 @@ import { start, end, error, createDeductionReducer, deleteDeductionReducer, getD
 
 export const getDeduction = (deductionId) => async (dispatch) => {
     try {
-        dispatch(start())
+        dispatch(start()) 
         const { data } = await api.getDeduction(deductionId)
         dispatch(getDeductionReducer(data.result))
         dispatch(end())

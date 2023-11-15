@@ -48,10 +48,10 @@ const ShowDeductions = ({ open, setOpen }) => {
     setDeductionsData({ ...deductionsData, [field]: value });
   };
 
-  const handleChangeDecutions = (deduction) => {
+  const handleChangeDecutions = (deductionId) => {
     setOpen(false);
     setOpenChangeModel(true);
-    dispatch(getDeductionReducer(deduction));
+    dispatch(getDeductionReducer(deductionId));
   };
 
   const handleClose = () => {
