@@ -36,7 +36,7 @@ const FollowUps = () => {
       headerName: "Next Follow Up Date",
       headerClassName: "super-app-theme--header",
       width: 200,
-      renderCell: (params) => <div className="font-primary font-light">{params.row.followUpDate}</div>,
+      renderCell: (params) => <div className="font-primary font-light">{moment(params.row?.followUpDate).format("DD-MM-YYYY")}</div>,
     },
     {
       field: "remarks",
