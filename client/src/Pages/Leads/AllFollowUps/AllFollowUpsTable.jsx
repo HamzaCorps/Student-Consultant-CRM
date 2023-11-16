@@ -255,7 +255,6 @@ const AllFollowUpsTable = () => {
 
   return (
     <>
-      <Lead open={showLead} setOpen={setShowLead} leadId={selectedLeadId} />
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
