@@ -53,7 +53,7 @@ const Topbar = () => {
         </div>
 
         <div className="md:flex justify-between items-center flex-none">
-          <h1 className="text-primary-blue text-[32px] capitalize font-light">All Follow Ups</h1>
+          <h1 className="text-primary-blue text-[32px] capitalize font-light">Call Reminders</h1>
 
           {showOptionButtons && (
             <div className="flex items-center justify-end gap-2 md:mt-0 mt-4">
@@ -61,7 +61,7 @@ const Topbar = () => {
                 <FormControl>
                   <Input
                     name="search"
-                    placeholder="Search Follow Up"
+                    placeholder="Search"
                     onChange={(e) => handleSearch(e.target.value)}
                     startAdornment={
                       <InputAdornment position="start">

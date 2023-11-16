@@ -21,10 +21,7 @@ const TranscriptPage = ({ }) => {
   const pdfRef = useRef();
 
   ////////////////////////////////////// USE EFFECTS ///////////////////////////////////
-  
-  useEffect(() => {
-    dispatch(getDeductions())
-  }, []);
+
 
   useEffect(() => {
     const downloadPdf = () => {
@@ -49,7 +46,8 @@ const TranscriptPage = ({ }) => {
         });
     };
     downloadPdf();
-  });
+    dispatch(getDeductions())
+  }, []);
 
   ////////////////////////////////////// FUNCTIONS ///////////////////////////////////
 

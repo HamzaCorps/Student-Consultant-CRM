@@ -89,7 +89,7 @@ const App = () => {
                   <Route path="/auth/login" element={<Navigate to="/" />} />
                   <Route path="/myLeads" element={<Leads />} />
                   <Route path="/leads" exact element={<Leads />} />
-                  <Route path="/leads/followups/all" element={<AllFollowUps />} />
+                  <Route path="/leads/call-reminders" element={<AllFollowUps />} />
                   <Route path="/leads/ledger" element={<Navigate to="/leads" />} />
                   <Route path="/leads/ledger/:leadId" element={<Ledger />} />
                   <Route path="/leads/:leadId" element={<Lead />} />

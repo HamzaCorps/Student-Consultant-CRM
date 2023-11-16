@@ -5,7 +5,7 @@ import { Path } from "../../utils";
 import { Chip, FormControl, Input, InputAdornment, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployeeLeads, getLeads, searchLead } from "../../redux/action/lead";
-import { PiArchive, PiChartBar, PiMagnifyingGlass } from "react-icons/pi";
+import { PiArchive, PiChartBar, PiMagnifyingGlass, PiNote } from "react-icons/pi";
 import { FiFilter, FiList, FiUser } from "react-icons/fi";
 import CreateLead from "./CreateLead";
 import EditModal from "./EditModal";
@@ -146,14 +146,14 @@ const Topbar = ({ options, setOptions, isFiltered, setIsFiltered, openFilters, s
                 <FiFilter className="text-[25px] " />
               </div>
             </Tooltip>
-            <Tooltip title="View Follow ups" arrow placement="top">
+            <Tooltip title="Call Reminders" arrow placement="top">
               <div
-                onClick={()=>navigate('/leads/followups/all')}
+                onClick={()=>navigate('/leads/call-reminders')}
                 className={` p-2 rounded-md cursor-pointer ${openFilters
                   ? "text-[#20aee3] bg-[#e4f1ff]"
                   : "bg-[#ebf2f5] hover:bg-[#dfe6e8] text-[#a6b5bd]"
                   }`}>
-                <PiChartBar className="text-[25px] " />
+                <PiNote className="text-[25px] " />
               </div>
             </Tooltip>
             <div>
