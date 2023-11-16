@@ -8,7 +8,6 @@ export const getLead = async (req, res, next) => {
 
         const { leadId } = req.params
         const findedLead = await Lead.findById(leadId).populate('client').populate('allocatedTo').exec()
-        console.log(findedLead)
         if (!findedLead) return next(createError(400, 'Lead not exist'))
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
@@ -23,10 +22,8 @@ export const getLeadByPhone = async (req, res, next) => {
         const { phone } = req.params
 
         const findedUser = await User.findOne({ phone })
-        console.log(findedUser)
 
         const findedLead = await Lead.find({ client: findedUser._id }).populate('client').populate('allocatedTo').exec()
-        console.log(findedLead)
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
 
@@ -261,7 +258,6 @@ export const createLead = async (req, res, next) => {
                 description,
                 allocatedTo: [req.user?._id]
             });
-            console.log(newLead, newLead.client)
             // Query to populate the fields
             const populatedLead = await Lead.findById(newLead._id)
                 .populate('allocatedTo')

@@ -5,13 +5,12 @@ import { getFollowUps, getEmployeeFollowUps } from "../../../redux/action/follow
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { format } from "timeago.js";
 import moment from "moment";
 
 const FollowUps = () => {
 
   /////////////////////////////////////////// VARIABLES //////////////////////////////////////////// 
-  const { followUps, error, isFetching } = useSelector(state => state.followUp)
+  const { followUps } = useSelector(state => state.followUp)
   const { loggedUser } = useSelector(state => state.user)
   console.log(followUps)
   const { leadId } = useParams()
@@ -62,9 +61,9 @@ const FollowUps = () => {
   useEffect(() => {
     loggedUser.role == 'employee'
       ?
-      dispatch(getFollowUps(leadId))
-      :
       dispatch(getEmployeeFollowUps(leadId))
+      :
+      dispatch(getFollowUps(leadId))
   }, [])
 
   /////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////// 
