@@ -30,14 +30,11 @@ export const register = async (req, res, next) => {
             role = role || 'client'
 
         const findedLead = await Lead.findOne({ clientPhone: phone })
-        console.log('findedLead',findedLead)
 
         const newUser = await User.create({ firstName, lastName, username, email, phone, password: hashedPassword, city, role })
-        console.log('newUser',newUser)
 
         if(findedLead){
            const updatedLead = await Lead.findByIdAndUpdate(findedLead._id, {$set: {client: newUser._id}} , { new: true }).populate('client').populate('allocatedTo').exec()
-            console.log('updatedLead',updatedLead)
         }
 
         res.status(200).json({ result: newUser, message: 'User created successfully', success: true })
@@ -109,7 +106,6 @@ export const sendForgetPasswordOTP = async (req, res) => {
         const hashedOTP = await bcrypt.hash(otp, 12)
         const newOTP = await OTP.create({ email, otp: hashedOTP, name: 'forget_password_otp' })
 
-        console.log('this', process.env.SENDER_EMAIL, process.env.SENDER_EMAIL_PASSWORD)
 
         var transporter = nodemailer.createTransport({
             service: 'Gmail',
@@ -134,7 +130,6 @@ export const sendForgetPasswordOTP = async (req, res) => {
     }
     catch (error) {
         res.status(404).json({ message: 'error in sendForgetPasswordOTP - controllers/user.js', error, success: false })
-        console.log(error)
     }
 }
 
@@ -176,6 +171,5 @@ export const setNewPassword = async (req, res) => {
     }
     catch (error) {
         res.status(404).json({ message: 'error in changePassword - controllers/user.js', error, success: false })
-        console.log(error)
     }
 }

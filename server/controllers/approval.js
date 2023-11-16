@@ -78,7 +78,6 @@ export const rejectRequestApproval = async (req, res, next) => {
 }
 export const createVoucherApproval = async (req, res, next) => {
     try {
-        console.log('req.body', req.body)
 
         const result = await Approval.create({
             title: 'Voucher Approval',
@@ -86,7 +85,6 @@ export const createVoucherApproval = async (req, res, next) => {
             description: 'Need approval for the voucher',
             data: { ...req.body }
         })
-        console.log('result', result)
 
         const notification = await Notification.create({
             title: 'Need Approval for Voucher.',

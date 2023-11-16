@@ -61,6 +61,13 @@ const AllFollowUpsTable = () => {
       renderCell: (params) => <div className="font-primary font-light">{params.row.uid}</div>,
     },
     {
+      field: "leadId",
+      headerName: "Lead Id",
+      headerClassName: "super-app-theme--header",
+      width: 200,
+      renderCell: (params) => <div className="font-primary font-light  ">{params.row.leadId?._id}</div>,
+    },
+    {
       field: "status",
       headerName: "Current Status",
       headerClassName: "super-app-theme--header",

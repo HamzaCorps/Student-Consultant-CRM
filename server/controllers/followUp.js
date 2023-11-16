@@ -43,35 +43,12 @@ export const getEmployeeFollowUps = async (req, res, next) => {
     try {
         const { leadId } = req.params;
 
-        const findedFollowUp = await FollowUp.aggregate([
-            {
-                $match: { leadId: new mongoose.Types.ObjectId(leadId) }
-            },
-            {
-                $lookup: {
-                    from: 'leads', // Replace 'leads' with the actual name of your collection
-                    localField: 'leadId',
-                    foreignField: '_id',
-                    as: 'lead'
-                }
-            },
-            {
-                $unwind: '$lead'
-            },
-            {
-                $match: { 'lead.allocatedTo': new mongoose.Types.ObjectId(req.user._id) }
-            },
-            {
-                $lookup: {
-                    from: 'clients', // Replace 'clients' with the actual name of your collection
-                    localField: 'lead.client',
-                    foreignField: '_id',
-                    as: 'lead.client'
-                }
-            }
-        ]);
+        // Find all follow-ups related to the given leadId
+        const allFollowUps = await FollowUp.find({ leadId }).populate('leadId');
 
-        res.status(200).json({ result: findedFollowUp, message: 'FollowUps retrieved successfully', success: true });
+        const employeeFollowUps = allFollowUps.filter((followUp) => followUp.leadId?.allocatedTo?.findIndex(allocatedTo => allocatedTo.toString() == req.user._id.toString()) != -1)
+        
+        res.status(200).json({ result: employeeFollowUps, message: 'FollowUps retrieved successfully', success: true });
     } catch (err) {
         next(createError(500, err.message));
     }
@@ -80,7 +57,8 @@ export const getEmployeeFollowUps = async (req, res, next) => {
 
 
 
- 
+
+
 export const getEmployeeFollowUpsStats = async (req, res, next) => {
     try {
         const response = await FollowUp.aggregate([
@@ -142,7 +120,7 @@ export const getEmployeeFollowUpsStats = async (req, res, next) => {
         next(createError(500, error.message))
     }
 };
- 
+
 export const getFollowUpsStats = async (req, res, next) => {
     try {
 
