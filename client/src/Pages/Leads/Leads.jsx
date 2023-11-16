@@ -248,19 +248,9 @@ function Leads({ type, showSidebar }) {
                 Refunds
               </StyledMenuItem>
               <StyledMenuItem
-                onClick={() => navigateToFollowUps(params.row._id)}
-                className="text-gray-600 flex font-primary">
-                Follow Ups
-              </StyledMenuItem>
-              <StyledMenuItem
                 onClick={() => handleOpenAttachmentModal(params.row._id)}
                 className="text-gray-600 flex font-primary">
                 Attachments
-              </StyledMenuItem>
-              <StyledMenuItem
-                onClick={() => navigateToLedger(params.row._id)}
-                className="text-gray-600 flex font-primary">
-                Ledger
               </StyledMenuItem>
             </Menu>
           </Dropdown>
@@ -339,14 +329,6 @@ function Leads({ type, showSidebar }) {
     } else {
       navigate(`/leads/refund/${lead._id}`);
     }
-  };
-
-  const navigateToFollowUps = (leadId) => {
-    navigate(`/leads/followups/${leadId}`);
-  };
-
-  const navigateToLedger = (leadId) => {
-    navigate(`/leads/ledger/${leadId}`);
   };
 
   return (

@@ -55,6 +55,7 @@ const CreateSale = ({ open, setOpen, scroll }) => {
     dispatch(createSale({ ...saleData, leadId: lead?._id || "" }, setOpen));
     dispatch(getLeadReducer());
     setSaleData(initialState);
+    setOpen(false);
   };
   const handleChange = (field, value) => {
     setSaleData({ ...saleData, [field]: value });
