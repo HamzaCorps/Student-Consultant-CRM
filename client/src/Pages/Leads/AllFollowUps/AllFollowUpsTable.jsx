@@ -95,7 +95,7 @@ const AllFollowUpsTable = () => {
 
       {rows.map((row) => (
         <div className="flex flex-col gap-2 " >
-          <h2 className="text-primary-blue text-[24px] capitalize font-light">{row.date} {row.day}</h2>
+          <h2 className="text-primary-red text-[24px] capitalize font-light">{row.date} {row.day}</h2>
           <Table
             rows={row.followUps}
             columns={columns}

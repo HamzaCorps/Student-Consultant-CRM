@@ -12,6 +12,7 @@ import { IoOpenOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import FilterDrawer from "./Filter";
 import { getSaleReducer, getSalesReducer } from "../../redux/reducer/sale";
+import moment from "moment";
 
 function Sales() {
   ////////////////////////////////////// VARIABLES //////////////////////////////
@@ -51,7 +52,7 @@ function Sales() {
       headerName: "Created At",
       width: 150,
       renderCell: (params) => (
-        <div className="font-primary">{new Date(params.row.createdAt).toLocaleDateString()}</div>
+        <div className="font-primary">{moment(params.row?.createdAt).format("DD-MM-YYYY")}</div>
       ),
     },
     {

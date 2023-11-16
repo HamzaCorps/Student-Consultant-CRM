@@ -22,6 +22,7 @@ import { Dropdown, Menu, MenuButton, MenuItem, menuItemClasses } from "@mui/base
 import Lead from "./Lead";
 import { Link, useNavigate } from "react-router-dom";
 import Attachments from "./Attachments/Attachments";
+import moment from "moment";
 
 const blue = {
   100: "#DAECFF",
@@ -138,7 +139,7 @@ function Leads({ type, showSidebar }) {
       width: 110,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => (
-        <div className="font-primary font-light">{format(params.row?.createdAt)}</div>
+        <div className="font-primary font-light">{moment(params.row?.createdAt).format("DD-MM-YYYY")}</div>
       ),
     },
     {

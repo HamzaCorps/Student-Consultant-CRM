@@ -139,7 +139,7 @@ const Ledger = () => {
       headerClassName: "super-app-theme--header",
       width: 170,
       renderCell: (params) => {
-        <div className="font-primary">{params.row.top}</div>;
+        <div style={{ fontFamily: "'Montserrat', sans-serif", textTransform: "capitalize" }}>{params.row.top}</div>;
       },
     },
     {
@@ -148,7 +148,7 @@ const Ledger = () => {
       headerClassName: "super-app-theme--header",
       width: 140,
       renderCell: (params) => {
-        <div className="font-primary">{params.row.amount}</div>;
+        <div style={{ fontFamily: "'Montserrat', sans-serif", textTransform: "capitalize" }}>{params.row.amount}</div>;
       },
     },
     {
