@@ -15,7 +15,7 @@ const AllFollowUps = () => {
   return (
     <div className="w-full">
       <Topbar />
-      <div className="pt-6">
+      <div className="">
         <AllFollowUpsTable />
       </div>
     </div>
