@@ -8,6 +8,7 @@ export const getLead = async (req, res, next) => {
 
         const { leadId } = req.params
         const findedLead = await Lead.findById(leadId).populate('client').populate('allocatedTo').exec()
+        console.log(findedLead)
         if (!findedLead) return next(createError(400, 'Lead not exist'))
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })

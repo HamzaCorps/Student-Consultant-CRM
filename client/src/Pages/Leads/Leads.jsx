@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Topbar from "./Topbar";
 import { useDispatch, useSelector } from "react-redux";
-import { getEmployeeLeads, getLeads } from "../../redux/action/lead";
+import { getEmployeeLeads, getLead, getLeads } from "../../redux/action/lead";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import { Tooltip } from "@mui/material";
@@ -329,10 +329,9 @@ function Leads({ type, showSidebar }) {
     setOpenDeleteModal(true);
     setSelectedLeadId(leadId);
   };
-
   const handleOpenViewModal = (leadId) => {
-    setSelectedLeadId(leadId);
-    setOpenViewModal(true);
+    dispatch(getLeadReducer(leadId));
+    navigate(`/leads/${leadId}`);
   };
   const navigateToRefund = (lead) => {
     if (lead.isAppliedForRefund) {
@@ -358,7 +357,6 @@ function Leads({ type, showSidebar }) {
       <ShiftLeadModal open={openShiftLeadModal} setOpen={setOpenShiftLeadModal} />
       <ShareLeadModal open={openShareLeadModal} setOpen={setOpenShareLeadModal} />
       <Filter open={openFilters} setOpen={setOpenFilters} setIsFiltered={setIsFiltered} />
-      <Lead open={openViewModal} setOpen={setOpenViewModal} leadId={selectedLeadId} />
       <Attachments
         open={openAttachmentModal}
         setOpen={setOpenAttachmentModal}

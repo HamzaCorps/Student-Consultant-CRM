@@ -175,8 +175,6 @@ const Ledger = () => {
         rows={cashbooks}
         columns={LedgerColumns}
         rowsPerPage={5}
-        isFetching={cashbookFetching}
-        error={cashbookError}
       />
 
       <LedgerSalesTopbar />
@@ -184,8 +182,6 @@ const Ledger = () => {
         rows={sales}
         columns={SalesColumns}
         rowsPerPage={5}
-        isFetching={salesFetching}
-        error={salesError}
       />
     </div>
   );
