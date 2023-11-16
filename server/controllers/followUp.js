@@ -162,7 +162,7 @@ export const getFollowUpsStats = async (req, res, next) => {
             }
 
             result.forEach(item => {
-                if (item.date === createdAtDate) {
+                if (item.date === followUpDate) {
                     item.followUps.push(followUp);
                 }
             });
