@@ -83,13 +83,12 @@ export const getEmployeeClients = async (req, res, next) => {
 
         let allClients = await User.find({ role: 'client' })
         const employeeLeads = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
-            .populate('client').populate('allocatedTo')
-            .exec();
+        console.log('allClients 1', allClients)
 
         allClients = allClients.filter((client) => {
-            employeeLeads.findIndex(lead => lead.clientPhone == client.phone) != -1
+            employeeLeads.includes(lead => lead.clientPhone.toString() == client.phone.toString())
         })
-
+        console.log('allClients', allClients)
         res.status(200).json({ result: allClients, message: 'employees fetched seccessfully', success: true })
 
     } catch (err) {
