@@ -1,4 +1,5 @@
 import Sale from '../models/sale.js'
+import Lead from '../models/lead.js'
 import { createError } from '../utils/error.js'
 
 
@@ -21,6 +22,24 @@ export const getSales = async (req, res, next) => {
 
         const findedSale = await Sale.find()
         res.status(200).json({ result: findedSale, message: 'sales fetched successfully', success: true })
+
+    } catch (err) {
+        next(createError(500, err.message))
+    }
+}
+export const getEmployeeSales = async (req, res, next) => {
+    try {
+
+        const allSales = await Sale.find({})
+        const employeeLeads = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
+            .populate('client').populate('allocatedTo')
+            .exec();
+
+        allSales = allSales.filter((sale) => {
+            employeeLeads.findIndex(lead => lead._id == sale.leadId) != -1
+        })
+
+        res.status(200).json({ result: allSales, message: 'sales fetched successfully', success: true })
 
     } catch (err) {
         next(createError(500, err.message))

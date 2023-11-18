@@ -59,65 +59,99 @@ export const getEmployeeFollowUps = async (req, res, next) => {
 
 
 
+// export const getEmployeeFollowUpsStats = async (req, res, next) => {
+//     try {
+//         const response = await FollowUp.aggregate([
+//             {
+//                 $sort: { createdAt: 1 },
+//             },
+//             {
+//                 $group: {
+//                     _id: {
+//                         $dateToString: { format: '%Y-%m-%d', date: '$followUpDate' },
+//                     },
+//                     followUps: { $push: '$$ROOT' },
+//                 },
+//             },
+//             {
+//                 $project: {
+//                     _id: 0,
+//                     date: '$_id',
+//                     followUps: 1,
+//                 },
+//             },
+//             {
+//                 $unwind: '$followUps'
+//             },
+//             {
+//                 $lookup: {
+//                     from: 'leads',
+//                     localField: 'followUps.leadId',
+//                     foreignField: '_id',
+//                     as: 'followUps.lead'
+//                 }
+//             },
+//             {
+//                 $unwind: '$followUps.lead'
+//             },
+//             {
+//                 $match: {
+//                     'followUps.lead.allocatedTo': req.user._id
+//                 }
+//             },
+//             {
+//                 $lookup: {
+//                     from: 'users',
+//                     localField: 'followUps.lead.client',
+//                     foreignField: '_id',
+//                     as: 'followUps.lead.client'
+//                 }
+//             },
+//             {
+//                 $group: {
+//                     _id: '$date',
+//                     followUps: { $push: '$followUps' }
+//                 }
+//             },
+//         ]);
+
+//         res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
+//     } catch (error) {
+//         next(createError(500, error.message))
+//     }
+// };
+
 export const getEmployeeFollowUpsStats = async (req, res, next) => {
     try {
-        const response = await FollowUp.aggregate([
-            {
-                $sort: { createdAt: 1 },
-            },
-            {
-                $group: {
-                    _id: {
-                        $dateToString: { format: '%Y-%m-%d', date: '$followUpDate' },
-                    },
-                    followUps: { $push: '$$ROOT' },
-                },
-            },
-            {
-                $project: {
-                    _id: 0,
-                    date: '$_id',
-                    followUps: 1,
-                },
-            },
-            {
-                $unwind: '$followUps'
-            },
-            {
-                $lookup: {
-                    from: 'leads',
-                    localField: 'followUps.leadId',
-                    foreignField: '_id',
-                    as: 'followUps.lead'
+        const followUps = await FollowUp.find()
+            .populate({
+                path: 'leadId',
+                populate: {
+                    path: 'client'
                 }
-            },
-            {
-                $unwind: '$followUps.lead'
-            },
-            {
-                $match: {
-                    'followUps.lead.allocatedTo': req.user._id
-                }
-            },
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'followUps.lead.client',
-                    foreignField: '_id',
-                    as: 'followUps.lead.client'
-                }
-            },
-            {
-                $group: {
-                    _id: '$date',
-                    followUps: { $push: '$followUps' }
-                }
-            },
-        ]);
+            });
 
-        res.status(200).json({ result: response, message: 'stats fetched successfully.', success: true });
+        const employeeFollowUps = followUps.filter((followUp) => followUp.leadId.allocatedTo.includes(req.user._id));
+
+        const reducedFollowUps = employeeFollowUps.reduce((result, followUp) => {
+            const followUpDate = new Date(followUp.followUpDate).toLocaleDateString();
+
+            if (!result.find(item => item.date === followUpDate)) {
+                result.push({ date: followUpDate, followUps: [] });
+            }
+
+            result.forEach(item => {
+                if (item.date === followUpDate) {
+                    item.followUps.push(followUp);
+                }
+            });
+
+            return result;
+        }, []);
+
+        res.status(200).json({ result: reducedFollowUps, message: "Employee follow-ups stats fetched successfully.", success: true });
     } catch (error) {
-        next(createError(500, error.message))
+        next(createError(500, error.message));
     }
 };
 

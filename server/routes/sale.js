@@ -1,11 +1,12 @@
 import express from 'express'
-import { createSale, getSale, getSales, getLeadSales, updateSale, deleteSale, deleteWholeCollection } from '../controllers/sale.js'
+import { createSale, getSale, getSales,getEmployeeSales, getLeadSales, updateSale, deleteSale, deleteWholeCollection } from '../controllers/sale.js'
 import { verifyEmployee, verifyToken } from '../middleware/auth.js'
 
 const router = express.Router()
 
 // GET
 router.get('/get/single/:saleId', verifyToken, verifyEmployee, getSale)
+router.get('/get/employee', verifyToken, verifyEmployee, getEmployeeSales)
 router.get('/get/all', verifyToken, verifyEmployee, getSales)
 router.get('/get/lead', verifyToken, verifyEmployee, getLeadSales)
 
