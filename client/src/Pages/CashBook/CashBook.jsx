@@ -134,7 +134,6 @@ function CashBook() {
             isFetching={isFetching}
          />
         </div>
-
         <div className="flex flex-col">
           <div className="flex justify-center text-3xl mb-4 font-primary text-gray-600 mt-5">
             <h3>Amounts Out</h3>
@@ -144,7 +143,6 @@ function CashBook() {
             columns={columns}
             rowsPerPage={10}
             isFetching={isFetching}
-            error={error}
           />
         </div>
       </div>
