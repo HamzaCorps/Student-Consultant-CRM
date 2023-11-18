@@ -53,7 +53,6 @@ const AllFollowUpsTable = () => {
   .filter(item => new Date(item.date) <= currentDate) // Filter out dates greater than current date
   .sort((a, b) => new Date(a.date) - new Date(b.date))
   .reverse()
-console.log(sortedRows)
 
   const columns = [
     {
