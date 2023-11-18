@@ -17,7 +17,6 @@ const AllFollowUpsTable = () => {
   const { followUpsStats } = useSelector((state) => state.followUp);
   const { loggedUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log('followUps', followUpsStats)
   /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
   const [showLead, setShowLead] = useState(false);
   const [selectedLeadId, setSelectedLeadId] = useState(false);
@@ -51,10 +50,10 @@ const AllFollowUpsTable = () => {
 
   const currentDate = new Date();
   const sortedRows = rows
-    // .filter((item) => moment(item.date, "DD/MM/YYYY").isSameOrBefore(currentDate, "day")) // Filter out dates greater than current date
-    .sort((a, b) => moment(a.date, "DD/MM/YYYY").diff(moment(b.date, "DD/MM/YYYY"))) // Sort by date
-    .reverse(); // Reverse the order so that latest date comes first
-
+  .filter(item => new Date(item.date) <= currentDate) // Filter out dates greater than current date
+  .sort((a, b) => new Date(a.date) - new Date(b.date))
+  .reverse()
+console.log(sortedRows)
 
   const columns = [
     {

@@ -19,6 +19,8 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { PiNotepad, PiUser, PiXLight } from "react-icons/pi";
 
@@ -355,6 +357,67 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                   </td>
                 </tr>
               )}
+            </table>
+            <div className="text-xl flex justify-start items-center gap-2 pt-8 font-normal">
+              <PiNotepad />
+              <span>Follow Up Details</span>
+            </div>
+            <Divider />
+            <table className="mt-4">
+              <tr>
+                <td className="pb-4 text-lg flex mt-1 items-start">Current Status </td>
+                <td className="pb-4">
+                  <Select
+                    // onChange={handleInputChange}
+                    // value={followUpData.status}
+                    name="status"
+                    type="text"
+                    size="small"
+                    fullWidth>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="New Lead">New Lead</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Call Not Answer">Call Not Answer</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Deal Done">Deal Done</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Keen Interested">Keen Interested</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Visit Done">Visit Done</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Contact in Future">Contact in Future</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Visit Schedule">Visit Schedule</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Archived">Archived</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Wrong Number">Wrong Number</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Busy">Busy</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Number Off">Number Off</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Call back Later">Call Back Later</MenuItem>
+                    <MenuItem sx={{ fontFamily: "'Montserrat', sans-serif" }} value="Interested">Interested</MenuItem>
+                  </Select>
+                </td>
+              </tr>
+              <tr>
+                <td className="flex flex-col justify-start mt-1 text-lg">Next Follow Up Date </td>
+                <td className="pb-4">
+                  <TextField
+                    // onChange={handleInputChange}
+                    // value={followUpData.followUpDate}
+                    name="followUpDate"
+                    type="date"
+                    size="small"
+                    fullWidth
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td className="flex flex-col justify-start mt-1 text-lg">Remarks </td>
+                <td className="pb-4">
+                  <TextField
+                    // onChange={handleInputChange}
+                    // value={followUpData.remarks}
+                    name="remarks"
+                    type="text"
+                    size="small"
+                    fullWidth
+                    multiline
+                    rows={5}
+                  />
+                </td>
+              </tr>
             </table>
           </div>
         </DialogContent>
