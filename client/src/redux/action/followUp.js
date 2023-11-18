@@ -61,10 +61,10 @@ export const createFollowUp = (followUpData) => async (dispatch) => {
         dispatch(error(err.message))
     }
 }
-export const deleteFollowUp = () => async (dispatch) => {
+export const deleteFollowUp = (followUpId) => async (dispatch) => {
     try {
         dispatch(start())
-        const { data } = await api.deleteFollowUp()
+        const { data } = await api.deleteFollowUp(followUpId)
         dispatch(deleteFollowUpReducer(data.result))
         dispatch(end())
     } catch (err) {

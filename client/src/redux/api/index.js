@@ -130,7 +130,7 @@ export const getEmployeeFollowUps = (leadId) => API.get(`/followUp/get/employee/
 export const getFollowUpsStats = () => API.get(`/followUp/get/stats`)
 export const getEmployeeFollowUpsStats = () => API.get(`/followUp/get/stats/employee`)
 export const createFollowUp = (followUpData) => API.post(`/followUp/create`, followUpData)
-export const deleteFollowUp = (followUpId) => API.delete(`/followUp/delete/${followUpId}',`)
+export const deleteFollowUp = (followUpId) => API.delete(`/followUp/delete/${followUpId}`)
 
 // REFUND
 export const getRefund = (refundId) => API.get(`/refund/get/single/${refundId}`)
