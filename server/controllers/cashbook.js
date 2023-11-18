@@ -1,4 +1,5 @@
 import Cashbook from '../models/cashbook.js'
+import Lead from '../models/lead.js'
 import User from '../models/user.js'
 import { createError } from '../utils/error.js'
 import bcrypt from 'bcryptjs'

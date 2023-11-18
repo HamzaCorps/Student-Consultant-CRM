@@ -30,7 +30,7 @@ export const getSales = async (req, res, next) => {
 export const getEmployeeSales = async (req, res, next) => {
     try {
 
-        const allSales = await Sale.find({})
+        let allSales = await Sale.find({})
         const employeeLeads = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
             .populate('client').populate('allocatedTo')
             .exec();
