@@ -16,11 +16,8 @@ const Board = ({ leads, title, _id }) => {
       ${title == "Unsuccessful" ? "border-t-orange-500" : ""}
        rounded-[10px] min-w-[260px] -[270px] h-[700px]`}
     >
-      <div className="flex justify-between items-center h-[32px] px-[4px] ">
-        <h4 className="text-[16px] text-primary-gray ">{title}</h4>
-        <button className="w-[18px] h-[18px] rounded-full bg-primary-gray text-white flex justify-center items-center ">
-          <Add style={{ fontSize: "16px" }} />
-        </button>
+      <div className="flex justify-center items-center h-[32px] px-[4px] ">
+        <h4 className="text-[16px] text-primary-gray">{title}</h4>
       </div>
 
       <div style={{ height: "calc(100% - 32px)" }} className="leadBoard h-full overflow-y-scroll  ">
