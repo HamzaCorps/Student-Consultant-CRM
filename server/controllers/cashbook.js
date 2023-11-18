@@ -33,7 +33,7 @@ export const getEmployeeCashbooks = async (req, res, next) => {
             .exec();
 
         allCashbooks = allCashbooks.filter((cashbook) => {
-            employeeLeads.includes(lead => lead._id.toString() == cashbook.leadId.toString())
+            return employeeLeads.findIndex(lead => lead._id.toString() == cashbook.leadId.toString()) != -1
         })
 
         res.status(200).json({ result: allCashbooks, message: 'cashbooks fetched successfully', success: true })
