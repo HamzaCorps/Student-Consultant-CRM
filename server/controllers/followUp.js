@@ -47,7 +47,7 @@ export const getEmployeeFollowUps = async (req, res, next) => {
         const allFollowUps = await FollowUp.find({ leadId }).populate('leadId');
 
         const employeeFollowUps = allFollowUps.filter((followUp) => followUp.leadId?.allocatedTo?.findIndex(allocatedTo => allocatedTo.toString() == req.user._id.toString()) != -1)
-        
+
         res.status(200).json({ result: employeeFollowUps, message: 'FollowUps retrieved successfully', success: true });
     } catch (err) {
         next(createError(500, err.message));
@@ -131,7 +131,8 @@ export const getEmployeeFollowUpsStats = async (req, res, next) => {
                 }
             });
 
-        const employeeFollowUps = followUps.filter((followUp) => followUp.leadId.allocatedTo.includes(req.user._id));
+        console.log('follow', followUps)
+        const employeeFollowUps = followUps.filter((followUp) => followUp?.leadId?.allocatedTo?.includes(req?.user?._id));
 
         const reducedFollowUps = employeeFollowUps.reduce((result, followUp) => {
             const followUpDate = new Date(followUp.followUpDate).toLocaleDateString();
@@ -151,6 +152,7 @@ export const getEmployeeFollowUpsStats = async (req, res, next) => {
 
         res.status(200).json({ result: reducedFollowUps, message: "Employee follow-ups stats fetched successfully.", success: true });
     } catch (error) {
+        console.log('error', error)
         next(createError(500, error.message));
     }
 };
