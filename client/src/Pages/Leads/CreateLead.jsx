@@ -46,6 +46,11 @@ const CreateLead = ({ setOpen, open, scroll }) => {
     source: "",
     description: "",
   };
+  const initialFollowUpState = {
+    followUpStatus: "",
+    remarks: "",
+    followUpDate: "",
+  }
   const priorities = [
     { name: "Very Cold", value: "veryCold" },
     { name: "Cold", value: "cold" },
@@ -89,6 +94,7 @@ const CreateLead = ({ setOpen, open, scroll }) => {
 
   //////////////////////////////////////// STATES ////////////////////////////////////
   const [leadData, setLeadData] = useState(initialLeadState);
+  const [followUpData, setFollowUpData] = useState(initialFollowUpState);
   const [createMultiple, setCreateMultiple] = useState(false);
   const [leadCountsToCreate, setLeadCountsToCreate] = useState(1);
 
@@ -97,21 +103,10 @@ const CreateLead = ({ setOpen, open, scroll }) => {
   //////////////////////////////////////// FUNCTIONS //////////////////////////////////
   const handleSubmit = (e) => {
     e.preventDefault();
-    const {
-      clientName,
-      clientPhone,
-      country,
-      priority,
-      status,
-      degree,
-      major,
-      visa,
-      source,
-      description,
-    } = leadData;
+   
 
     dispatch(
-      createLead({ ...leadData, count: leadCountsToCreate < 1 ? 1 : leadCountsToCreate }, navigate)
+      createLead({ ...leadData, count: leadCountsToCreate < 1 ? 1 : leadCountsToCreate, ...followUpData }, navigate)
     );
     setLeadData(initialLeadState);
     setCreateMultiple(false);
@@ -368,9 +363,9 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                 <td className="pb-4 text-lg flex mt-1 items-start">Current Status </td>
                 <td className="pb-4">
                   <Select
-                    // onChange={handleInputChange}
-                    // value={followUpData.status}
-                    name="status"
+                    onChange={(e) => setFollowUpData({ ...followUpData, followUpStatus: e.target.value })}
+                    value={followUpData.followUpStatus}
+                    name="followUpStatus"
                     type="text"
                     size="small"
                     fullWidth>
@@ -394,8 +389,8 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                 <td className="flex flex-col justify-start mt-1 text-lg">Next Follow Up Date </td>
                 <td className="pb-4">
                   <TextField
-                    // onChange={handleInputChange}
-                    // value={followUpData.followUpDate}
+                    onChange={(e) => setFollowUpData({ ...followUpData, followUpDate: e.target.value })}
+                    value={followUpData.followUpDate}
                     name="followUpDate"
                     type="date"
                     size="small"
@@ -407,8 +402,8 @@ const CreateLead = ({ setOpen, open, scroll }) => {
                 <td className="flex flex-col justify-start mt-1 text-lg">Remarks </td>
                 <td className="pb-4">
                   <TextField
-                    // onChange={handleInputChange}
-                    // value={followUpData.remarks}
+                    onChange={(e) => setFollowUpData({ ...followUpData, remarks: e.target.value })}
+                    value={followUpData.remarks}
                     name="remarks"
                     type="text"
                     size="small"

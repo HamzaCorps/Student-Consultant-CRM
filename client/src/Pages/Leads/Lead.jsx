@@ -22,7 +22,6 @@ const Lead = () => {
   const { leadId } = useParams();
   const dispatch = useDispatch();
   const { currentLead, isFetching } = useSelector((state) => state.lead);
-  console.log(currentLead)
   const date = moment(currentLead?.createdAt).format("DD-MM-YYYY");
 
   //////////////////////////////////// UseEffects /////////////////////////////////////

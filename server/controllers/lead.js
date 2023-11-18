@@ -1,3 +1,4 @@
+import FollowUp from '../models/followUp.js'
 import Lead from '../models/lead.js'
 import User from '../models/user.js'
 import { createError, isValidDate } from '../utils/error.js'
@@ -7,7 +8,7 @@ export const getLead = async (req, res, next) => {
     try {
 
         const { leadId } = req.params
-        const findedLead = await Lead.findById(leadId).populate('client').populate('allocatedTo').exec()
+        const findedLead = await Lead.findById(leadId).populate('client').populate('allocatedTo').populate('followUps').exec()
         if (!findedLead) return next(createError(400, 'Lead not exist'))
 
         res.status(200).json({ result: findedLead, message: 'lead fetched successfully', success: true })
@@ -234,10 +235,12 @@ export const filterLead = async (req, res, next) => {
 
 export const createLead = async (req, res, next) => {
     try {
-        const { clientName, clientPhone, priority, country, visa, degree, degreeName, status, source, description, count, major } = req.body;
+        const { clientName, clientPhone, priority, country, visa, degree, degreeName, status: leadStatus, source, description, count, major } = req.body;
+        const { followUpStatus, followUpDate, remarks } = req.body  // for followup
 
-        const findedLead = await User.findOne({ phone: clientPhone })
-        
+        const findedUser = await User.findOne({ phone: clientPhone })
+
+
         // Create the lead(s) based on the counts value or once if counts is undefined
         const leadsToCreate = Number(count) || 1;
         const createdLeads = [];
@@ -245,24 +248,25 @@ export const createLead = async (req, res, next) => {
         for (let i = 0; i < leadsToCreate; i++) {
             const newLead = await Lead.create({
                 clientName,
-                client: findedLead ? findedLead._id : null,
+                client: findedUser ? findedUser._id : null,
                 clientPhone,
                 priority,
                 country,
                 visa,
                 degree,
                 degreeName,
-                status,
+                status: leadStatus,
                 source,
                 major,
                 description,
                 allocatedTo: [req.user?._id]
             });
+            await FollowUp.create({ status: followUpStatus, followUpDate, remarks, leadId: newLead._id })
+
             // Query to populate the fields
             const populatedLead = await Lead.findById(newLead._id)
                 .populate('allocatedTo')
                 .exec();
-
             createdLeads.push(populatedLead);
         }
 
