@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Divider, Dialog, DialogContent, DialogTitle, Slide, Tooltip } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { Loader } from "../../utils";
+import { Loader, Path } from "../../utils";
 import moment  from "moment";
 import FollowUps from "./FollowUps/FollowUps";
 import Ledger from "./Ledger/Ledger";
@@ -22,6 +22,7 @@ const Lead = () => {
   const { leadId } = useParams();
   const dispatch = useDispatch();
   const { currentLead, isFetching } = useSelector((state) => state.lead);
+  console.log(currentLead)
   const date = moment(currentLead?.createdAt).format("DD-MM-YYYY");
 
   //////////////////////////////////// UseEffects /////////////////////////////////////
@@ -33,6 +34,9 @@ const Lead = () => {
 
   return (
     <div className="w-full font-primary">
+       <div className="w-full text-[14px]">
+          <Path />
+        </div>
       <h1 className="text-primary-blue text-[32px] capitalize font-light">Lead Details</h1>
 
       {isFetching && (

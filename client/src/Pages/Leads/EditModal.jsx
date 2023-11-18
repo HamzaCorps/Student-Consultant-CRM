@@ -81,16 +81,16 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
   ////////////////////////////////////// STATES  /////////////////////////////////////
   const [leadData, setLeadData] = useState({
     ...currentLead,
-    clientName: currentLead?.client?.clientName,
-    clientPhone: currentLead?.client?.phone,
+    clientName: currentLead?.clientName || currentLead?.client?.clientName,
+    clientPhone: currentLead?.clientPhone || currentLead?.client?.phone,
   });
 
   ////////////////////////////////////// USE EFFECTS  /////////////////////////////////////
   useEffect(() => {
     setLeadData({
       ...currentLead,
-      clientName: currentLead?.client?.clientName,
-      clientPhone: currentLead?.client?.phone,
+      clientName: currentLead?.clientName || currentLead?.client?.clientName,
+      clientPhone: currentLead?.clientPhone || currentLead?.client?.phone,
     });
   }, [currentLead]);
 
@@ -128,8 +128,6 @@ const EditModal = ({ open, setOpen, scroll, leadId }) => {
     setLeadData(initialLeadState)
     setOpen(false);
   };
-
-  console.log(currentLead);
 
   return (
     <div>

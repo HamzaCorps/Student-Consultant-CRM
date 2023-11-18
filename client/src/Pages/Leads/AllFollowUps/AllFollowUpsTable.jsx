@@ -42,8 +42,8 @@ const AllFollowUpsTable = () => {
   const rows = followUpsStats?.map((stat) => {
     const dateParts = stat.date.split("/");
     const year = parseInt(dateParts[2]);
-    const month = parseInt(dateParts[0]) - 1; // Months in JavaScript are zero-based
-    const day = parseInt(dateParts[1]);
+    const month = parseInt(dateParts[1]) - 1; // Months in JavaScript are zero-based
+    const day = parseInt(dateParts[0]);
     const date = new Date(year, month, day);
 
     return createData(stat.date, DAYS[date.getDay()], stat.followUps);
@@ -54,8 +54,6 @@ const AllFollowUpsTable = () => {
     .filter((item) => moment(item.date, "DD/MM/YYYY").isSameOrBefore(currentDate, "day")) // Filter out dates greater than current date
     .sort((a, b) => moment(a.date, "DD/MM/YYYY").diff(moment(b.date, "DD/MM/YYYY"))) // Sort by date
     .reverse(); // Reverse the order so that latest date comes first
-
-  console.log(sortedRow);
 
   const columns = [
     {
@@ -185,6 +183,7 @@ const AllFollowUpsTable = () => {
     navigate(`/leads/${leadId}`);
   };
 
+  console.log(sortedRow)
   return (
     <div className="flex flex-col gap-4">
       {sortedRow.map((row) => (
