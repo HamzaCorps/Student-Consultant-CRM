@@ -17,7 +17,7 @@ const AllFollowUpsTable = () => {
   const { followUpsStats } = useSelector((state) => state.followUp);
   const { loggedUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
+  console.log('followUps', followUpsStats)
   /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
   const [showLead, setShowLead] = useState(false);
   const [selectedLeadId, setSelectedLeadId] = useState(false);
@@ -50,10 +50,11 @@ const AllFollowUpsTable = () => {
   });
 
   const currentDate = new Date();
-  const sortedRow = rows
-    .filter((item) => moment(item.date, "DD/MM/YYYY").isSameOrBefore(currentDate, "day")) // Filter out dates greater than current date
+  const sortedRows = rows
+    // .filter((item) => moment(item.date, "DD/MM/YYYY").isSameOrBefore(currentDate, "day")) // Filter out dates greater than current date
     .sort((a, b) => moment(a.date, "DD/MM/YYYY").diff(moment(b.date, "DD/MM/YYYY"))) // Sort by date
     .reverse(); // Reverse the order so that latest date comes first
+
 
   const columns = [
     {
@@ -183,10 +184,9 @@ const AllFollowUpsTable = () => {
     navigate(`/leads/${leadId}`);
   };
 
-  console.log(sortedRow)
   return (
     <div className="flex flex-col gap-4">
-      {sortedRow.map((row) => (
+      {sortedRows.map((row) => (
         <div className="flex flex-col gap-2 ">
           <h2 className="text-primary-red text-[24px] capitalize font-light">
             {row.date} {row.day}
