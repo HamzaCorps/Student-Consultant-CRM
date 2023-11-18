@@ -132,8 +132,7 @@ function CashBook() {
             columns={columns}
             rowsPerPage={10}
             isFetching={isFetching}
-            error={error}
-          />
+         />
         </div>
 
         <div className="flex flex-col">
