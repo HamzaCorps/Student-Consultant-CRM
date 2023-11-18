@@ -19,6 +19,30 @@ export const getCashbooks = async (req, res, next) => {
         next(createError(500, err.message))
     }
 }
+export const getEmployeeCashbooks = async (req, res, next) => {
+    try {
+
+        const { type } = req.query
+
+        const allCashbooks =
+            type != 'undefined'
+                ? await Cashbook.find({ type })
+                : await Cashbook.find()
+
+        const employeeLeads = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
+            .populate('client').populate('allocatedTo')
+            .exec();
+
+        allCashbooks = allCashbooks.filter((cashbook) => {
+            employeeLeads.findIndex(lead => lead._id == cashbook.leadId) != -1
+        })
+
+        res.status(200).json({ result: allCashbooks, message: 'cashbooks fetched successfully', success: true })
+
+    } catch (err) {
+        next(createError(500, err.message))
+    }
+}
 export const getCashbook = async (req, res, next) => {
     try {
 
@@ -210,7 +234,7 @@ export const getLeadCashbooks = async (req, res, next) => {
 export const createCashbook = async (req, res, next) => {
     try {
 
-        const { clientName, top, remarks, amount, type, staff,  leadId } = req.body
+        const { clientName, top, remarks, amount, type, staff, leadId } = req.body
         if (!clientName || !top || !remarks || !amount || !type || !staff)
             return next(createError(400, 'Make sure to provide all the fields'))
 

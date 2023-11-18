@@ -6,7 +6,7 @@ import View from "./View";
 import Create from "./Create";
 import Update from "./Update";
 import Delete from "./Delete";
-import { getEvents } from "../../../redux/action/event";
+import { getEmployeeEvents, getEvents } from "../../../redux/action/event";
 import { useDispatch, useSelector } from "react-redux";
 import { Add } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
@@ -36,6 +36,7 @@ const EventCalendar = () => {
 
   const dispatch = useDispatch()
   const { events } = useSelector(state => state.event)
+  const { loggedUser } = useSelector(state => state.user)
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [showViewModal, setShowViewModal] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
@@ -43,7 +44,11 @@ const EventCalendar = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   useEffect(() => {
-    dispatch(getEvents())
+    loggedUser.role == 'employee'
+      ?
+      dispatch(getEmployeeEvents())
+      :
+      dispatch(getEvents())
   }, [])
   useEffect(() => {
   }, [event, showViewModal])
@@ -80,14 +85,14 @@ const EventCalendar = () => {
       />
 
       <Tooltip title="Add New Event To Calendar" placement="top" arrow>
-      <button
-        onClick={() => setShowCreateModal(true)}
-        className="absolute bottom-4 right-4 bg-red-500 text-white rounded-full p-[1rem] shadow-xl z-[50000] cursor-pointer "
-      >
-        <Add style={{}} />
-      </button>
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="absolute bottom-4 right-4 bg-red-500 text-white rounded-full p-[1rem] shadow-xl z-[50000] cursor-pointer "
+        >
+          <Add style={{}} />
+        </button>
       </Tooltip>
-      
+
 
       <Calendar
         localizer={localizer}

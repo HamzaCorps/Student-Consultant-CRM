@@ -12,6 +12,16 @@ export const getSale = (saleId) => async (dispatch) => {
         dispatch(error(err.message))
     }
 }
+export const getEmployeeSales = () => async (dispatch) => {
+    try {
+        dispatch(start())
+        const { data } = await api.getEmployeeSales()
+        dispatch(getSalesReducer(data.result))
+        dispatch(end())
+    } catch (err) {
+        dispatch(error(err.message))
+    }
+}
 export const getSales = () => async (dispatch) => {
     try {
         dispatch(start())
