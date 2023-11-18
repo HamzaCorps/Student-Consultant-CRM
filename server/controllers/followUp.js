@@ -46,7 +46,9 @@ export const getEmployeeFollowUps = async (req, res, next) => {
         // Find all follow-ups related to the given leadId
         const allFollowUps = await FollowUp.find({ leadId }).populate('leadId');
 
-        const employeeFollowUps = allFollowUps.filter((followUp) => followUp.leadId?.allocatedTo?.findIndex(allocatedTo => allocatedTo.toString() == req.user._id.toString()) != -1)
+        const employeeFollowUps = allFollowUps.filter((followUp) => {
+            return followUp.leadId?.allocatedTo?.findIndex(allocatedTo => allocatedTo.toString() == req.user._id.toString()) != -1
+        })
 
         res.status(200).json({ result: employeeFollowUps, message: 'FollowUps retrieved successfully', success: true });
     } catch (err) {

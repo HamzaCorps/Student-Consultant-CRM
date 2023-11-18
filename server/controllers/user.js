@@ -80,22 +80,20 @@ export const getClients = async (req, res, next) => {
 
 export const getEmployeeClients = async (req, res, next) => {
     try {
-
         let allClients = await User.find({ role: 'client' })
         const employeeLeads = await Lead.find({ allocatedTo: { $in: req.user?._id }, isArchived: false })
-            .populate('client').populate('allocatedTo')
-            .exec();
 
+        // Filter clients based on the condition
         allClients = allClients.filter((client) => {
-            employeeLeads.findIndex(lead => lead.clientPhone == client.phone) != -1
-        })
+            return employeeLeads.findIndex(lead => lead.clientPhone.toString() === client.phone.toString()) !== -1
+        });
 
-        res.status(200).json({ result: allClients, message: 'employees fetched seccessfully', success: true })
-
+        res.status(200).json({ result: allClients, message: 'employees fetched successfully', success: true });
     } catch (err) {
-        next(createError(500, err.message))
+        next(createError(500, err.message));
     }
-}
+};
+
 
 export const getEmployees = async (req, res, next) => {
     try {

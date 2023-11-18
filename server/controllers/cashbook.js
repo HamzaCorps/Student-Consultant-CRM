@@ -1,8 +1,6 @@
 import Cashbook from '../models/cashbook.js'
 import Lead from '../models/lead.js'
-import User from '../models/user.js'
 import { createError } from '../utils/error.js'
-import bcrypt from 'bcryptjs'
 
 export const getCashbooks = async (req, res, next) => {
     try {
@@ -35,7 +33,7 @@ export const getEmployeeCashbooks = async (req, res, next) => {
             .exec();
 
         allCashbooks = allCashbooks.filter((cashbook) => {
-            employeeLeads.findIndex(lead => lead._id == cashbook.leadId) != -1
+            return employeeLeads.findIndex(lead => lead._id.toString() == cashbook.leadId.toString()) != -1
         })
 
         res.status(200).json({ result: allCashbooks, message: 'cashbooks fetched successfully', success: true })

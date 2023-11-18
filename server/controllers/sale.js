@@ -36,7 +36,7 @@ export const getEmployeeSales = async (req, res, next) => {
             .exec();
 
         allSales = allSales.filter((sale) => {
-            employeeLeads.findIndex(lead => lead._id == sale.leadId) != -1
+            return employeeLeads.findIndex(lead => lead._id.toString() == sale.leadId.toString()) != -1
         })
 
         res.status(200).json({ result: allSales, message: 'sales fetched successfully', success: true })
