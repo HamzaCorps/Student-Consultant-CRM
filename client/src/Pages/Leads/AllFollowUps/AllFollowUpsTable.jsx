@@ -9,12 +9,13 @@ import { Tooltip } from "@mui/material";
 import { IoOpenOutline } from "react-icons/io5";
 import { getLeadReducer } from "../../../redux/reducer/lead";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../../../utils";
 
 const AllFollowUpsTable = () => {
   /////////////////////////////////////////////////// VARIABLES ////////////////////////////////////////////////
   const dispatch = useDispatch();
   const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const { followUpsStats } = useSelector((state) => state.followUp);
+  const { followUpsStats, isFetching } = useSelector((state) => state.followUp);
   const { loggedUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
@@ -41,8 +42,8 @@ const AllFollowUpsTable = () => {
   const rows = followUpsStats?.map((stat) => {
     const dateParts = stat.date.split("/");
     const year = parseInt(dateParts[2]);
-    const month = parseInt(dateParts[1]) - 1; // Months in JavaScript are zero-based
-    const day = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[0]) - 1; // Months in JavaScript are zero-based
+    const day = parseInt(dateParts[1]);
     const date = new Date(year, month, day);
 
     return createData(stat.date, DAYS[date.getDay()], stat.followUps);
@@ -50,9 +51,9 @@ const AllFollowUpsTable = () => {
 
   const currentDate = new Date();
   const sortedRows = rows
-  .filter(item => new Date(item.date) <= currentDate) // Filter out dates greater than current date
-  .sort((a, b) => new Date(a.date) - new Date(b.date))
-  .reverse()
+    .filter((item) => new Date(item.date) <= currentDate) // Filter out dates greater than current date
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
+    .reverse();
 
   const columns = [
     {
@@ -133,9 +134,38 @@ const AllFollowUpsTable = () => {
       headerClassName: "super-app-theme--header",
       width: 150,
       renderCell: (params) => (
-        <Tooltip title={params.row?.status} placement="top">
-          <div className="font-primary font-light">{params.row.status}</div>
-        </Tooltip>
+        <div
+          className={`font-primary font-light border-[1px] rounded-full py-1 px-2 ${
+            params.row?.status == "New Lead"
+              ? "text-red-400 border-red-400"
+              : params.row?.status == "Call Not Answer"
+              ? "text-yellow-400 border-yellow-400"
+              : params.row?.status == "Deal Done"
+              ? "text-green-400 border-green-400"
+              : params.row?.status == "Keen Interested"
+              ? "text-blue-400 border-blue-400"
+              : params.row?.status == "Visit Done"
+              ? "text-purple-400 border-purple-400"
+              : params.row?.status == "Contact in Future"
+              ? "text-cyan-400 border-cyan-400"
+              : params.row?.status == "Visit Schedule"
+              ? "text-pink-400 border-pink-400"
+              : params.row?.status == "Archived"
+              ? "text-rose-700 border-rose-700"
+              : params.row?.status == "Wrong Number"
+              ? "text-amber-700 border-amber-700"
+              : params.row?.status == "Busy"
+              ? "text-emerald-700 border-emerald-700"
+              : params.row?.status == "Number Off"
+              ? "text-info border-info"
+              : params.row?.status == "Call back Later"
+              ? "text-yellow-600 border-yellow-600"
+              : params.row?.status == "Interested"
+              ? "text-success border-success"
+              : "text-gray-400 border-gray-400"
+          }`}>
+          {params.row?.status}
+        </div>
       ),
     },
     {
@@ -168,7 +198,9 @@ const AllFollowUpsTable = () => {
       renderCell: (params) => (
         <div>
           <Tooltip placement="top" title="View">
-            <div className="cursor-pointer" onClick={() => handleOpenViewModal(params.row?.leadId?._id)}>
+            <div
+              className="cursor-pointer"
+              onClick={() => handleOpenViewModal(params.row?.leadId?._id)}>
               <IoOpenOutline className="cursor-pointer text-orange-500 text-[23px] hover:text-orange-400" />
             </div>
           </Tooltip>
@@ -184,14 +216,33 @@ const AllFollowUpsTable = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {sortedRows.map((row) => (
-        <div className="flex flex-col gap-2 ">
-          <h2 className="text-primary-red text-[24px] capitalize font-light">
-            {row.date} {row.day}
-          </h2>
-          <Table rows={row.followUps} columns={columns} rowsPerPage={10} />
+      {sortedRows?.length == 0 ? (
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex justify-center">
+            <img className="h-96" src="/images/notifications.png" />
+          </div>
+          <div className="text-center text-[#6C63FF] font-primary text-3xl">
+            No Call Reminders Found
+          </div>
         </div>
-      ))}
+      ) : (
+        <>
+          {isFetching ? (
+            <div className="w-full h-[11rem] flex justify-center items-center ">
+              <Loader />
+            </div>
+          ) : (
+            sortedRows.map((row) => (
+              <div className="flex flex-col gap-2 ">
+                <h2 className="text-primary-red text-[24px] capitalize font-light">
+                  {row.date} {row.day}
+                </h2>
+                <Table rows={row.followUps} columns={columns} rowsPerPage={10} />
+              </div>
+            ))
+          )}
+        </>
+      )}
     </div>
   );
 };

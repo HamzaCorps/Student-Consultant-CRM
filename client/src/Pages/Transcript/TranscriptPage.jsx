@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { format, parseISO } from "date-fns";
 import { getDeductions } from "../../redux/action/deduction";
+import QRCode from "qrcode.react";
 
 const TranscriptPage = ({ }) => {
   ////////////////////////////////////// VARIABLES ///////////////////////////////////
@@ -92,7 +93,7 @@ const TranscriptPage = ({ }) => {
           </tr>
           <tr className="border-b-[1px] border-gray-700 px-10 pt-2 flex justify-between ">
             <td className="text-lg pb-4">Day Offs</td>
-            <td className="text-lg pb-4">-{currentTranscript?.dayOffs * deductions[0]?.dayOffs}</td>
+            <td className="text-lg pb-4">-{currentTranscript?.dayOffs * currentTranscript?.amountPerDayOff}</td>
           </tr>
           <tr className="border-b-[1px] border-gray-700 px-10 pt-9 flex justify-between pb-4"></tr>
           <tr className="border-b-[1px] border-gray-700 px-10 pt-2 flex justify-between">
@@ -103,10 +104,19 @@ const TranscriptPage = ({ }) => {
       </div>
       <div className="flex justify-center pb-10">
         <div className="flex flex-col items-center">
-            <div className="text-lg font-semibold">{currentTranscript?.netSalary}</div>
-            <div className="text-lg capitalize">{numberToWords.toWords(currentTranscript?.netSalary)}</div>
+            <div className="text-lg font-semibold">Rs. {currentTranscript?.netSalary}</div>
+            <div className="text-lg capitalize">{numberToWords.toWords(currentTranscript?.netSalary)} PKR</div>
         </div>
       </div>
+
+      <div className="flex justify-center mt-4">
+        <QRCode value={`Name: ${currentTranscript?.employeeName} \nPhone: ${currentTranscript?.phone} \nSalary Earned: ${currentTranscript?.netSalary} \nTotal Deductions: ${currentTranscript?.lateArrivals * deductions[0]?.lateArrivals + currentTranscript?.halfDays * deductions[0]?.halfDays + currentTranscript?.dayOffs * currentTranscript?.amountPerDayOff}`} />
+      </div>
+
+      <div className="flex justify-center flex-col py-2">
+          <p className="text-center">&copy; Right Reserverd by A. Consultant</p>
+          <p className="text-center">2nd Floor, Plaza 6-A, Vilas Road, Main Boulevard, Park View City, Lahore</p>
+        </div>
     </div>
   );
 };

@@ -106,9 +106,7 @@ const Employees = memo(() => {
 
   /////////////////////////////////////// USE EFFECTS ////////////////////////////////////
   useEffect(() => {
-    if (employees.length === 0) {
-      dispatch(getEmployees());
-    }
+    dispatch(getEmployees());
   }, []);
   useEffect(() => {
     if (!isFiltered) {
@@ -147,7 +145,6 @@ const Employees = memo(() => {
         rows={employees}
         columns={columns}
         isFetching={isFetching}
-        error={error}
         rowsPerPage={10}
       />
     </div>

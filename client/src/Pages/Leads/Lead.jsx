@@ -14,6 +14,7 @@ import { Loader, Path } from "../../utils";
 import moment  from "moment";
 import FollowUps from "./FollowUps/FollowUps";
 import Ledger from "./Ledger/Ledger";
+import { current } from "@reduxjs/toolkit";
 
 const Lead = () => {
   //////////////////////////////////// States ////////////////////////////////////////
@@ -87,6 +88,7 @@ const Lead = () => {
                     <TableCell sx={{ fontFamily: "'Montserrat', sans-serif", color: 'rgb(32 174 227)', fontSize: '16px' }}>Major</TableCell>
                     <TableCell sx={{ fontFamily: "'Montserrat', sans-serif", color: 'rgb(32 174 227)', fontSize: '16px' }}>Visa</TableCell>
                     <TableCell sx={{ fontFamily: "'Montserrat', sans-serif", color: 'rgb(32 174 227)', fontSize: '16px' }}>Created</TableCell>
+                    <TableCell sx={{ fontFamily: "'Montserrat', sans-serif", color: 'rgb(32 174 227)', fontSize: '16px' }}>Allocated To</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -96,6 +98,19 @@ const Lead = () => {
                     <TableCell sx={{ fontFamily: "'Montserrat', sans-serif" }}><Tooltip title={currentLead?.major} arrow>{currentLead?.major}</Tooltip></TableCell>
                     <TableCell sx={{ fontFamily: "'Montserrat', sans-serif" }}><Tooltip title={currentLead?.visa} arrow>{currentLead?.visa}</Tooltip></TableCell>
                     <TableCell sx={{ fontFamily: "'Montserrat', sans-serif" }}><Tooltip title={date} arrow>{date}</Tooltip></TableCell>
+                    <TableCell sx={{ fontFamily: "'Montserrat', sans-serif" }}>
+                      {
+                        currentLead?.allocatedTo?.length > 1 ? (
+                          currentLead?.allocatedTo?.map((item, key) => (
+                            <Tooltip className="capitalize flex gap-2" key={key} title={`• ${item?.firstName}`} arrow>• {item?.firstName}</Tooltip>
+                          ))
+                        ) : (
+                          currentLead?.allocatedTo?.map((item, key) => (
+                            <Tooltip className="capitalize flex gap-2" key={key} title={item?.firstName} arrow>{item?.firstName}</Tooltip>
+                          ))
+                        )
+                      }
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
