@@ -14,11 +14,13 @@ import { IoOpenOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import Filter from "./Filter";
 import User from "./User";
+import { Loader } from "../../utils";
 
 const Employees = memo(() => {
   /////////////////////////////////////// VARIABLES ////////////////////////////////////////
   const dispatch = useDispatch();
   const { employees, allEmployees, isFetching, error } = useSelector((state) => state.user);
+  console.log(isFetching);
   const columns = [
     {
       field: "uid",
@@ -47,11 +49,7 @@ const Employees = memo(() => {
       headerName: "Username",
       headerClassName: "super-app-theme--header",
       width: 200,
-      renderCell: (params) => (
-        <div className="font-primary capitalize">
-          {params.row.username}
-        </div>
-      ),
+      renderCell: (params) => <div className="font-primary capitalize">{params.row.username}</div>,
     },
 
     {
@@ -141,12 +139,7 @@ const Employees = memo(() => {
         setIsFiltered={setIsFiltered}
       />
 
-      <Table
-        rows={employees}
-        columns={columns}
-        isFetching={isFetching}
-        rowsPerPage={10}
-      />
+      <Table rows={employees} columns={columns} isFetching={isFetching} rowsPerPage={10} />
     </div>
   );
 });
