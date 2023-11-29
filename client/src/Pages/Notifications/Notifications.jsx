@@ -51,7 +51,7 @@ function Notifications({ }) {
             <Topbar />
 
             <ViewNotification open={openNotification} setOpen={setOpenNotification} notificationId={notificationId} />
-
+            
             {
                 notifications.map((notification, index) => (
                     <div key={index} className="w-[48%] ">

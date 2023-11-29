@@ -21,6 +21,7 @@ const AllFollowUpsTable = () => {
   /////////////////////////////////////////////////// STATES ////////////////////////////////////////////////
   const [showLead, setShowLead] = useState(false);
   const [selectedLeadId, setSelectedLeadId] = useState(false);
+  const [sortedRows, setSortedRows] = useState([])
 
   /////////////////////////////////////////////////// USE EFFECTS ////////////////////////////////////////////////
   useEffect(() => {
@@ -42,18 +43,24 @@ const AllFollowUpsTable = () => {
   const rows = followUpsStats?.map((stat) => {
     const dateParts = stat.date.split("/");
     const year = parseInt(dateParts[2]);
-    const month = parseInt(dateParts[0]) - 1; // Months in JavaScript are zero-based
-    const day = parseInt(dateParts[1]);
+    const month = parseInt(dateParts[1]) - 1; // Months in JavaScript are zero-based
+    const day = parseInt(dateParts[0]);
     const date = new Date(year, month, day);
 
     return createData(stat.date, DAYS[date.getDay()], stat.followUps);
   });
 
   const currentDate = new Date();
-  const sortedRows = rows
-    .filter((item) => new Date(item.date) <= currentDate) // Filter out dates greater than current date
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .reverse();
+  // const sortedRows = rows
+  //   .filter((item) => new Date(item.date) <= currentDate) // Filter out dates greater than current date
+  //   .sort((a, b) => new Date(a.date) - new Date(b.date))
+  //   .reverse();
+
+  useEffect(() => {
+    setSortedRows(rows
+    .filter(item => moment(item.date, 'DD/MM/YYYY').isSameOrBefore(currentDate, 'day')) // Filter out dates greater than current date
+    .sort((a, b) => moment(b.date, 'DD/MM/YYYY').diff(moment(a.date, 'DD/MM/YYYY')))) // Reverse the order
+  }, [])
 
   const columns = [
     {
@@ -162,9 +169,9 @@ const AllFollowUpsTable = () => {
               ? "text-yellow-600 border-yellow-600"
               : params.row?.status == "Interested"
               ? "text-success border-success"
-              : "text-gray-400 border-gray-400"
+              : "text-red-400 border-red-400"
           }`}>
-          {params.row?.status}
+          {params.row?.status ? params.row?.status : params.row?.leadId?.status}
         </div>
       ),
     },
@@ -216,32 +223,19 @@ const AllFollowUpsTable = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {sortedRows?.length == 0 ? (
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex justify-center">
-            <img className="h-96" src="/images/notifications.png" />
-          </div>
-          <div className="text-center text-[#6C63FF] font-primary text-3xl">
-            No Call Reminders Found
-          </div>
+      {isFetching ? (
+        <div className="w-full h-[11rem] flex justify-center items-center ">
+          <Loader />
         </div>
-      ) : (
-        <>
-          {isFetching ? (
-            <div className="w-full h-[11rem] flex justify-center items-center ">
-              <Loader />
-            </div>
-          ) : (
-            sortedRows.map((row) => (
-              <div className="flex flex-col gap-2 ">
-                <h2 className="text-primary-red text-[24px] capitalize font-light">
-                  {row.date} {row.day}
-                </h2>
-                <Table rows={row.followUps} columns={columns} rowsPerPage={10} />
-              </div>
-            ))
-          )}
-        </>
+      ) :  (
+        sortedRows.map((row) => (
+          <div className="flex flex-col gap-2 ">
+            <h2 className="text-primary-red text-[24px] capitalize font-light">
+              {row.date} {row.day}
+            </h2>
+            <Table rows={row.followUps} columns={columns} rowsPerPage={10} />
+          </div>
+        ))
       )}
     </div>
   );
